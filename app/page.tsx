@@ -1,14 +1,15 @@
 import Carousel from "@/components/Carousel";
-import { getPopularMovies, getTopRatedMovies } from "@/lib/movie";
-import { getTopRatedSeries } from "@/lib/tv";
+import { getMovies } from "@/lib/movie";
+import { getSeries } from "@/lib/tv";
 
 async function Home() {
-  const moviesByPopularity = await getPopularMovies();
-  const moviesByRate = await getTopRatedMovies();
-  const series = await getTopRatedSeries();
+  const moviesByPopularity = await getMovies("popular");
+  const moviesByRate = await getMovies("top_rated");
+  const seriesByRate = await getSeries("top_rated");
 
   return (
     <main className="flex flex-col gap-4 py-6">
+      {/* TODO Convert this subheading to a react component */}
       <h2 className="flex gap-2 text-2xl font-bold">
         <span className="border-l-4 border-main-500 rounded"></span>Trending
       </h2>
@@ -22,7 +23,7 @@ async function Home() {
         <span className="border-l-4 border-main-500 rounded"></span>Top 10 TV
         Shows on FilmFortress
       </h3>
-      <Carousel media={series.slice(0, 10)} />
+      <Carousel media={seriesByRate.slice(0, 10)} />
     </main>
   );
 }
