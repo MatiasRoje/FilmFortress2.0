@@ -1,9 +1,11 @@
-import NavBar from "@/components/NavBar";
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
 
-const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from "next";
+import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "FilmFortress",
@@ -22,7 +24,7 @@ export default function RootLayout({
           <NavBar />
         </header>
         {children}
-        <footer>[Footer]</footer>
+        <Footer />
       </body>
     </html>
   );
