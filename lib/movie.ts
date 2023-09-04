@@ -1,7 +1,7 @@
 const apiKey = process.env.TMDB_API_KEY;
 const imageUrl = process.env.TMBD_IMG_URL;
 
-export async function getMovies() {
+export async function getTopRatedMovies() {
   const res = await fetch(
     `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=en-US&page=1`,
   );
