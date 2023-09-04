@@ -9,11 +9,8 @@ const Carousel = ({ media }: any) => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(0);
 
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const visibleItems = media.slice(startIndex, endIndex);
-  // For the sliding effect
-  const translateX = -currentPage * 66.68;
+  // Number will be calculated depending of how many movies should be displayed, usually they will be displayed in multiples of 6
+  const translateX = -currentPage * (media.length > 10 ? 100 : 66.68);
 
   const handleNextClick = () => {
     setCurrentPage(prevPage => prevPage + 1);

@@ -15,3 +15,18 @@ export async function getTopRatedMovies() {
     posterPath: imageUrl + movie.poster_path,
   }));
 }
+
+export async function getPopularMovies() {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`,
+  );
+  const data = await res.json();
+  const movies = data.results;
+  return movies.map((movie: any) => ({
+    id: movie.id,
+    title: movie.title,
+    releaseDate: movie.release_date,
+    voteAverage: movie.vote_average,
+    posterPath: imageUrl + movie.poster_path,
+  }));
+}
