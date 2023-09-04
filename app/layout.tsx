@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="container mx-auto bg-zinc-900 text-gray-50 flex flex-col px-4 py- min-h-screen">
+      <body className="container mx-auto bg-neutral-800 text-gray-50 flex flex-col px-4 py-4 min-h-screen">
         <header>
           <NavBar />
         </header>
