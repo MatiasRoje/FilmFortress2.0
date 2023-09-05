@@ -1,10 +1,10 @@
 const apiKey = process.env.TMDB_API_KEY;
 const imageUrl = process.env.TMBD_IMG_URL;
 
-interface Movie {
+export interface Movie {
   id: number;
   title: string;
-  releaseDate: Date;
+  releaseDate: string;
   voteAverage: number;
   posterPath: string;
 }
@@ -19,7 +19,11 @@ export async function getMovies(query: string): Promise<Movie[]> {
   return movies.map((movie: any) => ({
     id: movie.id,
     title: movie.title,
-    releaseDate: movie.release_date,
+    releaseDate: new Date(movie.release_date).toLocaleString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }),
     voteAverage: movie.vote_average,
     posterPath: imageUrl + movie.poster_path,
   }));

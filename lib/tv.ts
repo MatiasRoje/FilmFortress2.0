@@ -1,10 +1,10 @@
 const apiKey = process.env.TMDB_API_KEY;
 const imageUrl = process.env.TMBD_IMG_URL;
 
-interface TvShow {
+export interface TvShow {
   id: number;
   title: string;
-  releaseDate: Date;
+  releaseDate: string;
   voteAverage: number;
   posterPath: string;
 }
