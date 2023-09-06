@@ -17,8 +17,8 @@ function MediaCard({ media }: MediaCardProps) {
         <Image
           src={media.posterPath}
           alt=""
-          width="270"
-          height="185"
+          width="200"
+          height="300"
           className="rounded-t"
         />
         <p>

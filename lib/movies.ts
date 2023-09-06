@@ -9,9 +9,16 @@ export type Movie = {
   posterPath: string;
 };
 
+type Genre = {
+  id: number;
+  name: string;
+};
+
 type MovieDetails = Movie & {
   overview: string;
   tagline: string;
+  runtime: string;
+  genres: Genre[];
 };
 
 // queries: top_rated, popular
@@ -47,13 +54,31 @@ function StripMovieDetails(movieObjet: any): MovieDetails {
     id: movieObjet.id,
     title: movieObjet.title,
     releaseDate: new Date(movieObjet.release_date).toLocaleString("en-US", {
-      day: "numeric",
-      month: "short",
       year: "numeric",
     }),
     voteAverage: movieObjet.vote_average,
     posterPath: imageUrl + movieObjet.poster_path,
     overview: movieObjet.overview,
     tagline: movieObjet.tagline,
+    runtime: formatMinutesToHoursAndMinutes(movieObjet.runtime),
+    genres: movieObjet.genres,
   };
+}
+
+function formatMinutesToHoursAndMinutes(minutes: number): string {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  // Build the formatted string
+  let formattedTime = "";
+
+  if (hours > 0) {
+    formattedTime += hours + "h ";
+  }
+
+  if (remainingMinutes > 0) {
+    formattedTime += remainingMinutes + "m";
+  }
+
+  return formattedTime;
 }
