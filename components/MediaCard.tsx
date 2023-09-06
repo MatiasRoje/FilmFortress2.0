@@ -1,4 +1,4 @@
-import { Movie } from "@/lib/movie";
+import { Movie } from "@/lib/movies";
 import { TvShow } from "@/lib/tv";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +13,7 @@ interface MediaCardProps {
 function MediaCard({ media }: MediaCardProps) {
   return (
     <li className="px-3" style={{ flex: "0 0 16.66%" }}>
-      <Link href="/" className="relative">
+      <Link href={`/movies/${media.id}`} className="relative">
         <Image
           src={media.posterPath}
           alt=""
@@ -38,7 +38,10 @@ function MediaCard({ media }: MediaCardProps) {
           </p>
         </div>
         <p>
-          <Link href="/" className="font-bold hover:underline">
+          <Link
+            href={`/movies/${media.id}`}
+            className="font-bold hover:underline"
+          >
             {media.title}
           </Link>
         </p>

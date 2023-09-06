@@ -20,7 +20,7 @@ function Footer() {
             href="/"
             className="flex items-center justify-center p-3 rounded-full hover:bg-neutral-700"
           >
-            <FontAwesomeIcon icon={faInstagram} style={{ fontSize: 22 }} />
+            <FontAwesomeIcon icon={faInstagram} style={{ fontSize: 20 }} />
           </Link>
         </li>
         <li>
@@ -28,7 +28,7 @@ function Footer() {
             href="/"
             className="flex items-center justify-center p-3 rounded-full hover:bg-neutral-700"
           >
-            <FontAwesomeIcon icon={faYoutube} style={{ fontSize: 22 }} />
+            <FontAwesomeIcon icon={faYoutube} style={{ fontSize: 20 }} />
           </Link>
         </li>
         <li>
@@ -36,7 +36,7 @@ function Footer() {
             href="/"
             className="flex items-center justify-center p-3 rounded-full hover:bg-neutral-700"
           >
-            <FontAwesomeIcon icon={faFacebook} style={{ fontSize: 22 }} />
+            <FontAwesomeIcon icon={faFacebook} style={{ fontSize: 20 }} />
           </Link>
         </li>
         <li>
@@ -44,7 +44,7 @@ function Footer() {
             href="/"
             className="flex items-center justify-center p-3 rounded-full hover:bg-neutral-700"
           >
-            <FontAwesomeIcon icon={faTwitter} style={{ fontSize: 22 }} />
+            <FontAwesomeIcon icon={faTwitter} style={{ fontSize: 20 }} />
           </Link>
         </li>
       </ul>
@@ -55,7 +55,7 @@ function Footer() {
           target="_blank"
           className="hover:underline"
         >
-          Matias Roje
+          Matías Roje
         </a>
         . All rights reserved.
       </p>

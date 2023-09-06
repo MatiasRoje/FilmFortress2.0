@@ -13,7 +13,7 @@ function NavBar() {
           </Link>
         </li>
         <li className="ml-2 px-3 py-1 rounded hover:bg-neutral-700">
-          <Link href="/">Movies</Link>
+          <Link href="/movies">Movies</Link>
         </li>
         <li className="ml-2 px-3 py-1 rounded hover:bg-neutral-700">
           <Link href="/">TV Shows</Link>
@@ -22,7 +22,7 @@ function NavBar() {
           <Link href="/">
             <div className="flex gap-1">
               <span>
-                <PlusCircleIcon width={24} height={24} />
+                <PlusCircleIcon className="w-6 h-6" />
               </span>
               Watchlist
             </div>
