@@ -1,7 +1,8 @@
 import { TvShow } from "@/types/tv";
 
-const apiKey = process.env.TMDB_API_KEY;
-const imageUrl = process.env.TMBD_IMG_URL;
+const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+const imageUrl = process.env.NEXT_PUBLIC_TMDB_IMG_URL;
+const imageUrlLight = process.env.NEXT_PUBLIC_TMDB_IMG_LIGHT;
 
 // queries: top_rated, popular
 export async function getSeries(query: string): Promise<TvShow[]> {
@@ -15,6 +16,6 @@ export async function getSeries(query: string): Promise<TvShow[]> {
     title: serie.name,
     releaseDate: serie.first_air_date,
     voteAverage: serie.vote_average,
-    posterPath: imageUrl + serie.poster_path,
+    posterPath: imageUrlLight + serie.poster_path,
   }));
 }

@@ -1,8 +1,9 @@
 import { StripMovie } from "@/lib/movies";
+import { Movie } from "@/types/movies";
 import { useEffect, useState } from "react";
 
 function useSearch(query: string) {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -26,9 +27,11 @@ function useSearch(query: string) {
           const data = await res.json();
           if (data.Response === "False") throw new Error("Movie not found");
 
-          const moviesData = data.results
+          const moviePromises: Promise<Movie>[] = data.results
             .slice(0, 8)
             .map((movie: any) => StripMovie(movie));
+          const moviesData = await Promise.all(moviePromises);
+
           setMovies(moviesData);
           setError("");
           setIsDropdownOpen(true);

@@ -1,8 +1,9 @@
 import { Cast, Crew, Movie, MovieDetails } from "@/types/movies";
 import { formatMinutesToHoursAndMinutes } from "./utility";
 
-const apiKey = process.env.TMDB_API_KEY;
+const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const imageUrl = process.env.NEXT_PUBLIC_TMDB_IMG_URL;
+const imageUrlLight = process.env.NEXT_PUBLIC_TMDB_IMG_LIGHT;
 
 // queries: top_rated, popular
 export async function getMovies(query: string): Promise<Movie[]> {
@@ -24,7 +25,7 @@ export function StripMovie(MovieObject: any): Movie {
       year: "numeric",
     }),
     voteAverage: MovieObject.vote_average,
-    posterPath: imageUrl + MovieObject.poster_path,
+    posterPath: imageUrlLight + MovieObject.poster_path,
   };
 }
 
@@ -74,7 +75,7 @@ export function StripMovieDetails(movieObject: any): MovieDetails {
 function StripCast(castObject: any): Cast {
   return {
     name: castObject.name,
-    profilePath: imageUrl + castObject.profile_path,
+    profilePath: imageUrlLight + castObject.profile_path,
     character: castObject.character,
   };
 }

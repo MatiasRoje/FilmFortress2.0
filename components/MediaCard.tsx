@@ -19,7 +19,7 @@ function MediaCard({ media }: MediaCardProps) {
           alt=""
           width="180"
           height="270"
-          className="rounded-t max-w-none h-[17rem]"
+          className="rounded-t max-w-none h-[17rem] w-auto"
         />
         <p>
           <PlusCircleIcon className="absolute top-0 right-1 h-9 w-9 hover:text-yellow-400" />

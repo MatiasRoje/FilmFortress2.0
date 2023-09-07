@@ -8,22 +8,26 @@ async function Home() {
   const seriesByRate = await getSeries("top_rated");
 
   return (
-    <main className="flex flex-col gap-4 py-6">
+    <main className="flex flex-col gap-10 py-6">
       {/* TODO Convert this subheading to a react component */}
-      <h2 className="flex gap-2 text-2xl font-bold">
-        <span className="border-l-4 border-main-500 rounded"></span>Trending
-      </h2>
-      <Carousel mediaCollection={moviesByPopularity.slice(0, 18)} />
+      <div className="flex flex-col gap-4">
+        <h2 className="flex gap-2 text-2xl font-bold">
+          <span className="border-l-4 border-main-500 rounded"></span>Trending
+        </h2>
+        <Carousel mediaCollection={moviesByPopularity.slice(0, 18)} />
+      </div>
+      <div className="flex flex-col gap-4">
+        <h3 className="flex gap-2 text-2xl font-bold">
+          <span className="border-l-4 border-main-500 rounded"></span>Top 10
+          movies on FilmFortress
+        </h3>
+        <Carousel mediaCollection={moviesByRate.slice(0, 10)} />
+      </div>
       {/* <h3 className="flex gap-2 text-2xl font-bold">
-        <span className="border-l-4 border-main-500 rounded"></span>Top 10
-        movies on FilmFortress
-      </h3>
-      <Carousel mediaCollection={moviesByRate.slice(0, 10)} />
-      <h3 className="flex gap-2 text-2xl font-bold">
         <span className="border-l-4 border-main-500 rounded"></span>Top 10 TV
         Shows on FilmFortress
       </h3>
-      <Carousel mediaCollection={seriesByRate.slice(0, 10)} /> */}
+      <Carousel mediaCollection={seriesByRate.slice(0, 10)} />  */}
     </main>
   );
 }

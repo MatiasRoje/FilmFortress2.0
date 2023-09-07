@@ -44,6 +44,7 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
           width="300"
           height="450"
           className="relative z-10 rounded"
+          priority
         />
         <div className="relative z-10 text-white flex flex-col gap-4 py-8 pr-8">
           <div>
