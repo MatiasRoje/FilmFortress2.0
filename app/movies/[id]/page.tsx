@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { PlusCircleIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import { Metadata } from "next";
 
 type MoviePageParams = {
   id: number;
@@ -11,6 +12,15 @@ type MoviePageParams = {
 type MoviePageProps = {
   params: MoviePageParams;
 };
+
+export async function generateMetadata({
+  params: { id },
+}: MoviePageProps): Promise<Metadata> {
+  const movie = await getMovie(id);
+  return {
+    title: movie.title,
+  };
+}
 
 async function MoviePage({ params: { id } }: MoviePageProps) {
   const movie = await getMovie(id);

@@ -8,8 +8,12 @@ import Footer from "@/components/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "FilmFortress",
-  description: "A movies database",
+  title: {
+    default: "FilmFortress",
+    template: "%s | FilmFortress",
+  },
+  description:
+    "A 10.000+ movies database created by Matías Roje with the intention of learning Next.js",
 };
 
 export default function RootLayout({
