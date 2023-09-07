@@ -1,7 +1,8 @@
 "use client";
 
-import { Movie } from "@/lib/movies";
-import { useKey, useMovies } from "@/lib/search";
+import useKey from "@/hooks/useKey";
+import useSearch from "@/hooks/useSearch";
+import { Movie } from "@/types/movies";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -12,7 +13,7 @@ function SearchBar() {
   const [query, setQuery] = useState("");
   const inputEl = useRef<HTMLInputElement | null>(null);
   const { movies, isLoading, error, isDropdownOpen, setIsDropdownOpen } =
-    useMovies(query);
+    useSearch(query);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useKey("Enter", function () {
@@ -93,6 +94,7 @@ function SearchBar() {
                         height={150}
                         className="max-w-none rounded"
                         placeholder="empty"
+                        quality={1}
                       />
                     </div>
                     <div className="p-2">

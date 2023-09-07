@@ -1,44 +1,8 @@
+import { Cast, Crew, Movie, MovieDetails } from "@/types/movies";
+import { formatMinutesToHoursAndMinutes } from "./utility";
+
 const apiKey = process.env.TMDB_API_KEY;
 const imageUrl = process.env.NEXT_PUBLIC_TMDB_IMG_URL;
-
-export type Movie = {
-  id: number;
-  title: string;
-  releaseDate: string;
-  voteAverage: number;
-  posterPath: string;
-};
-
-type Genre = {
-  id: number;
-  name: string;
-};
-
-type Cast = {
-  name: string;
-  profilePath: string;
-  character: string;
-};
-
-type Crew = {
-  name: string;
-  job: string;
-};
-
-type MovieDetails = Movie & {
-  overview: string;
-  tagline: string;
-  runtime: string;
-  genres: Genre[];
-  cast: Cast[];
-  directors: Crew[];
-  writers: Crew[];
-  backgropPath: string;
-  status: string;
-  budget: string;
-  revenue: string;
-  countries: string[];
-};
 
 // queries: top_rated, popular
 export async function getMovies(query: string): Promise<Movie[]> {
@@ -48,18 +12,6 @@ export async function getMovies(query: string): Promise<Movie[]> {
   const data = await res.json();
   const movies = data.results;
   return movies.map((movie: any) => StripMovie(movie));
-}
-
-export async function getMovie(id: number): Promise<MovieDetails> {
-  const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`,
-  );
-  const details = await res.json();
-  const resCredits = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=en-US`,
-  );
-  const credits = await resCredits.json();
-  return StripMovieDetails({ ...details, ...credits });
 }
 
 export function StripMovie(MovieObject: any): Movie {
@@ -74,6 +26,18 @@ export function StripMovie(MovieObject: any): Movie {
     voteAverage: MovieObject.vote_average,
     posterPath: imageUrl + MovieObject.poster_path,
   };
+}
+
+export async function getMovie(id: number): Promise<MovieDetails> {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`,
+  );
+  const details = await res.json();
+  const resCredits = await fetch(
+    `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=en-US`,
+  );
+  const credits = await resCredits.json();
+  return StripMovieDetails({ ...details, ...credits });
 }
 
 export function StripMovieDetails(movieObject: any): MovieDetails {
@@ -120,24 +84,6 @@ function StripCrew(crewObject: any): Crew {
     name: crewObject.name,
     job: crewObject.name,
   };
-}
-
-function formatMinutesToHoursAndMinutes(minutes: number): string {
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-
-  // Build the formatted string
-  let formattedTime = "";
-
-  if (hours > 0) {
-    formattedTime += hours + "h ";
-  }
-
-  if (remainingMinutes > 0) {
-    formattedTime += remainingMinutes + "m";
-  }
-
-  return formattedTime;
 }
 
 function countryCodeToFlagEmoji(countryCode: string): string {

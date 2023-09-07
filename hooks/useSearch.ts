@@ -1,26 +1,7 @@
+import { StripMovie } from "@/lib/movies";
 import { useEffect, useState } from "react";
-import { StripMovie } from "./movies";
 
-export function useKey(key: string, action: () => void) {
-  useEffect(
-    function () {
-      function callback(e: KeyboardEvent) {
-        if (e.code.toLowerCase() === key.toLowerCase()) {
-          action();
-        }
-      }
-
-      document.addEventListener("keydown", callback);
-
-      return function () {
-        document.removeEventListener("keydown", callback);
-      };
-    },
-    [action, key],
-  );
-}
-
-export function useMovies(query: string) {
+function useSearch(query: string) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -28,7 +9,6 @@ export function useMovies(query: string) {
 
   useEffect(
     function () {
-      // callback?.();
       const controller = new AbortController();
 
       async function FetchMovies() {
@@ -47,7 +27,7 @@ export function useMovies(query: string) {
           if (data.Response === "False") throw new Error("Movie not found");
 
           const moviesData = data.results
-            .slice(0, 10)
+            .slice(0, 8)
             .map((movie: any) => StripMovie(movie));
           setMovies(moviesData);
           setError("");
@@ -79,3 +59,5 @@ export function useMovies(query: string) {
 
   return { movies, isLoading, error, isDropdownOpen, setIsDropdownOpen };
 }
+
+export default useSearch;

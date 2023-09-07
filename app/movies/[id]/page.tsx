@@ -145,11 +145,11 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
             </div>
             <div>
               <p className="font-bold">Budget</p>
-              <p>{movie.budget}</p>
+              <p>{movie.budget === "$0" ? "-" : movie.budget}</p>
             </div>
             <div>
               <p className="font-bold">Revenue</p>
-              <p>{movie.revenue}</p>
+              <p>{movie.revenue === "$0" ? "-" : movie.revenue}</p>
             </div>
           </div>
         </div>

@@ -1,10 +1,10 @@
-import { Movie } from "@/lib/movies";
-import { TvShow } from "@/lib/tv";
 import Image from "next/image";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { SparklesIcon } from "@heroicons/react/24/outline";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { Movie } from "@/types/movies";
+import { TvShow } from "@/types/tv";
 
 interface MediaCardProps {
   media: Movie | TvShow;

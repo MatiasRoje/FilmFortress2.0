@@ -1,13 +1,7 @@
+import { TvShow } from "@/types/tv";
+
 const apiKey = process.env.TMDB_API_KEY;
 const imageUrl = process.env.TMBD_IMG_URL;
-
-export interface TvShow {
-  id: number;
-  title: string;
-  releaseDate: string;
-  voteAverage: number;
-  posterPath: string;
-}
 
 // queries: top_rated, popular
 export async function getSeries(query: string): Promise<TvShow[]> {
