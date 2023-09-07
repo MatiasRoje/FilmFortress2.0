@@ -6,9 +6,9 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { Movie } from "@/types/movies";
 import { TvShow } from "@/types/tv";
 
-interface MediaCardProps {
+type MediaCardProps = {
   media: Movie | TvShow;
-}
+};
 
 function MediaCard({ media }: MediaCardProps) {
   return (

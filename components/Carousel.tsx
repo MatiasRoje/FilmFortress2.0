@@ -3,8 +3,14 @@
 import React, { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import MediaCard from "./MediaCard";
+import { Movie } from "@/types/movies";
+import { TvShow } from "@/types/tv";
 
-const Carousel = ({ mediaCollection }: any) => {
+type CarouselProps = Movie[] | TvShow[];
+
+type MediaCollectionProps = Movie | TvShow;
+
+const Carousel = ({ mediaCollection }: { mediaCollection: CarouselProps }) => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -36,7 +42,7 @@ const Carousel = ({ mediaCollection }: any) => {
           transitionDuration: "1500ms",
         }}
       >
-        {mediaCollection.map((media: any) => (
+        {mediaCollection.map((media: MediaCollectionProps) => (
           <MediaCard media={media} key={media.id} />
         ))}
       </ul>

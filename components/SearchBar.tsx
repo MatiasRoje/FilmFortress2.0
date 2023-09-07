@@ -65,6 +65,7 @@ function SearchBar() {
           onChange={e => setQuery(e.target.value)}
           ref={inputEl}
         />
+        {/* TODO: We need a proper spinner for this, not a Loading string... */}
         {isLoading && <Loader />}
         {error && <p>Error</p>}
       </div>

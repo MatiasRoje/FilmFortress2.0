@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 
-interface ButtonProps {
+type ButtonProps = {
   children: ReactNode;
-}
+};
 
 function Button({ children }: ButtonProps) {
   return (
