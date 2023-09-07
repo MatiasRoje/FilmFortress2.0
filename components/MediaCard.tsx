@@ -17,12 +17,12 @@ function MediaCard({ media }: MediaCardProps) {
         <Image
           src={media.posterPath}
           alt=""
-          width="200"
-          height="300"
-          className="rounded-t"
+          width="180"
+          height="270"
+          className="rounded-t max-w-none h-[17rem]"
         />
         <p>
-          <PlusCircleIcon className="absolute top-0 right-0 h-9 w-9 hover:text-yellow-400" />
+          <PlusCircleIcon className="absolute top-0 right-1 h-9 w-9 hover:text-yellow-400" />
         </p>
       </Link>
       <div className="h-36 flex flex-col gap-2 p-2 bg-neutral-700 rounded-b">

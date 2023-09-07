@@ -1,5 +1,5 @@
 const apiKey = process.env.TMDB_API_KEY;
-const imageUrl = process.env.TMBD_IMG_URL;
+const imageUrl = process.env.NEXT_PUBLIC_TMDB_IMG_URL;
 
 export type Movie = {
   id: number;
@@ -47,17 +47,7 @@ export async function getMovies(query: string): Promise<Movie[]> {
   );
   const data = await res.json();
   const movies = data.results;
-  return movies.map((movie: any) => ({
-    id: movie.id,
-    title: movie.title,
-    releaseDate: new Date(movie.release_date).toLocaleString("en-US", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    }),
-    voteAverage: movie.vote_average,
-    posterPath: imageUrl + movie.poster_path,
-  }));
+  return movies.map((movie: any) => StripMovie(movie));
 }
 
 export async function getMovie(id: number): Promise<MovieDetails> {
@@ -72,7 +62,21 @@ export async function getMovie(id: number): Promise<MovieDetails> {
   return StripMovieDetails({ ...details, ...credits });
 }
 
-function StripMovieDetails(movieObject: any): MovieDetails {
+export function StripMovie(MovieObject: any): Movie {
+  return {
+    id: MovieObject.id,
+    title: MovieObject.title,
+    releaseDate: new Date(MovieObject.release_date).toLocaleString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }),
+    voteAverage: MovieObject.vote_average,
+    posterPath: imageUrl + MovieObject.poster_path,
+  };
+}
+
+export function StripMovieDetails(movieObject: any): MovieDetails {
   return {
     id: movieObject.id,
     title: movieObject.title,

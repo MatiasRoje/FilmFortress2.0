@@ -16,7 +16,6 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
   const movie = await getMovie(id);
   const directors = movie.directors.map(director => director.name);
   const writers = movie.writers.map(writer => writer.name);
-  console.log(movie.countries);
 
   return (
     <main>

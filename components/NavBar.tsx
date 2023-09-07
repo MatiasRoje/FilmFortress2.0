@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "./Button";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import SearchBar from "./SearchBar";
 
 function NavBar() {
   return (
@@ -18,6 +19,7 @@ function NavBar() {
         <li className="ml-2 px-3 py-1 rounded hover:bg-neutral-700">
           <Link href="/">TV Shows</Link>
         </li>
+        <SearchBar />
         <li className="ml-auto px-3 py-1 rounded hover:bg-neutral-700">
           <Link href="/">
             <div className="flex gap-1">
