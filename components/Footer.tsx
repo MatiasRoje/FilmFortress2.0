@@ -48,17 +48,30 @@ function Footer() {
           </Link>
         </li>
       </ul>
-      <p className="text-xs">
-        © 2023 by{" "}
-        <a
-          href="https://github.com/MatiasRoje"
-          target="_blank"
-          className="hover:underline"
-        >
-          Matías Roje
-        </a>
-        . All rights reserved.
-      </p>
+      <div className="text-center">
+        <p className="text-xs">
+          Movie data and images courtesy of{" "}
+          <a
+            href="https://www.themoviedb.org/"
+            target="_blank"
+            className="hover:underline"
+          >
+            TMDB
+          </a>
+          .
+        </p>
+        <p className="text-xs">
+          © 2023 by{" "}
+          <a
+            href="https://github.com/MatiasRoje"
+            target="_blank"
+            className="hover:underline"
+          >
+            Matías Roje
+          </a>
+          . All rights reserved.
+        </p>
+      </div>
     </footer>
   );
 }

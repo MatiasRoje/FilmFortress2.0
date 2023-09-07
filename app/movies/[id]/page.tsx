@@ -62,7 +62,7 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
               <p>
                 <span>
                   <SparklesIcon className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded" />
-                </span>{" "}
+                </span>
               </p>
             </div>
             <div className="flex flex-col items-center justify-start">
@@ -70,9 +70,7 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
               <p>
                 <span>
                   <PlusCircleIcon className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded" />
-                </span>{" "}
-                {/* TODO Here it would be nice to display a explainatory note like "rate this moive" as in TMBD, for that the function can'b be asyn anymore */}
-                {/* {noteRate && <p>Add to your watchlist</p>} */}
+                </span>
               </p>
             </div>
           </div>
