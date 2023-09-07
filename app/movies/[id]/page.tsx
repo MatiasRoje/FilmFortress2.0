@@ -90,13 +90,13 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
           </div>
           <div className="flex mt-auto gap-6">
             <div>
-              <p className="font-bold">{directors.join(", ")}</p>
+              <p className="font-semibold">{directors.join(", ")}</p>
               <p className="text-sm">
                 {directors.length === 1 ? "Director" : "Directors"}
               </p>
             </div>
             <div>
-              <p className="font-bold">{writers.join(", ")}</p>
+              <p className="font-semibold">{writers.join(", ")}</p>
               <p className="text-sm">
                 {writers.length === 1
                   ? "Writer"
@@ -131,7 +131,7 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
                   className="rounded-t"
                 />
                 <div className="w-36 p-2">
-                  <p className="font-bold">{cast.name}</p>
+                  <p className="font-semibold">{cast.name}</p>
                   <p className="text-sm">{cast.character}</p>
                 </div>
               </li>
@@ -144,21 +144,21 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
           </ul>
           <div className="flex flex-col gap-3 rounded bg-neutral-700 py-2 px-6 ml-auto">
             <div>
-              <p className="font-bold">
+              <p className="font-medium">
                 {movie.countries.length > 1 ? "Countries" : "Country"}
               </p>
               <p>{movie.countries.join(" ")}</p>
             </div>
             <div>
-              <p className="font-bold">Status</p>
+              <p className="font-medium">Status</p>
               <p>{movie.status}</p>
             </div>
             <div>
-              <p className="font-bold">Budget</p>
+              <p className="font-medium">Budget</p>
               <p>{movie.budget === "$0" ? "-" : movie.budget}</p>
             </div>
             <div>
-              <p className="font-bold">Revenue</p>
+              <p className="font-mediumfon">Revenue</p>
               <p>{movie.revenue === "$0" ? "-" : movie.revenue}</p>
             </div>
           </div>

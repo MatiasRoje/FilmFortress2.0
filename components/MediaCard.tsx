@@ -40,7 +40,7 @@ function MediaCard({ media }: MediaCardProps) {
         <p>
           <Link
             href={`/movies/${media.id}`}
-            className="font-bold hover:underline"
+            className="font-semibold hover:underline"
           >
             {media.title}
           </Link>

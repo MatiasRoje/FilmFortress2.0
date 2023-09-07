@@ -3,6 +3,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
 import type { Metadata } from "next";
+import { poppins } from "./fonts";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import "./globals.css";
@@ -22,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${poppins.variable}`}>
       <body className="container mx-auto bg-neutral-800 text-gray-50 flex flex-col px-4 py-4 min-h-screen">
         <header>
           <NavBar />

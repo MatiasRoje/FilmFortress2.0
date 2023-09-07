@@ -26,6 +26,9 @@ const config: Config = {
           900: "#0a3835",
         },
       },
+      fontFamily: {
+        sans: ["var(--font-poppins)", "sans-serif"],
+      },
     },
   },
   plugins: [],
