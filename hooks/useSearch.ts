@@ -16,23 +16,12 @@ function useSearch(query: string) {
         try {
           setIsLoading(true);
           setError("");
-          const res = await fetch(
-            `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`,
-            { signal: controller.signal },
-          );
 
-          if (!res.ok)
-            throw new Error("Something went wrong with fetching movies");
+          const url = `/api/search?query=${encodeURIComponent(query)}`;
+          const res = await fetch(url, { signal: controller.signal });
+          const movies = await res.json();
 
-          const data = await res.json();
-          if (data.Response === "False") throw new Error("Movie not found");
-
-          const moviePromises: Promise<Movie>[] = data.results
-            .slice(0, 8)
-            .map((movie: any) => StripMovie(movie));
-          const moviesData = await Promise.all(moviePromises);
-
-          setMovies(moviesData);
+          setMovies(movies);
           setError("");
           setIsDropdownOpen(true);
         } catch (err: any) {

@@ -1,7 +1,7 @@
 import { Cast, Crew, Movie, MovieDetails } from "@/types/movies";
 import { formatMinutesToHoursAndMinutes } from "./utility";
 
-const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+const apiKey = process.env.TMDB_API_KEY;
 const imageUrl = process.env.NEXT_PUBLIC_TMDB_IMG_URL;
 const imageUrlLight = process.env.NEXT_PUBLIC_TMDB_IMG_LIGHT;
 
@@ -39,6 +39,23 @@ export async function getMovie(id: number): Promise<MovieDetails> {
   );
   const credits = await resCredits.json();
   return StripMovieDetails({ ...details, ...credits });
+}
+
+export async function searchMovies(query: string) {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${apiKey}`,
+  );
+
+  if (!res.ok) throw new Error("Something went wrong with fetching movies");
+
+  const data = await res.json();
+  if (data.Response === "False") throw new Error("Movie not found");
+
+  const moviePromises: Promise<Movie>[] = data.results
+    .slice(0, 8)
+    .map((movie: any) => StripMovie(movie));
+  const moviesData = await Promise.all(moviePromises);
+  return moviesData;
 }
 
 export function StripMovieDetails(movieObject: any): MovieDetails {
