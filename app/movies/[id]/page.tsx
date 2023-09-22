@@ -55,7 +55,7 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
               <span>{movie.runtime}</span>
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 py-1">
             <div className="flex flex-col gap-1 items-center justify-start">
               <p className="text-sm text-gray-200">
                 <span className="text-main-400">F</span>F Rating

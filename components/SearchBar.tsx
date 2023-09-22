@@ -6,6 +6,7 @@ import { Combobox } from "@headlessui/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Spinner from "./Spinner";
 
 function SearchBar() {
   const router = useRouter();
@@ -17,7 +18,7 @@ function SearchBar() {
   };
 
   return (
-    <div className="relative flex">
+    <div className="relative flex gap-1 items-center justify-center">
       <Combobox onChange={handleChange}>
         <Combobox.Input
           placeholder="Search movies, tv show..."
@@ -25,9 +26,8 @@ function SearchBar() {
           value={query}
           onChange={event => setQuery(event.target.value)}
         />
-        {/* TODO: We need a proper spinner for this, not a Loading string... */}
-        {isLoading && <Loader />}
-        {error && <p>Error</p>}
+        {isLoading && <Spinner dimensions="w-8 h-8" />}
+        {error && <p className="text-red-500">Error</p>}
         <Combobox.Options className="absolute z-20 top-full left-0 w-[36rem] my-2 bg-neutral-600 rounded shadow-lg grid grid-cols-2 [&>*:nth-child(1)]:rounded-tl [&>*:nth-child(2)]:rounded-tr [&>*:nth-last-child(1)]:rounded-br [&>*:nth-last-child(2)]:rounded-bl">
           {!isLoading &&
             !error &&
@@ -60,10 +60,6 @@ function SearchBar() {
       </Combobox>
     </div>
   );
-}
-
-function Loader() {
-  return <p className="loader">Loading...</p>;
 }
 
 export default SearchBar;
