@@ -4,6 +4,7 @@ import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { PlusCircleIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { Metadata } from "next";
+import ReviewsSection from "@/components/ReviewsSection";
 
 type MoviePageParams = {
   id: number;
@@ -55,16 +56,16 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
               <span>{movie.runtime}</span>
             </div>
           </div>
-          <div className="flex gap-3 py-1">
+          <div className="flex gap-3 py-1 items-start">
             <div className="flex flex-col gap-1 items-center justify-start">
               <p className="text-sm text-gray-200">
                 <span className="text-main-400">F</span>F Rating
               </p>
               <p className="flex items-center gap-1">
-                <span>
+                <span className="p-1">
                   <StarIcon className="w-8 h-8 text-yellow-500" />
                 </span>{" "}
-                {movie.voteAverage.toFixed(1)} / 10
+                {movie.voteAverage.toFixed(1)}
               </p>
             </div>
             <div className="flex flex-col items-center justify-start">
@@ -138,7 +139,7 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
               </li>
             ))}
             <li className="flex items-center w-24">
-              <Link href="" className="rounded py-1 px-2 hover:bg-neutral-700">
+              <Link href="" className="rounded py-1 px-2 hover:underline">
                 Full Cast & Crew
               </Link>
             </li>
@@ -165,6 +166,7 @@ async function MoviePage({ params: { id } }: MoviePageProps) {
           </div>
         </div>
       </section>
+      <ReviewsSection movieId={id} />
     </main>
   );
 }
