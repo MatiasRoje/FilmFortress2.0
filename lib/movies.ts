@@ -9,24 +9,13 @@ const imageUrlLight = process.env.NEXT_PUBLIC_TMDB_IMG_LIGHT;
 export async function getMovies(query: string): Promise<Movie[]> {
   const res = await fetch(
     `https://api.themoviedb.org/3/movie/${query}?api_key=${apiKey}&language=en-US&page=1`,
+    {
+      next: { revalidate: 3600 },
+    },
   );
   const data = await res.json();
   const movies = data.results;
   return movies.map((movie: any) => StripMovie(movie));
-}
-
-export function StripMovie(MovieObject: any): Movie {
-  return {
-    id: MovieObject.id,
-    title: MovieObject.title,
-    releaseDate: new Date(MovieObject.release_date).toLocaleString("en-US", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    }),
-    voteAverage: MovieObject.vote_average,
-    posterPath: imageUrlLight + MovieObject.poster_path,
-  };
 }
 
 export async function getMovie(id: number): Promise<MovieDetails> {
@@ -56,6 +45,22 @@ export async function searchMovies(query: string) {
     .map((movie: any) => StripMovie(movie));
   const moviesData = await Promise.all(moviePromises);
   return moviesData;
+}
+
+// NOTE Helper functions
+
+export function StripMovie(MovieObject: any): Movie {
+  return {
+    id: MovieObject.id,
+    title: MovieObject.title,
+    releaseDate: new Date(MovieObject.release_date).toLocaleString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }),
+    voteAverage: MovieObject.vote_average,
+    posterPath: imageUrlLight + MovieObject.poster_path,
+  };
 }
 
 export function StripMovieDetails(movieObject: any): MovieDetails {
