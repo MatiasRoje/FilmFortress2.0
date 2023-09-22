@@ -15,7 +15,7 @@ async function ReviewsSection({ movieId }: ReviewsSectionProps) {
   return (
     <section className="flex flex-col gap-8 my-6">
       <div className="flex gap-2 items-baseline p-2">
-        <Link href="">
+        <Link href={`/movies/${movieId}/reviews`}>
           <h3 className="text-xl font-semibold hover:underline">Reviews</h3>
         </Link>
         <span>—{reviews.length}</span>
@@ -26,7 +26,7 @@ async function ReviewsSection({ movieId }: ReviewsSectionProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-lg font-semibold">
-                  A review by {lastReview.author}{" "}
+                  Review by {lastReview.author}{" "}
                 </p>
                 <p className="text-sm italic">
                   Written on {lastReview.createdDate}
@@ -44,7 +44,10 @@ async function ReviewsSection({ movieId }: ReviewsSectionProps) {
             </article>
           </div>
           <div className="flex items-center w-24 mx-8">
-            <Link href="" className="rounded py-1 px-2 hover:underline">
+            <Link
+              href={`/movies/${movieId}/reviews`}
+              className="rounded py-1 px-2 hover:underline"
+            >
               Read all reviews
             </Link>
           </div>

@@ -36,11 +36,13 @@ function ExpandableText({ text }: ExpandableTextProps) {
       <div
         dangerouslySetInnerHTML={{ __html: expanded ? text : displayedText }}
       />
-      <div className="flex justify-end">
-        <button onClick={toggleText} className="hover:underline">
-          {expanded ? "Show Less" : "Show More"}
-        </button>
-      </div>
+      {text.split(" ").length > 50 && (
+        <div className="flex justify-end">
+          <button onClick={toggleText} className="hover:underline">
+            {expanded ? "Show Less" : "Show More"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
