@@ -1,55 +1,51 @@
-import { StripMovie } from "@/lib/movies";
 import { Movie } from "@/types/movies";
 import { useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 function useSearch(query: string) {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [debouncedQuery] = useDebounce(query, 300);
 
-  useEffect(
-    function () {
-      const controller = new AbortController();
+  useEffect(() => {
+    const controller = new AbortController();
 
-      async function FetchMovies() {
-        try {
-          setIsLoading(true);
-          setError("");
-
-          const url = `/api/search?query=${encodeURIComponent(query)}`;
-          const res = await fetch(url, { signal: controller.signal });
-          const movies = await res.json();
-
-          setMovies(movies);
-          setError("");
-          setIsDropdownOpen(true);
-        } catch (err: any) {
-          if (err.name !== "AbortError") {
-            console.log(err.message);
-            setError(err.message);
-          }
-        } finally {
-          setIsLoading(false);
-        }
-      }
-
-      if (query.length < 3) {
-        setMovies([]);
+    async function FetchMovies() {
+      try {
+        setIsLoading(true);
         setError("");
-        return;
+
+        const url = `/api/search?query=${encodeURIComponent(debouncedQuery)}`;
+        const res = await fetch(url, { signal: controller.signal });
+        const movies = await res.json();
+
+        setMovies(movies);
+        setError("");
+      } catch (err: any) {
+        if (err.name !== "AbortError") {
+          console.log(err.message);
+          setError(err.message);
+        }
+      } finally {
+        setIsLoading(false);
       }
+    }
 
-      FetchMovies();
+    if (debouncedQuery.length < 2) {
+      setMovies([]);
+      setError("");
+      return;
+    }
 
-      return function () {
-        controller.abort();
-      };
-    },
-    [query],
-  );
+    FetchMovies();
 
-  return { movies, isLoading, error, isDropdownOpen, setIsDropdownOpen };
+    return function () {
+      controller.abort();
+    };
+  }, [debouncedQuery]);
+
+  return { movies, isLoading, error };
 }
 
 export default useSearch;

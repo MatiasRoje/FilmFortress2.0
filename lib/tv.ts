@@ -1,6 +1,6 @@
 import { TvShow } from "@/types/tv";
 
-const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+const apiKey = process.env.TMDB_API_KEY;
 const imageUrl = process.env.NEXT_PUBLIC_TMDB_IMG_URL;
 const imageUrlLight = process.env.NEXT_PUBLIC_TMDB_IMG_LIGHT;
 
