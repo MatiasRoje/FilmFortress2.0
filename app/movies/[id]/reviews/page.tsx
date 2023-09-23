@@ -15,10 +15,13 @@ function ReviewsPage() {
     async function fetchData() {
       try {
         if (movieId) {
-          const url = `/api/movie/${movieId}`;
-          const res = await fetch(url);
-          const movieFetch = await res.json();
+          const resMovie = await fetch(`/api/movies/${movieId}`);
+          const movieFetch = await resMovie.json();
           setMovie(movieFetch);
+
+          const resReviews = await fetch(`/api/reviews/${movieId}`);
+          const reviewsFetch = await resReviews.json();
+          setReviews(reviewsFetch);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -28,7 +31,17 @@ function ReviewsPage() {
     fetchData();
   }, [movieId]);
 
-  return <div>{typeof movie === "string" ? "" : movie.title}</div>;
+  console.log(reviews);
+
+  return (
+    <div>
+      <p>{typeof movie === "string" ? "" : movie.title}</p>
+      <ul>
+        {reviews &&
+          reviews.map(review => <li key={review.id}>{review.author}</li>)}
+      </ul>
+    </div>
+  );
 }
 
 export default ReviewsPage;
