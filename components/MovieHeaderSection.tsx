@@ -30,7 +30,7 @@ function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
       />
       <div className="relative z-10 text-white flex flex-col gap-4 py-8 pr-8">
         <div>
-          <h2 className="text-3xl">{movie.title}</h2>
+          <h1 className="text-3xl">{movie.title}</h1>
           <div className="flex gap-1 text-sm">
             <span>{movie.releaseDate}</span>
             <span>•</span>

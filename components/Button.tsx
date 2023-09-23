@@ -1,12 +1,16 @@
 import { ReactNode } from "react";
 
 type ButtonProps = {
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   children: ReactNode;
 };
 
-function Button({ children }: ButtonProps) {
+function Button({ onClick, children }: ButtonProps) {
   return (
-    <button className="bg-main-500 text-white px-4 py-2 rounded hover:bg-main-600">
+    <button
+      onClick={onClick}
+      className="bg-main-500 text-white px-4 py-2 rounded hover:bg-main-600"
+    >
       {children}
     </button>
   );
