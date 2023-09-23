@@ -21,7 +21,7 @@ function SearchBar() {
     <div className="relative flex gap-1 items-center justify-center">
       <Combobox onChange={handleChange}>
         <Combobox.Input
-          placeholder="Search movies, tv show..."
+          placeholder="Search movies, tv shows..."
           className="text-neutral-800 border-none px-4 py-2 text-lg rounded w-[36rem] transition-all duration-300 focus:outline-none focus:shadow-lg focus:-translate-y-px"
           value={query}
           onChange={event => setQuery(event.target.value)}
