@@ -49,17 +49,17 @@ export async function searchMovies(query: string) {
 
 // NOTE Helper functions
 
-export function StripMovie(MovieObject: any): Movie {
+export function StripMovie(movieObject: any): Movie {
   return {
-    id: MovieObject.id,
-    title: MovieObject.title,
-    releaseDate: new Date(MovieObject.release_date).toLocaleString("en-US", {
+    id: movieObject.id,
+    title: movieObject.title,
+    releaseDate: new Date(movieObject.release_date).toLocaleString("en-US", {
       day: "numeric",
       month: "short",
       year: "numeric",
     }),
-    voteAverage: MovieObject.vote_average,
-    posterPath: imageUrlLight + MovieObject.poster_path,
+    voteAverage: movieObject.vote_average,
+    posterPath: imageUrlLight + movieObject.poster_path,
   };
 }
 
