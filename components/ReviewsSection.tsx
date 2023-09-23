@@ -1,8 +1,6 @@
 import { getReviewsFromMovie } from "@/lib/reviews";
 import { Review } from "@/types/reviews";
-import { StarIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import ExpandableText from "./ExpandableText";
 import ReviewCard from "./ReviewCard";
 
 type ReviewsSectionProps = {
