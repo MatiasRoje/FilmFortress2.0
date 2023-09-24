@@ -6,7 +6,6 @@ export async function GET(request: NextRequest) {
 
   if (movieId) {
     const reviews = await getReviewsFromMovie(parseInt(movieId));
-    console.log(reviews);
     return NextResponse.json(reviews);
   }
 }
