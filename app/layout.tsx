@@ -26,11 +26,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable}`}>
       <body className="container mx-auto bg-neutral-800 text-gray-50 flex flex-col px-4 py-4 min-h-screen">
-        <header>
-          <NavBar />
-        </header>
-        <AuthProvider>{children}</AuthProvider>
-        <Footer />
+        <AuthProvider>
+          <header>
+            <NavBar />
+          </header>
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

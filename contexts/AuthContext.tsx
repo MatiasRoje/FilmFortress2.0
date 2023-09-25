@@ -61,7 +61,7 @@ function reducer(state: AuthState, action: AuthAction): AuthState {
   }
 }
 
-const FAKE_USER: User = {
+const DEV_USER: User = {
   username: "Alice",
   id: 1,
   email: "alice@example.com",
@@ -97,8 +97,8 @@ function AuthProvider({ children }: AuthProviderProps) {
   }, [error]);
 
   function login(email: string, password: string) {
-    if (email === FAKE_USER.email && password === FAKE_USER.password) {
-      dispatch({ type: "login", payload: FAKE_USER });
+    if (email === DEV_USER.email && password === DEV_USER.password) {
+      dispatch({ type: "login", payload: DEV_USER });
     } else {
       dispatch({ type: "error", payload: "Invalid email or password" });
     }
