@@ -1,15 +1,24 @@
+"use client";
+
 import Image from "next/image";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { PlusCircleIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { MovieDetails } from "@/types/movies";
+import RateModal from "./RateModal";
+import { useState } from "react";
 
 type MovieHeaderSectionProps = {
   movie: MovieDetails;
 };
 
 function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const directors = movie.directors.map(director => director.name);
   const writers = movie.writers.map(writer => writer.name);
+
+  function handleClick() {
+    setIsOpen(true);
+  }
 
   return (
     <section className="relative flex gap-8 my-6">
@@ -53,7 +62,10 @@ function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
             <p className="text-sm text-gray-200">Your Rating</p>
             <p>
               <span>
-                <SparklesIcon className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded" />
+                <SparklesIcon
+                  className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded"
+                  onClick={handleClick}
+                />
               </span>
             </p>
           </div>
@@ -90,6 +102,7 @@ function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
           </div>
         </div>
       </div>
+      <RateModal isOpen={isOpen} setIsOpen={setIsOpen} media={movie} />
     </section>
   );
 }
