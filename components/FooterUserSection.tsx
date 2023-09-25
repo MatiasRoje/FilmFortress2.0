@@ -5,7 +5,7 @@ import Button from "./Button";
 import { useAuth } from "@/contexts/AuthContext";
 
 function FooterUserSection() {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return isAuthenticated ? (
     ""

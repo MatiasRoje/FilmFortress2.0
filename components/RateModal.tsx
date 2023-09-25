@@ -4,6 +4,9 @@ import StarRating from "./StarRating";
 import Button from "./Button";
 import { Movie, MovieDetails } from "@/types/movies";
 import { TvShow } from "@/types/tv";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import { postRating } from "@/lib/ratings";
 
 type RateModalProps = {
   isOpen: boolean;
@@ -12,8 +15,24 @@ type RateModalProps = {
 };
 
 function RateModal({ isOpen, setIsOpen, media }: RateModalProps) {
+  const router = useRouter();
   let titleRef = useRef<HTMLHeadingElement | null>(null);
   const [userRating, setUserRating] = useState(0);
+  const { user, isAuthenticated } = useAuth();
+
+  async function handleClick() {
+    if (!isAuthenticated) router.push("/login");
+
+    if (user && media && userRating) {
+      const res = await postRating(userRating, media.id, user.id);
+
+      if (res && res.ok) {
+        router.back();
+      } else {
+        throw new Error("Failed to create a rating");
+      }
+    }
+  }
 
   return (
     <Dialog
@@ -40,7 +59,9 @@ function RateModal({ isOpen, setIsOpen, media }: RateModalProps) {
           </h2>
           <StarRating maxRating={10} size={28} onSetRating={setUserRating} />
           {userRating ? (
-            <Button paddingX="px-32">Rate</Button>
+            <Button onClick={handleClick} paddingX="px-32">
+              Rate
+            </Button>
           ) : (
             <button
               className="bg-neutral-500 text-white px-32 py-2 rounded"
