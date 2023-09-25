@@ -14,7 +14,7 @@ function LoginForm() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/");
+      router.back();
     }
   }, [isAuthenticated, router]);
 

@@ -6,15 +6,19 @@ import { PlusCircleIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { MovieDetails } from "@/types/movies";
 import RateModal from "./RateModal";
 import { useState } from "react";
+import { Rating } from "@/types/ratings";
 
 type MovieHeaderSectionProps = {
   movie: MovieDetails;
+  ratings: Rating[];
 };
 
-function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
+function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [tempRating, setTempRating] = useState<string | number>("");
   const directors = movie.directors.map(director => director.name);
   const writers = movie.writers.map(writer => writer.name);
+  const userRating = ratings.find(rating => rating.movieId === movie.id);
 
   function handleClick() {
     setIsOpen(true);
@@ -58,16 +62,34 @@ function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
               {movie.voteAverage.toFixed(1)}
             </p>
           </div>
-          <div className="flex flex-col items-center justify-start">
+          <div className="flex flex-col items-center justify-baseline">
             <p className="text-sm text-gray-200">Your Rating</p>
-            <p>
-              <span>
-                <SparklesIcon
-                  className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded"
-                  onClick={handleClick}
-                />
-              </span>
-            </p>
+            {userRating && (
+              <p className="flex items-center gap-1">
+                <span className="px-1 py-2">
+                  <SparklesIcon className="w-8 h-8 text-yellow-500" />
+                </span>{" "}
+                {userRating.rating}
+              </p>
+            )}
+            {tempRating && (
+              <p className="flex items-center gap-1">
+                <span className="px-1 py-2">
+                  <SparklesIcon className="w-8 h-8 text-yellow-500" />
+                </span>{" "}
+                {tempRating}
+              </p>
+            )}
+            {!userRating && !tempRating && (
+              <p>
+                <span>
+                  <SparklesIcon
+                    className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded"
+                    onClick={handleClick}
+                  />
+                </span>
+              </p>
+            )}
           </div>
           <div className="flex flex-col items-center justify-start">
             <p className="text-sm text-gray-200">Add to Watchlist</p>
@@ -102,7 +124,12 @@ function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
           </div>
         </div>
       </div>
-      <RateModal isOpen={isOpen} setIsOpen={setIsOpen} media={movie} />
+      <RateModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        media={movie}
+        setTempRating={setTempRating}
+      />
     </section>
   );
 }

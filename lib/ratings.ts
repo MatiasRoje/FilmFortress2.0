@@ -13,6 +13,22 @@ export async function postRating(
     });
     return res;
   } catch (error) {
-    console.log("Error: ", error);
+    console.log("Error posting rating: ", error);
+  }
+}
+
+export async function getRatings() {
+  try {
+    const res = await fetch("http:/localhost:3000/api/ratings", {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch ratings");
+    }
+
+    return res.json();
+  } catch (error) {
+    console.log("Error loading ratings:", error);
   }
 }

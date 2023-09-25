@@ -18,8 +18,8 @@ function ReviewCard({ review, width }: ReviewCardProps) {
         <p className="flex items-center justify-center gap-1 text-lg">
           <span>
             <StarIcon className="w-6 h-6 text-yellow-500" />
-          </span>{" "}
-          {review.rating?.toFixed(1)}
+          </span>
+          {review.rating}
         </p>
       </div>
       <article className={`mt-4 text-justify ${width}`}>

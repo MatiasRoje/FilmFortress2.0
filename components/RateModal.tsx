@@ -12,9 +12,15 @@ type RateModalProps = {
   isOpen: boolean;
   setIsOpen: (boolean: boolean) => void;
   media: Movie | MovieDetails | TvShow;
+  setTempRating: (rating: number) => void;
 };
 
-function RateModal({ isOpen, setIsOpen, media }: RateModalProps) {
+function RateModal({
+  isOpen,
+  setIsOpen,
+  media,
+  setTempRating,
+}: RateModalProps) {
   const router = useRouter();
   let titleRef = useRef<HTMLHeadingElement | null>(null);
   const [userRating, setUserRating] = useState(0);
@@ -27,7 +33,8 @@ function RateModal({ isOpen, setIsOpen, media }: RateModalProps) {
       const res = await postRating(userRating, media.id, user.id);
 
       if (res && res.ok) {
-        router.back();
+        setIsOpen(false);
+        setTempRating(userRating);
       } else {
         throw new Error("Failed to create a rating");
       }

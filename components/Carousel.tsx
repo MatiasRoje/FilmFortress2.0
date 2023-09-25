@@ -5,12 +5,16 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import MediaCard from "./MediaCard";
 import { Movie } from "@/types/movies";
 import { TvShow } from "@/types/tv";
+import { Rating } from "@/types/ratings";
 
-type CarouselProps = Movie[] | TvShow[];
+type CarouselProps = {
+  mediaCollection: Movie[] | TvShow[];
+  ratings: Rating[];
+};
 
 type MediaCollectionProps = Movie | TvShow;
 
-const Carousel = ({ mediaCollection }: { mediaCollection: CarouselProps }) => {
+const Carousel = ({ mediaCollection, ratings }: CarouselProps) => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -43,7 +47,7 @@ const Carousel = ({ mediaCollection }: { mediaCollection: CarouselProps }) => {
         }}
       >
         {mediaCollection.map((media: MediaCollectionProps) => (
-          <MediaCard media={media} key={media.id} />
+          <MediaCard media={media} key={media.id} ratings={ratings} />
         ))}
       </ul>
       <button
