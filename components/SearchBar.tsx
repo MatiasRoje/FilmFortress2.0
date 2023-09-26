@@ -4,18 +4,30 @@ import useSearch from "@/hooks/useSearch";
 import { Movie } from "@/types/movies";
 import { Combobox } from "@headlessui/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import Spinner from "./Spinner";
 
 function SearchBar() {
   const router = useRouter();
+  const pathname = usePathname();
   const [query, setQuery] = useState("");
   const { movies, isLoading, error } = useSearch(query);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleChange = (id: number) => {
+    setQuery("");
     router.push(`/movies/${id}`);
   };
+
+  useEffect(() => {
+    setQuery("");
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.blur();
+      }
+    }, 0);
+  }, [pathname]);
 
   return (
     <div className="relative flex gap-1 items-center justify-center">
@@ -25,6 +37,7 @@ function SearchBar() {
           className="text-neutral-800 border-none px-4 py-2 text-lg rounded w-[36rem] transition-all duration-300 focus:outline-none focus:shadow-lg focus:-translate-y-px"
           value={query}
           onChange={event => setQuery(event.target.value)}
+          ref={inputRef}
         />
         {isLoading && <Spinner dimensions="w-8 h-8" />}
         {error && <p className="text-red-500">Error</p>}
