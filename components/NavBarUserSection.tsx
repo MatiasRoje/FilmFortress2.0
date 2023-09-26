@@ -48,7 +48,7 @@ function NavBarUserSection() {
                     className={`py-2 px-4 rounded min-w-max ${
                       active && "bg-neutral-600"
                     }`}
-                    href={`/user/${user?.id}/watchlist`}
+                    href={`/users/${user?.id}/watchlist`}
                   >
                     Your watchlist
                   </Link>
@@ -60,7 +60,7 @@ function NavBarUserSection() {
                     className={`py-2 px-4 rounded min-w-max ${
                       active && "bg-neutral-600"
                     }`}
-                    href={`/user/${user?.id}/ratings`}
+                    href={`/users/${user?.id}/ratings`}
                   >
                     Your ratings
                   </Link>
@@ -72,7 +72,7 @@ function NavBarUserSection() {
                     className={`py-2 px-4 rounded min-w-max ${
                       active && "bg-neutral-600"
                     }`}
-                    href={`/user/${user?.id}/lists`}
+                    href={`/users/${user?.id}/lists`}
                   >
                     Your lists
                   </Link>
