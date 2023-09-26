@@ -53,7 +53,7 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
         <div className="flex gap-3 py-1 items-start">
           <div className="flex flex-col gap-1 items-center justify-start">
             <p className="text-sm text-gray-200">
-              <span className="text-main-400">F</span>F Rating
+              <span className="text-main-300">F</span>F Rating
             </p>
             <p className="flex items-center gap-1">
               <span className="p-1">
@@ -84,7 +84,7 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
               <p>
                 <span>
                   <SparklesIcon
-                    className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded"
+                    className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded transition duration-300"
                     onClick={handleClick}
                   />
                 </span>
@@ -95,7 +95,7 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
             <p className="text-sm text-gray-200">Add to Watchlist</p>
             <p>
               <span>
-                <PlusCircleIcon className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded" />
+                <PlusCircleIcon className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded transition duration-300" />
               </span>
             </p>
           </div>

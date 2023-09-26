@@ -33,7 +33,7 @@ const Carousel = ({ mediaCollection, ratings }: CarouselProps) => {
     <div className="my-2 overflow-hidden relative">
       <button
         onClick={handlePrevClick}
-        className={`absolute p-2 left-9 top-1/3 transform translate-y-1/2 -translate-x-1/2 bg-neutral-600/25 text-white border border-white hover:text-yellow-400 hover:border-yellow-400 rounded-full prev-button z-10 ${
+        className={`absolute p-2 left-9 top-1/3 transform translate-y-1/2 -translate-x-1/2 bg-neutral-600/25 text-white border border-white hover:text-yellow-400 hover:border-yellow-400 transition duration-300 rounded-full prev-button z-10 ${
           currentPage === 0 ? "hidden" : ""
         }`}
       >
@@ -52,7 +52,7 @@ const Carousel = ({ mediaCollection, ratings }: CarouselProps) => {
       </ul>
       <button
         onClick={handleNextClick}
-        className={`absolute p-2 -right-8 top-1/3 transform translate-y-1/2 -translate-x-1/2 bg-neutral-600/25 text-white border border-white hover:text-yellow-400 hover:border-yellow-400 rounded-full z-10 overflow-visible ${
+        className={`absolute p-2 -right-8 top-1/3 transform translate-y-1/2 -translate-x-1/2 bg-neutral-600/25 text-white border border-white hover:text-yellow-400 hover:border-yellow-400 transition duration-300 rounded-full z-10 overflow-visible ${
           currentPage === Math.ceil(mediaCollection.length / itemsPerPage) - 1
             ? "hidden"
             : ""

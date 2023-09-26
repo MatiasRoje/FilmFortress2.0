@@ -10,7 +10,7 @@ function Button({ onClick, children, paddingX = "px-4" }: ButtonProps) {
   return (
     <button
       onClick={onClick}
-      className={`bg-main-500 text-white ${paddingX} py-2 rounded hover:bg-main-600`}
+      className={`bg-main-500 text-white ${paddingX} py-2 rounded hover:bg-main-600 transition duration-300`}
     >
       {children}
     </button>

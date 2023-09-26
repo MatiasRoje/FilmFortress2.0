@@ -54,10 +54,10 @@ function ReviewsPage() {
               className="rounded relative"
               priority
             />
-            <p>Login to write a review.</p>
+            <p>Sign in to write a review.</p>
             <button
               onClick={handleClick}
-              className={`absolute p-2 top-1/2 transform -translate-y-full bg-neutral-600/25 text-white border border-white hover:text-yellow-400 hover:border-yellow-400 rounded-full prev-button z-10 flex items-center`}
+              className={`absolute p-2 top-1/2 transform -translate-y-full bg-neutral-600/25 text-white border border-white hover:text-yellow-400 hover:border-yellow-400 transition duration-300 rounded-full prev-button z-10 flex items-center`}
             >
               <ChevronLeftIcon className="h-12 w-12" />
             </button>

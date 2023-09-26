@@ -34,7 +34,7 @@ function MediaCard({ media, ratings }: MediaCardProps) {
           className="rounded-t max-w-none h-[17rem] w-auto"
         />
         <p>
-          <PlusCircleIcon className="absolute top-0 right-1 h-9 w-9 hover:text-yellow-400" />
+          <PlusCircleIcon className="absolute top-0 right-1 h-9 w-9 hover:text-yellow-400 transition duration-300" />
         </p>
       </Link>
       <div className="h-36 flex flex-col gap-2 p-2 bg-neutral-700 rounded-b">
@@ -64,7 +64,7 @@ function MediaCard({ media, ratings }: MediaCardProps) {
           {!userRating && !tempRating && (
             <p>
               <SparklesIcon
-                className="w-9 h-9 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded"
+                className="w-9 h-9 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded transition duration-300"
                 onClick={handleClick}
               />
             </p>

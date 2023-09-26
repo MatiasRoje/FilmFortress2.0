@@ -1,7 +1,11 @@
+import Button from "@/components/Button";
 import Carousel from "@/components/Carousel";
+import WatchlistSection from "@/components/WatchlistSection";
 import { getMovies } from "@/lib/movies";
 import { getRatings } from "@/lib/ratings";
 import { getSeries } from "@/lib/tv";
+import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
 
 async function Home() {
   const moviesByPopularity = await getMovies("popular");
@@ -21,6 +25,7 @@ async function Home() {
           ratings={ratings}
         />
       </div>
+      <WatchlistSection />
       <div className="flex flex-col gap-4">
         <h3 className="flex gap-2 text-2xl font-bold">
           <span className="border-l-4 border-main-500 rounded"></span>Top 10
