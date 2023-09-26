@@ -4,9 +4,12 @@ import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Button from "./Button";
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 function WatchlistSection() {
   const [isHovered, setIsHovered] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const [tempWatchlist, setTempWatchlist] = useState([]);
 
   function handleHoverIn() {
     setIsHovered(true);
@@ -40,16 +43,38 @@ function WatchlistSection() {
         <span>
           <PlusCircleIcon className="p-2 w-12 h-12 text-yellow-400" />
         </span>
-        <div>
-          <p className="font-semibold">Sign in to access your Watchlist</p>
-          <p>
-            Create a list of TV shows and movies to help you remember what
-            you&apos;d like to watch.
-          </p>
-        </div>
-        <Button paddingX="px-12">
-          <Link href="/login">Sign in</Link>
-        </Button>
+        {!isAuthenticated ? (
+          <>
+            <div>
+              <p className="font-semibold">Sign in to access your Watchlist</p>
+              <p>
+                Create a list of TV shows and movies to help you remember what
+                you&apos;d like to watch.
+              </p>
+            </div>
+            <Button paddingX="px-12">
+              <Link href="/login">Sign in</Link>
+            </Button>
+          </>
+        ) : tempWatchlist.length === 0 ? (
+          <>
+            <div>
+              <p className="font-semibold">Your Watchlist is empty</p>
+              <p>
+                Create a list of TV shows and movies to help you remember what
+                you&apos;d like to watch.
+              </p>
+            </div>
+            <Link
+              href="/movies"
+              className="bg-neutral-600 text-white px-6 py-2 rounded hover:bg-neutral-500 transition duration-300"
+            >
+              Browse popular movies
+            </Link>
+          </>
+        ) : (
+          <p>Many movies</p>
+        )}
       </div>
     </section>
   );
