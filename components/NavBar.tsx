@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import Button from "./Button";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import SearchBar from "./SearchBar";
+import NavBarUserSection from "./NavBarUserSection";
 
 function NavBar() {
   return (
@@ -30,11 +30,7 @@ function NavBar() {
             </div>
           </Link>
         </li>
-        <li>
-          <Button>
-            <Link href="/login">Sign in</Link>
-          </Button>
-        </li>
+        <NavBarUserSection />
       </ul>
     </nav>
   );

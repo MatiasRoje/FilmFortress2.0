@@ -6,14 +6,12 @@ import {
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
-import Button from "./Button";
+import FooterUserSection from "./FooterUserSection";
 
 function Footer() {
   return (
     <footer className="flex flex-col gap-3 justify-center items-center align-middle border-t p-4">
-      <Button>
-        <Link href="/login">Join the community</Link>
-      </Button>
+      <FooterUserSection />
       <ul className="flex gap-3">
         <li>
           <Link

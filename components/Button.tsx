@@ -1,12 +1,17 @@
 import { ReactNode } from "react";
 
 type ButtonProps = {
+  paddingX?: string;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   children: ReactNode;
 };
 
-function Button({ children }: ButtonProps) {
+function Button({ onClick, children, paddingX = "px-4" }: ButtonProps) {
   return (
-    <button className="bg-main-500 text-white px-4 py-2 rounded hover:bg-main-600">
+    <button
+      onClick={onClick}
+      className={`bg-main-500 text-white ${paddingX} py-2 rounded hover:bg-main-600`}
+    >
       {children}
     </button>
   );
