@@ -12,10 +12,10 @@ import { AuthProvider } from "@/contexts/AuthContext";
 export const metadata: Metadata = {
   title: {
     default: "FilmFortress",
-    template: "%s | FilmFortress",
+    template: "%s — FilmFortress",
   },
   description:
-    "A 10.000+ movies database created by Matías Roje with the intention of learning Next.js",
+    "A 10.000+ movies database created by Matías Roje with the purpose of learning Next.js",
 };
 
 export default function RootLayout({
