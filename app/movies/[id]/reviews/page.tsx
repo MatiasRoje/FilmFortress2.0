@@ -7,7 +7,6 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import StarRating from "@/components/StarRating";
 
 function ReviewsPage() {
   const router = useRouter();

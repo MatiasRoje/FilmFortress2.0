@@ -30,9 +30,7 @@ function NavBar() {
             </div>
           </Link>
         </li>
-        <li>
-          <NavBarUserSection />
-        </li>
+        <NavBarUserSection />
       </ul>
     </nav>
   );
