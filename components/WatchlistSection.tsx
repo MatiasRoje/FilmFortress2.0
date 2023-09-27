@@ -20,28 +20,28 @@ function WatchlistSection() {
   }
 
   return (
-    <section className="flex flex-col gap-4 my-4">
+    <section className="my-4 flex flex-col gap-4">
       <Link
         href="/users/:id/watchlist"
         onMouseEnter={handleHoverIn}
         onMouseLeave={handleHoverOut}
       >
-        <h2 className="flex gap-2 text-2xl font-bold items-center">
-          <span className="border-l-4 border-main-400 rounded pl-2">
+        <h2 className="flex items-center gap-2 text-2xl font-bold">
+          <span className="rounded border-l-4 border-main-400 pl-2">
             From your Watchlist
           </span>
           <span>
             <ChevronRightIcon
-              className={`w-7 h-7 ${
+              className={`h-7 w-7 ${
                 isHovered && "text-main-300"
               } transition duration-300`}
             />
           </span>
         </h2>
       </Link>
-      <div className="flex flex-col gap-4 items-center justify-center text-center">
+      <div className="flex flex-col items-center justify-center gap-4 text-center">
         <span>
-          <PlusCircleIcon className="p-2 w-12 h-12" />
+          <PlusCircleIcon className="h-12 w-12 p-2" />
         </span>
         {!isAuthenticated ? (
           <>
@@ -67,7 +67,7 @@ function WatchlistSection() {
             </div>
             <Link
               href="/movies"
-              className="bg-neutral-600 text-white px-6 py-2 rounded hover:bg-neutral-500 transition duration-300"
+              className="rounded bg-neutral-600 px-6 py-2 text-white transition duration-300 hover:bg-neutral-500"
             >
               Browse popular movies
             </Link>

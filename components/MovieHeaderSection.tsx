@@ -25,9 +25,9 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
   }
 
   return (
-    <section className="relative flex gap-8 my-6">
+    <section className="relative my-6 flex gap-8">
       <div
-        className="absolute inset-0 bg-cover bg-center rounded"
+        className="absolute inset-0 rounded bg-cover bg-center"
         style={{
           backgroundImage: `url(${movie.backgropPath})`,
           filter: "brightness(50%) contrast(110%) grayscale(90%) opacity(50%)",
@@ -41,7 +41,7 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
         className="relative z-10 rounded-l"
         priority
       />
-      <div className="relative z-10 text-white flex flex-col gap-4 py-8 pr-8">
+      <div className="relative z-10 flex flex-col gap-4 py-8 pr-8 text-white">
         <div>
           <h1 className="text-3xl">{movie.title}</h1>
           <div className="flex gap-1 text-sm">
@@ -50,24 +50,24 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
             <span>{movie.runtime}</span>
           </div>
         </div>
-        <div className="flex gap-3 py-1 items-start">
-          <div className="flex flex-col gap-1 items-center justify-start">
+        <div className="flex items-start gap-3 py-1">
+          <div className="flex flex-col items-center justify-start gap-1">
             <p className="text-sm text-gray-200">
               <span className="text-main-300">F</span>F Rating
             </p>
             <p className="flex items-center gap-1">
               <span className="p-1">
-                <StarIcon className="w-8 h-8 text-yellow-500" />
+                <StarIcon className="h-8 w-8 text-yellow-500" />
               </span>{" "}
               {movie.voteAverage.toFixed(1)}
             </p>
           </div>
-          <div className="flex flex-col items-center justify-baseline">
+          <div className="justify-baseline flex flex-col items-center">
             <p className="text-sm text-gray-200">Your Rating</p>
             {userRating && (
               <p className="flex items-center gap-1">
                 <span className="px-1 py-2">
-                  <SparklesIcon className="w-8 h-8 text-yellow-500" />
+                  <SparklesIcon className="h-8 w-8 text-yellow-500" />
                 </span>{" "}
                 {userRating.rating}
               </p>
@@ -75,7 +75,7 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
             {tempRating && (
               <p className="flex items-center gap-1">
                 <span className="px-1 py-2">
-                  <SparklesIcon className="w-8 h-8 text-yellow-500" />
+                  <SparklesIcon className="h-8 w-8 text-yellow-500" />
                 </span>{" "}
                 {tempRating}
               </p>
@@ -84,7 +84,7 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
               <p>
                 <span>
                   <SparklesIcon
-                    className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded transition duration-300"
+                    className="h-12 w-12 rounded p-2 text-white transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
                     onClick={handleClick}
                   />
                 </span>
@@ -95,17 +95,17 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
             <p className="text-sm text-gray-200">Add to Watchlist</p>
             <p>
               <span>
-                <PlusCircleIcon className="w-12 h-12 text-white hover:text-yellow-400 p-2 hover:bg-neutral-600 rounded transition duration-300" />
+                <PlusCircleIcon className="h-12 w-12 rounded p-2 text-white transition duration-300 hover:bg-neutral-600 hover:text-yellow-400" />
               </span>
             </p>
           </div>
         </div>
         <p className="italic">{movie.tagline}</p>
         <div className="flex flex-col gap-2">
-          <p className="font-bold text-lg">Overview</p>
+          <p className="text-lg font-bold">Overview</p>
           <p className="text-justify">{movie.overview}</p>
         </div>
-        <div className="flex mt-auto gap-6">
+        <div className="mt-auto flex gap-6">
           <div>
             <p className="font-semibold">{directors.join(", ")}</p>
             <p className="text-sm">

@@ -44,25 +44,25 @@ function ReviewsPage() {
       {typeof movie === "string" ? (
         ""
       ) : (
-        <section className="flex gap-8 my-6">
-          <div className="flex flex-col gap-4 items-center">
+        <section className="my-6 flex gap-8">
+          <div className="flex flex-col items-center gap-4">
             <Image
               src={movie.posterPath}
               alt=""
               width="300"
               height="450"
-              className="rounded relative"
+              className="relative rounded"
               priority
             />
             <p>Sign in to write a review.</p>
             <button
               onClick={handleClick}
-              className={`absolute p-2 top-1/2 transform -translate-y-full bg-neutral-600/25 text-white border border-white hover:text-yellow-400 hover:border-yellow-400 transition duration-300 rounded-full prev-button z-10 flex items-center`}
+              className={`prev-button absolute top-1/2 z-10 flex -translate-y-full transform items-center rounded-full border border-white bg-neutral-600/25 p-2 text-white transition duration-300 hover:border-yellow-400 hover:text-yellow-400`}
             >
               <ChevronLeftIcon className="h-12 w-12" />
             </button>
           </div>
-          <div className="text-white flex flex-col gap-4">
+          <div className="flex flex-col gap-4 text-white">
             <div>
               <h1 className="text-3xl">{movie.title}</h1>
               <div className="flex gap-1 text-sm">

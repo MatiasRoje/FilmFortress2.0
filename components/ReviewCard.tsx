@@ -9,7 +9,7 @@ type ReviewCardProps = {
 
 function ReviewCard({ review, width }: ReviewCardProps) {
   return (
-    <div className="bg-neutral-700 rounded p-4 grow">
+    <div className="grow rounded bg-neutral-700 p-4">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-lg font-semibold">Review by {review.author} </p>
@@ -17,7 +17,7 @@ function ReviewCard({ review, width }: ReviewCardProps) {
         </div>
         <p className="flex items-center justify-center gap-1 text-lg">
           <span>
-            <StarIcon className="w-6 h-6 text-yellow-500" />
+            <StarIcon className="h-6 w-6 text-yellow-500" />
           </span>
           {review.rating}
         </p>

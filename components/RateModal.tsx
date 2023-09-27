@@ -57,11 +57,11 @@ function RateModal({
       {/* Full-screen container to center the panel */}
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
         {/* The actual dialog panel  */}
-        <Dialog.Panel className="flex flex-col items-center gap-5 py-8 px-12 mx-auto max-w-sm rounded bg-neutral-700">
+        <Dialog.Panel className="mx-auto flex max-w-sm flex-col items-center gap-5 rounded bg-neutral-700 px-12 py-8">
           <Dialog.Title className="text-xs font-medium text-yellow-400">
             RATE THIS
           </Dialog.Title>
-          <h2 className="text-xl font-bold text-center" ref={titleRef}>
+          <h2 className="text-center text-xl font-bold" ref={titleRef}>
             {media.title}
           </h2>
           <StarRating maxRating={10} size={28} onSetRating={setUserRating} />
@@ -71,7 +71,7 @@ function RateModal({
             </Button>
           ) : (
             <button
-              className="bg-neutral-500 text-white px-32 py-2 rounded"
+              className="rounded bg-neutral-500 px-32 py-2 text-white"
               disabled
             >
               Rate

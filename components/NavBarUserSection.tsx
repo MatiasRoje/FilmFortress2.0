@@ -23,29 +23,29 @@ function NavBarUserSection() {
         {({ open }) => (
           <>
             <Menu.Button
-              className={`flex px-3 py-1 gap-1 items-center justify-center rounded focus:outline-none hover:bg-neutral-700 ${
+              className={`flex items-center justify-center gap-1 rounded px-3 py-1 hover:bg-neutral-700 focus:outline-none ${
                 open && "bg-neutral-700"
               }`}
             >
               <span>
-                <UserCircleIcon className="w-6 h-6" />
+                <UserCircleIcon className="h-6 w-6" />
               </span>
               {user?.username}
               {open ? (
                 <span>
-                  <ChevronUpIcon className="w-4 h-4" />
+                  <ChevronUpIcon className="h-4 w-4" />
                 </span>
               ) : (
                 <span>
-                  <ChevronDownIcon className="w-4 h-4" />
+                  <ChevronDownIcon className="h-4 w-4" />
                 </span>
               )}
             </Menu.Button>
-            <Menu.Items className="origin-top-right absolute mt-2 right-0 z-50 flex flex-col rounded bg-neutral-700 focus:outline-none">
+            <Menu.Items className="absolute right-0 z-50 mt-2 flex origin-top-right flex-col rounded bg-neutral-700 focus:outline-none">
               <Menu.Item>
                 {({ active }) => (
                   <Link
-                    className={`py-2 px-4 rounded min-w-max ${
+                    className={`min-w-max rounded px-4 py-2 ${
                       active && "bg-neutral-600"
                     }`}
                     href={`/users/${user?.id}/reviews`}
@@ -57,7 +57,7 @@ function NavBarUserSection() {
               <Menu.Item>
                 {({ active }) => (
                   <Link
-                    className={`py-2 px-4 rounded min-w-max ${
+                    className={`min-w-max rounded px-4 py-2 ${
                       active && "bg-neutral-600"
                     }`}
                     href={`/users/${user?.id}/watchlist`}
@@ -69,7 +69,7 @@ function NavBarUserSection() {
               <Menu.Item>
                 {({ active }) => (
                   <Link
-                    className={`py-2 px-4 rounded min-w-max ${
+                    className={`min-w-max rounded px-4 py-2 ${
                       active && "bg-neutral-600"
                     }`}
                     href={`/users/${user?.id}/ratings`}
@@ -81,7 +81,7 @@ function NavBarUserSection() {
               <Menu.Item>
                 {({ active }) => (
                   <Link
-                    className={`py-2 px-4 rounded min-w-max ${
+                    className={`min-w-max rounded px-4 py-2 ${
                       active && "bg-neutral-600"
                     }`}
                     href={`/users/${user?.id}/lists`}
@@ -93,7 +93,7 @@ function NavBarUserSection() {
               <Menu.Item>
                 {({ active }) => (
                   <button
-                    className={`py-2 px-4 rounded text-left min-w-max ${
+                    className={`min-w-max rounded px-4 py-2 text-left ${
                       active && "bg-neutral-600"
                     }`}
                     onClick={handleSignOut}

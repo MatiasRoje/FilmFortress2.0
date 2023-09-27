@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${poppins.variable}`}>
-      <body className="container mx-auto bg-neutral-800 text-gray-50 flex flex-col px-4 py-4 min-h-screen">
+      <body className="container mx-auto flex min-h-screen flex-col bg-neutral-800 px-4 py-4 text-gray-50">
         <AuthProvider>
           <header>
             <NavBar />

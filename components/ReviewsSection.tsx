@@ -12,8 +12,8 @@ async function ReviewsSection({ movieId }: ReviewsSectionProps) {
   const lastReview = reviews.at(-1);
 
   return (
-    <section className="flex flex-col gap-8 my-6">
-      <div className="flex gap-2 items-baseline p-2">
+    <section className="my-6 flex flex-col gap-8">
+      <div className="flex items-baseline gap-2 p-2">
         <Link href={`/movies/${movieId}/reviews`}>
           <h3 className="text-xl font-semibold hover:underline">Reviews</h3>
         </Link>
@@ -22,10 +22,10 @@ async function ReviewsSection({ movieId }: ReviewsSectionProps) {
       {lastReview && (
         <div className="flex">
           <ReviewCard review={lastReview} width={"max-w-max"} />
-          <div className="flex items-center w-24 mx-8">
+          <div className="mx-8 flex w-24 items-center">
             <Link
               href={`/movies/${movieId}/reviews`}
-              className="rounded py-1 px-2 hover:underline"
+              className="rounded px-2 py-1 hover:underline"
             >
               Read all reviews
             </Link>

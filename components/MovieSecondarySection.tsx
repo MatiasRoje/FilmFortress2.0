@@ -8,12 +8,12 @@ type MovieSecondarySectionProps = {
 
 function MovieSecondarySection({ movie }: MovieSecondarySectionProps) {
   return (
-    <section className="flex flex-col gap-8 mb-6">
+    <section className="mb-6 flex flex-col gap-8">
       <ul className="flex gap-2 pr-1">
         {movie.genres.map(genre => (
           <li
             key={genre.id}
-            className="border rounded-full py-1 px-2 hover:bg-neutral-700"
+            className="rounded-full border px-2 py-1 hover:bg-neutral-700"
           >
             <Link href="">{genre.name}</Link>
           </li>
@@ -36,13 +36,13 @@ function MovieSecondarySection({ movie }: MovieSecondarySectionProps) {
               </div>
             </li>
           ))}
-          <li className="flex items-center w-24">
-            <Link href="" className="rounded py-1 px-2 hover:underline">
+          <li className="flex w-24 items-center">
+            <Link href="" className="rounded px-2 py-1 hover:underline">
               Full Cast & Crew
             </Link>
           </li>
         </ul>
-        <div className="flex flex-col gap-3 rounded bg-neutral-700 py-2 px-6 ml-auto">
+        <div className="ml-auto flex flex-col gap-3 rounded bg-neutral-700 px-6 py-2">
           <div>
             <p className="font-medium">
               {movie.countries.length > 1 ? "Countries" : "Country"}

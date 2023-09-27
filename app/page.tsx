@@ -1,4 +1,5 @@
 import Carousel from "@/components/Carousel";
+import HeroSection from "@/components/HeroSection";
 import WatchlistSection from "@/components/WatchlistSection";
 import { getMovies, getRandomMovieFromCollection } from "@/lib/movies";
 import { getRatings } from "@/lib/ratings";
@@ -14,24 +15,10 @@ async function Home() {
 
   return (
     <main className="flex flex-col gap-10 py-6">
-      <section className="relative flex flex-col gap-2 my-4 h-96 w-full">
-        <div
-          className="absolute flex bg-no-repeat bg-cover bg-[70%] inset-0 rounded"
-          style={{
-            backgroundImage: `linear-gradient(to right, rgba(38, 38, 38, 0.50) calc((50vw - 170px) - 340px), rgba(38, 38, 38, 0.20) 50%, rgba(38, 38, 38, 0.30) 100%), url(${randomMovie.backgropPath})`,
-            filter: "grayscale(20%)",
-          }}
-        ></div>
-        <div className="z-10 pt-16 px-6 flex flex-col gap-1">
-          <h1 className="text-4xl font-bold">Welcome to FilmFortress.</h1>
-          <p className="text-xl font-semibold">
-            Countless movies and TV shows waiting to be uncovered.
-          </p>
-        </div>
-      </section>
+      <HeroSection movie={randomMovie} />
       <div className="flex flex-col gap-4">
         <h2 className="flex gap-2 text-2xl font-bold">
-          <span className="border-l-4 border-main-500 rounded"></span>Trending
+          <span className="rounded border-l-4 border-main-400"></span>Trending
         </h2>
         <Carousel
           mediaCollection={moviesByPopularity.slice(0, 18)}
@@ -41,7 +28,7 @@ async function Home() {
       <WatchlistSection />
       <div className="flex flex-col gap-4">
         <h3 className="flex gap-2 text-2xl font-bold">
-          <span className="border-l-4 border-main-500 rounded"></span>Top 10
+          <span className="rounded border-l-4 border-main-400"></span>Top 10
           movies on FilmFortress
         </h3>
         <Carousel

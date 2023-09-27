@@ -10,13 +10,13 @@ import FooterUserSection from "./FooterUserSection";
 
 function Footer() {
   return (
-    <footer className="flex flex-col gap-3 justify-center items-center align-middle border-t p-4">
+    <footer className="flex flex-col items-center justify-center gap-3 border-t p-4 align-middle">
       <FooterUserSection />
       <ul className="flex gap-3">
         <li>
           <Link
             href="/"
-            className="flex items-center justify-center p-3 rounded-full hover:bg-neutral-700"
+            className="flex items-center justify-center rounded-full p-3 hover:bg-neutral-700"
           >
             <FontAwesomeIcon icon={faInstagram} style={{ fontSize: 20 }} />
           </Link>
@@ -24,7 +24,7 @@ function Footer() {
         <li>
           <Link
             href="/"
-            className="flex items-center justify-center p-3 rounded-full hover:bg-neutral-700"
+            className="flex items-center justify-center rounded-full p-3 hover:bg-neutral-700"
           >
             <FontAwesomeIcon icon={faYoutube} style={{ fontSize: 20 }} />
           </Link>
@@ -32,7 +32,7 @@ function Footer() {
         <li>
           <Link
             href="/"
-            className="flex items-center justify-center p-3 rounded-full hover:bg-neutral-700"
+            className="flex items-center justify-center rounded-full p-3 hover:bg-neutral-700"
           >
             <FontAwesomeIcon icon={faFacebook} style={{ fontSize: 20 }} />
           </Link>
@@ -40,7 +40,7 @@ function Footer() {
         <li>
           <Link
             href="/"
-            className="flex items-center justify-center p-3 rounded-full hover:bg-neutral-700"
+            className="flex items-center justify-center rounded-full p-3 hover:bg-neutral-700"
           >
             <FontAwesomeIcon icon={faTwitter} style={{ fontSize: 20 }} />
           </Link>

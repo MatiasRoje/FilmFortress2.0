@@ -30,18 +30,18 @@ function SearchBar() {
   }, [pathname]);
 
   return (
-    <div className="relative flex gap-1 items-center justify-center">
+    <div className="relative flex items-center justify-center gap-1">
       <Combobox onChange={handleChange}>
         <Combobox.Input
           placeholder="Search movies, tv shows..."
-          className="text-neutral-800 border-none px-4 py-2 text-lg rounded w-[36rem] transition-all duration-300 focus:outline-none focus:shadow-lg focus:-translate-y-px"
+          className="w-[36rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:-translate-y-px focus:shadow-lg focus:outline-none"
           value={query}
           onChange={event => setQuery(event.target.value)}
           ref={inputRef}
         />
         {isLoading && <Spinner dimensions="w-8 h-8" />}
         {error && <p className="text-red-500">Error</p>}
-        <Combobox.Options className="absolute z-20 top-full left-0 w-[36rem] my-2 bg-neutral-600 rounded shadow-lg grid grid-cols-2 [&>*:nth-child(1)]:rounded-tl [&>*:nth-child(2)]:rounded-tr [&>*:nth-last-child(1)]:rounded-br [&>*:nth-last-child(2)]:rounded-bl">
+        <Combobox.Options className="absolute left-0 top-full z-20 my-2 grid w-[36rem] grid-cols-2 rounded bg-neutral-600 shadow-lg [&>*:nth-child(1)]:rounded-tl [&>*:nth-child(2)]:rounded-tr [&>*:nth-last-child(1)]:rounded-br [&>*:nth-last-child(2)]:rounded-bl">
           {!isLoading &&
             !error &&
             movies?.map((movie: Movie) => (
