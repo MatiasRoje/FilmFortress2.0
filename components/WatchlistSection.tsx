@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
+import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Button from "./Button";
 import { useState } from "react";
@@ -41,7 +41,7 @@ function WatchlistSection() {
       </Link>
       <div className="flex flex-col gap-4 items-center justify-center text-center">
         <span>
-          <PlusCircleIcon className="p-2 w-12 h-12 text-yellow-400" />
+          <PlusCircleIcon className="p-2 w-12 h-12" />
         </span>
         {!isAuthenticated ? (
           <>
@@ -73,6 +73,7 @@ function WatchlistSection() {
             </Link>
           </>
         ) : (
+          // TODO Code for when the marked movies are pulled from the API
           <p>Many movies</p>
         )}
       </div>

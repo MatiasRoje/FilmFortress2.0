@@ -47,6 +47,12 @@ export async function searchMovies(query: string) {
   return moviesData;
 }
 
+export async function getRandomMovieFromCollection(movies: Movie[]) {
+  const randomMovie = movies[Math.floor(Math.random() * movies.length)];
+  const movieDetails = await getMovie(randomMovie.id);
+  return movieDetails;
+}
+
 // NOTE Helper functions
 
 export function StripMovie(movieObject: any): Movie {

@@ -27,10 +27,10 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
   return (
     <section className="relative flex gap-8 my-6">
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center rounded"
         style={{
           backgroundImage: `url(${movie.backgropPath})`,
-          filter: "brightness(50%) contrast(110%) grayscale(90%) opacity(50%) ",
+          filter: "brightness(50%) contrast(110%) grayscale(90%) opacity(50%)",
         }}
       ></div>
       <Image
@@ -38,7 +38,7 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
         alt=""
         width="300"
         height="450"
-        className="relative z-10 rounded"
+        className="relative z-10 rounded-l"
         priority
       />
       <div className="relative z-10 text-white flex flex-col gap-4 py-8 pr-8">

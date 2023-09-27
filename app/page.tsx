@@ -1,11 +1,8 @@
-import Button from "@/components/Button";
 import Carousel from "@/components/Carousel";
 import WatchlistSection from "@/components/WatchlistSection";
-import { getMovies } from "@/lib/movies";
+import { getMovies, getRandomMovieFromCollection } from "@/lib/movies";
 import { getRatings } from "@/lib/ratings";
 import { getSeries } from "@/lib/tv";
-import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
 
 async function Home() {
   const moviesByPopularity = await getMovies("popular");
@@ -13,9 +10,25 @@ async function Home() {
   const seriesByRate = await getSeries("top_rated");
   const { ratings } = await getRatings();
 
+  const randomMovie = await getRandomMovieFromCollection(moviesByPopularity);
+
   return (
     <main className="flex flex-col gap-10 py-6">
-      {/* TODO Convert this subheading to a react component */}
+      <section className="relative flex flex-col gap-2 my-4 h-96 w-full">
+        <div
+          className="absolute flex bg-no-repeat bg-cover bg-[70%] inset-0 rounded"
+          style={{
+            backgroundImage: `linear-gradient(to right, rgba(38, 38, 38, 0.50) calc((50vw - 170px) - 340px), rgba(38, 38, 38, 0.20) 50%, rgba(38, 38, 38, 0.30) 100%), url(${randomMovie.backgropPath})`,
+            filter: "grayscale(20%)",
+          }}
+        ></div>
+        <div className="z-10 pt-16 px-6 flex flex-col gap-1">
+          <h1 className="text-4xl font-bold">Welcome to FilmFortress.</h1>
+          <p className="text-xl font-semibold">
+            Countless movies and TV shows waiting to be uncovered.
+          </p>
+        </div>
+      </section>
       <div className="flex flex-col gap-4">
         <h2 className="flex gap-2 text-2xl font-bold">
           <span className="border-l-4 border-main-500 rounded"></span>Trending

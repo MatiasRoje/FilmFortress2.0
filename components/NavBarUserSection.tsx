@@ -48,6 +48,18 @@ function NavBarUserSection() {
                     className={`py-2 px-4 rounded min-w-max ${
                       active && "bg-neutral-600"
                     }`}
+                    href={`/users/${user?.id}/reviews`}
+                  >
+                    Your reviews
+                  </Link>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    className={`py-2 px-4 rounded min-w-max ${
+                      active && "bg-neutral-600"
+                    }`}
                     href={`/users/${user?.id}/watchlist`}
                   >
                     Your watchlist
