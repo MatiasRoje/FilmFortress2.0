@@ -109,9 +109,7 @@ function NavBarUserSection() {
     </li>
   ) : (
     <li>
-      <Button>
-        <Link href="/login">Sign in</Link>
-      </Button>
+      <Button href="/login">Sign in</Button>
     </li>
   );
 }

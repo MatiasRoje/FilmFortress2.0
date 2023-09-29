@@ -28,25 +28,25 @@ function LoginForm() {
   return (
     <form className="flex w-1/2 flex-col gap-6 rounded bg-neutral-700 p-6">
       <h2 className="text-xl font-semibold">Login</h2>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <label htmlFor="email">Email address</label>
         <input
           type="email"
           id="email"
           onChange={e => setEmail(e.target.value)}
           value={email}
-          className="w-[36rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:shadow-lg focus:outline-none"
+          className="rin w-[36rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400"
         />
       </div>
 
-      <div className="gap- flex flex-col">
+      <div className="flex flex-col gap-2">
         <label htmlFor="password">Password</label>
         <input
           type="password"
           id="password"
           onChange={e => setPassword(e.target.value)}
           value={password}
-          className="w-[36rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:shadow-lg focus:outline-none"
+          className="w-[36rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400"
         />
       </div>
 

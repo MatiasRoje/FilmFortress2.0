@@ -52,8 +52,8 @@ function WatchlistSection() {
                 you&apos;d like to watch.
               </p>
             </div>
-            <Button paddingX="px-12">
-              <Link href="/login">Sign in</Link>
+            <Button paddingX="px-12" href="/login">
+              Login
             </Button>
           </>
         ) : tempWatchlist.length === 0 ? (
@@ -67,7 +67,7 @@ function WatchlistSection() {
             </div>
             <Link
               href="/movies"
-              className="rounded bg-neutral-600 px-6 py-2 transition duration-300 hover:bg-neutral-500"
+              className="focus:ring- rounded bg-neutral-600 px-6 py-2 transition duration-300 hover:bg-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
             >
               Browse popular movies
             </Link>

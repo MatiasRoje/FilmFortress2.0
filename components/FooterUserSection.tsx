@@ -10,9 +10,7 @@ function FooterUserSection() {
   return isAuthenticated ? (
     ""
   ) : (
-    <Button>
-      <Link href="/login">Join the community</Link>
-    </Button>
+    <Button href="/login">Join the community</Button>
   );
 }
 
