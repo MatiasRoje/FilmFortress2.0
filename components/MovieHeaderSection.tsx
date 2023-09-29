@@ -45,7 +45,7 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
         <div>
           <h1 className="text-3xl">{movie.title}</h1>
           <div className="flex gap-1 text-sm">
-            <span>{movie.releaseDate}</span>
+            <span>{movie.releaseDate.slice(-4)}</span>
             <span>•</span>
             <span>{movie.runtime}</span>
           </div>

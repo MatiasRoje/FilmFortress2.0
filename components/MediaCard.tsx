@@ -6,26 +6,72 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { Movie } from "@/types/movies";
 import { TvShow } from "@/types/tv";
 import RateModal from "./RateModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Rating } from "@/types/ratings";
+import { postMovieToWatchlist } from "@/lib/watchlists";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import { Watchlist } from "@/types/watchlists";
 
 type MediaCardProps = {
   media: Movie | TvShow;
   ratings: Rating[];
+  watchlists: Watchlist[];
 };
 
-function MediaCard({ media, ratings }: MediaCardProps) {
+function MediaCard({ media, ratings, watchlists }: MediaCardProps) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [tempRating, setTempRating] = useState<string | number>("");
   const userRating = ratings.find(rating => rating.movieId === media.id);
+  const { user, isAuthenticated } = useAuth();
+  const [watchlist, setWatchlist] = useState<undefined | Watchlist>(undefined);
+
+  useEffect(() => {
+    if (user) {
+      const watchlist = watchlists.find(
+        watchlist => watchlist.userId === user.id
+      );
+      setWatchlist(watchlist);
+    }
+  }, [user, watchlists]);
 
   function handleClick() {
     setIsOpen(true);
   }
 
+  async function handleAddMovieToWatchlist() {
+    if (!isAuthenticated) router.push("/login");
+
+    if (user) {
+      const res = await postMovieToWatchlist(media.id, user.id);
+
+      if (res && res.ok) {
+        setWatchlist((prevWatchlist: Watchlist | undefined) => {
+          if (!prevWatchlist) {
+            // If there is no previous watchlist, create a new one
+            return {
+              userId: user.id,
+              movieIds: [media.id],
+              name: "Watchlist",
+            };
+          } else {
+            // If there is a previous watchlist, update movieIds
+            return {
+              ...prevWatchlist,
+              movieIds: [...prevWatchlist.movieIds, media.id],
+            };
+          }
+        });
+      } else {
+        throw new Error("Failed to create a rating");
+      }
+    }
+  }
+
   return (
-    <li className="px-3" style={{ flex: "0 0 16.66%" }}>
-      <Link href={`/movies/${media.id}`} className="relative">
+    <li className="relative px-3" style={{ flex: "0 0 16.66%" }}>
+      <Link href={`/movies/${media.id}`}>
         <Image
           src={media.posterPath}
           alt=""
@@ -33,17 +79,27 @@ function MediaCard({ media, ratings }: MediaCardProps) {
           height="270"
           className="h-[17rem] w-auto max-w-none rounded-t"
         />
-        <p>
-          <PlusCircleIcon className="absolute right-1 top-0 h-9 w-9 transition duration-300 hover:text-yellow-400" />
-        </p>
       </Link>
+      {watchlist && watchlist.movieIds.includes(media.id) ? (
+        <p>
+          <PlusCircleIcon className="absolute top-0 z-10 h-9 w-9 text-yellow-400 transition duration-300 hover:cursor-pointer" />
+        </p>
+      ) : (
+        <p>
+          <PlusCircleIcon
+            className="absolute top-0 z-10 h-9 w-9 transition duration-300 hover:cursor-pointer hover:text-yellow-400"
+            onClick={handleAddMovieToWatchlist}
+          />
+        </p>
+      )}
+
       <div className="flex h-36 flex-col gap-2 rounded-b bg-neutral-700 p-2">
         <div className="flex items-center gap-3">
           <p className="flex items-center justify-center gap-1">
             <span>
               <StarIcon className="h-4 w-4 text-yellow-500" />
             </span>{" "}
-            {media.voteAverage}
+            {media.voteAverage.toFixed(1)}
           </p>
           {userRating && (
             <p className="flex items-center">

@@ -6,15 +6,17 @@ import MediaCard from "./MediaCard";
 import { Movie } from "@/types/movies";
 import { TvShow } from "@/types/tv";
 import { Rating } from "@/types/ratings";
+import { Watchlist } from "@/types/watchlists";
 
 type CarouselProps = {
   mediaCollection: Movie[] | TvShow[];
   ratings: Rating[];
+  watchlists: Watchlist[];
 };
 
 type MediaCollectionProps = Movie | TvShow;
 
-const Carousel = ({ mediaCollection, ratings }: CarouselProps) => {
+const Carousel = ({ mediaCollection, ratings, watchlists }: CarouselProps) => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -47,7 +49,12 @@ const Carousel = ({ mediaCollection, ratings }: CarouselProps) => {
         }}
       >
         {mediaCollection.map((media: MediaCollectionProps) => (
-          <MediaCard media={media} key={media.id} ratings={ratings} />
+          <MediaCard
+            media={media}
+            key={media.id}
+            ratings={ratings}
+            watchlists={watchlists}
+          />
         ))}
       </ul>
       <button

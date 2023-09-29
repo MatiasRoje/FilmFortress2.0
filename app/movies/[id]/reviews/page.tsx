@@ -6,7 +6,9 @@ import { Review } from "@/types/reviews";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { ChevronLeftIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
+import { useAuth } from "@/contexts/AuthContext";
+import Button from "@/components/Button";
 
 function ReviewsPage() {
   const router = useRouter();
@@ -14,6 +16,7 @@ function ReviewsPage() {
   const movieId = pathname.split("/").at(2);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [movie, setMovie] = useState<string | MovieDetails>("");
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     async function fetchData() {
@@ -35,9 +38,11 @@ function ReviewsPage() {
     fetchData();
   }, [movieId]);
 
-  const handleClick = () => {
+  const handleClickBack = () => {
     router.push(`/movies/${movieId}`);
   };
+
+  const handleAddReview = () => {};
 
   return (
     <main>
@@ -54,9 +59,20 @@ function ReviewsPage() {
               className="relative rounded"
               priority
             />
-            <p>Sign in to write a review.</p>
+            {isAuthenticated ? (
+              <Button onClick={handleAddReview}>
+                <div className="flex items-center gap-1">
+                  <span>
+                    <PencilSquareIcon className="h-4 w-4" />
+                  </span>
+                  Add review
+                </div>
+              </Button>
+            ) : (
+              <p>Sign in to write a review.</p>
+            )}
             <button
-              onClick={handleClick}
+              onClick={handleClickBack}
               className={`absolute top-1/2 z-10 flex -translate-y-full transform items-center rounded-full border border-white bg-neutral-600/25 p-2 text-neutral-50 transition duration-300 hover:border-yellow-400 hover:text-yellow-400`}
             >
               <ChevronLeftIcon className="h-12 w-12" />

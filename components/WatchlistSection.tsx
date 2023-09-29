@@ -3,13 +3,34 @@
 import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Button from "./Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { Watchlist } from "@/types/watchlists";
+import useWatchlist from "@/hooks/useWatchlist";
+import Carousel from "./Carousel";
+import { Rating } from "@/types/ratings";
 
-function WatchlistSection() {
+type WatchlistSectionProps = {
+  watchlists: Watchlist[];
+  ratings: Rating[];
+};
+
+function WatchlistSection({ watchlists, ratings }: WatchlistSectionProps) {
   const [isHovered, setIsHovered] = useState(false);
   const { isAuthenticated } = useAuth();
-  const [tempWatchlist, setTempWatchlist] = useState([]);
+  const { user } = useAuth();
+  const [watchlist, setWatchlist] = useState<undefined | Watchlist>(undefined);
+
+  useEffect(() => {
+    if (user) {
+      const watchlist = watchlists.find(
+        watchlist => watchlist.userId === user.id
+      );
+      setWatchlist(watchlist);
+    }
+  }, [user, watchlists]);
+
+  const movies = useWatchlist(watchlist?.movieIds);
 
   function handleHoverIn() {
     setIsHovered(true);
@@ -39,44 +60,49 @@ function WatchlistSection() {
           </span>
         </h2>
       </Link>
-      <div className="flex flex-col items-center justify-center gap-4 text-center">
-        <span>
-          <PlusCircleIcon className="h-12 w-12 p-2" />
-        </span>
-        {!isAuthenticated ? (
-          <>
-            <div>
-              <p className="font-semibold">Sign in to access your Watchlist</p>
-              <p>
-                Create a list of TV shows and movies to help you remember what
-                you&apos;d like to watch.
-              </p>
-            </div>
-            <Button paddingX="px-12" href="/login">
-              Login
-            </Button>
-          </>
-        ) : tempWatchlist.length === 0 ? (
-          <>
-            <div>
-              <p className="font-semibold">Your Watchlist is empty</p>
-              <p>
-                Create a list of TV shows and movies to help you remember what
-                you&apos;d like to watch.
-              </p>
-            </div>
-            <Link
-              href="/movies"
-              className="focus:ring- rounded bg-neutral-600 px-6 py-2 transition duration-300 hover:bg-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
-            >
-              Browse popular movies
-            </Link>
-          </>
-        ) : (
-          // TODO Code for when the marked movies are pulled from the API
-          <p>Many movies</p>
-        )}
-      </div>
+
+      {!isAuthenticated ? (
+        <div className="flex flex-col items-center justify-center gap-4 text-center">
+          <span>
+            <PlusCircleIcon className="h-12 w-12 p-2" />
+          </span>
+          <div>
+            <p className="font-semibold">Sign in to access your Watchlist</p>
+            <p>
+              Create a list of TV shows and movies to help you remember what
+              you&apos;d like to watch.
+            </p>
+          </div>
+          <Button paddingX="px-12" href="/login">
+            Login
+          </Button>
+        </div>
+      ) : watchlist && watchlist.movieIds.length === 0 ? (
+        <div className="flex flex-col items-center justify-center gap-4 text-center">
+          <span>
+            <PlusCircleIcon className="h-12 w-12 p-2" />
+          </span>
+          <div>
+            <p className="font-semibold">Your Watchlist is empty</p>
+            <p>
+              Create a list of TV shows and movies to help you remember what
+              you&apos;d like to watch.
+            </p>
+          </div>
+          <Link
+            href="/movies"
+            className="focus:ring- rounded bg-neutral-600 px-6 py-2 transition duration-300 hover:bg-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
+          >
+            Browse popular movies
+          </Link>
+        </div>
+      ) : (
+        <Carousel
+          mediaCollection={movies}
+          ratings={ratings}
+          watchlists={watchlists}
+        />
+      )}
     </section>
   );
 }

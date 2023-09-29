@@ -11,7 +11,7 @@ export async function getMovies(query: string): Promise<Movie[]> {
     `https://api.themoviedb.org/3/movie/${query}?api_key=${apiKey}&language=en-US&page=1`,
     {
       next: { revalidate: 3600 },
-    },
+    }
   );
   const data = await res.json();
   const movies = data.results;
@@ -20,11 +20,11 @@ export async function getMovies(query: string): Promise<Movie[]> {
 
 export async function getMovie(id: number): Promise<MovieDetails> {
   const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`,
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`
   );
   const details = await res.json();
   const resCredits = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=en-US`,
+    `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=en-US`
   );
   const credits = await resCredits.json();
   return StripMovieDetails({ ...details, ...credits });
@@ -32,7 +32,7 @@ export async function getMovie(id: number): Promise<MovieDetails> {
 
 export async function searchMovies(query: string) {
   const res = await fetch(
-    `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${apiKey}`,
+    `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${apiKey}`
   );
 
   if (!res.ok) throw new Error("Something went wrong with fetching movies");
@@ -74,6 +74,8 @@ export function StripMovieDetails(movieObject: any): MovieDetails {
     id: movieObject.id,
     title: movieObject.title,
     releaseDate: new Date(movieObject.release_date).toLocaleString("en-US", {
+      day: "numeric",
+      month: "short",
       year: "numeric",
     }),
     voteAverage: movieObject.vote_average,
@@ -95,7 +97,7 @@ export function StripMovieDetails(movieObject: any): MovieDetails {
     revenue: `$${movieObject.revenue.toLocaleString("en-US")}`,
     countries: movieObject.production_countries.map(
       (country: { iso_3166_1: string }) =>
-        countryCodeToFlagEmoji(country.iso_3166_1),
+        countryCodeToFlagEmoji(country.iso_3166_1)
     ),
   };
 }
