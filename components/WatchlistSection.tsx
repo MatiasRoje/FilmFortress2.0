@@ -67,7 +67,7 @@ function WatchlistSection() {
             </div>
             <Link
               href="/movies"
-              className="rounded bg-neutral-600 px-6 py-2 text-white transition duration-300 hover:bg-neutral-500"
+              className="rounded bg-neutral-600 px-6 py-2 transition duration-300 hover:bg-neutral-500"
             >
               Browse popular movies
             </Link>

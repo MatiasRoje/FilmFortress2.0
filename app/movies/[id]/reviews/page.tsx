@@ -57,12 +57,12 @@ function ReviewsPage() {
             <p>Sign in to write a review.</p>
             <button
               onClick={handleClick}
-              className={`prev-button absolute top-1/2 z-10 flex -translate-y-full transform items-center rounded-full border border-white bg-neutral-600/25 p-2 text-white transition duration-300 hover:border-yellow-400 hover:text-yellow-400`}
+              className={`absolute top-1/2 z-10 flex -translate-y-full transform items-center rounded-full border border-white bg-neutral-600/25 p-2 text-neutral-50 transition duration-300 hover:border-yellow-400 hover:text-yellow-400`}
             >
               <ChevronLeftIcon className="h-12 w-12" />
             </button>
           </div>
-          <div className="flex flex-col gap-4 text-white">
+          <div className="flex flex-col gap-4">
             <div>
               <h1 className="text-3xl">{movie.title}</h1>
               <div className="flex gap-1 text-sm">

@@ -64,7 +64,7 @@ function MediaCard({ media, ratings }: MediaCardProps) {
           {!userRating && !tempRating && (
             <p>
               <SparklesIcon
-                className="h-9 w-9 rounded p-2 text-white transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
+                className="h-9 w-9 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
                 onClick={handleClick}
               />
             </p>

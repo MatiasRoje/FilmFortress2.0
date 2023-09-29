@@ -41,7 +41,7 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
         className="relative z-10 rounded-l"
         priority
       />
-      <div className="relative z-10 flex flex-col gap-4 py-8 pr-8 text-white">
+      <div className="pr- relative z-10 flex flex-col gap-4 py-8">
         <div>
           <h1 className="text-3xl">{movie.title}</h1>
           <div className="flex gap-1 text-sm">
@@ -84,7 +84,7 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
               <p>
                 <span>
                   <SparklesIcon
-                    className="h-12 w-12 rounded p-2 text-white transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
+                    className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
                     onClick={handleClick}
                   />
                 </span>
@@ -95,7 +95,7 @@ function MovieHeaderSection({ movie, ratings }: MovieHeaderSectionProps) {
             <p className="text-sm text-gray-200">Add to Watchlist</p>
             <p>
               <span>
-                <PlusCircleIcon className="h-12 w-12 rounded p-2 text-white transition duration-300 hover:bg-neutral-600 hover:text-yellow-400" />
+                <PlusCircleIcon className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400" />
               </span>
             </p>
           </div>

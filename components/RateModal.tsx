@@ -70,10 +70,7 @@ function RateModal({
               Rate
             </Button>
           ) : (
-            <button
-              className="rounded bg-neutral-500 px-32 py-2 text-white"
-              disabled
-            >
+            <button className="rounded bg-neutral-500 px-32 py-2" disabled>
               Rate
             </button>
           )}

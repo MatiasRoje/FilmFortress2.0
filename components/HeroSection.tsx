@@ -6,7 +6,7 @@ type HeroSectionProps = {
 
 function HeroSection({ movie }: HeroSectionProps) {
   return (
-    <section className="relative my-4 flex h-96 w-full flex-col gap-2">
+    <section className="relative my-4 flex h-[28rem] w-full flex-col gap-2">
       <div
         className="absolute inset-0 flex rounded bg-cover bg-[70%] bg-no-repeat"
         style={{
