@@ -18,7 +18,7 @@ export async function generateMetadata({
 }: MoviePageProps): Promise<Metadata> {
   const movie = await getMovie(id);
   return {
-    title: `${movie.title} (${movie.releaseDate})`,
+    title: `${movie.title} (${movie.releaseDate.slice(-4)})`,
   };
 }
 

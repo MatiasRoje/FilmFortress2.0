@@ -2,6 +2,7 @@ import { getReviewsFromMovie } from "@/lib/reviews";
 import { Review } from "@/types/reviews";
 import Link from "next/link";
 import ReviewCard from "./ReviewCard";
+import ReviewsButton from "./ReviewsButton";
 
 type ReviewsSectionProps = {
   movieId: number;
@@ -12,12 +13,15 @@ async function ReviewsSection({ movieId }: ReviewsSectionProps) {
   const lastReview = reviews.at(-1);
 
   return (
-    <section className="my-6 flex flex-col gap-8">
-      <div className="flex items-baseline gap-2 p-2">
-        <Link href={`/movies/${movieId}/reviews`}>
-          <h3 className="text-xl font-semibold hover:underline">Reviews</h3>
-        </Link>
-        <span>—{reviews.length}</span>
+    <section className="my-8 flex flex-col gap-8">
+      <div className="flex items-center gap-4">
+        <div className="flex items-baseline gap-2 p-2">
+          <Link href={`/movies/${movieId}/reviews`}>
+            <h3 className="text-xl font-semibold hover:underline">Reviews</h3>
+          </Link>
+          <span>—{reviews.length}</span>
+        </div>
+        <ReviewsButton />
       </div>
       {lastReview && (
         <div className="flex">

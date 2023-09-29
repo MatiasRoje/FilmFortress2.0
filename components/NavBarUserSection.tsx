@@ -80,18 +80,6 @@ function NavBarUserSection() {
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <Link
-                    className={`min-w-max rounded px-4 py-2 ${
-                      active && "bg-neutral-600"
-                    }`}
-                    href={`/users/${user?.id}/lists`}
-                  >
-                    Your lists
-                  </Link>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
                   <button
                     className={`min-w-max rounded px-4 py-2 text-left ${
                       active && "bg-neutral-600"

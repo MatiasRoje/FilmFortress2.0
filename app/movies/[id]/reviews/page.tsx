@@ -6,9 +6,9 @@ import { Review } from "@/types/reviews";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ChevronLeftIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
+import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useAuth } from "@/contexts/AuthContext";
-import Button from "@/components/Button";
+import ReviewsButton from "@/components/ReviewsButton";
 
 function ReviewsPage() {
   const router = useRouter();
@@ -42,8 +42,6 @@ function ReviewsPage() {
     router.push(`/movies/${movieId}`);
   };
 
-  const handleAddReview = () => {};
-
   return (
     <main>
       {typeof movie === "string" ? (
@@ -60,14 +58,7 @@ function ReviewsPage() {
               priority
             />
             {isAuthenticated ? (
-              <Button onClick={handleAddReview}>
-                <div className="flex items-center gap-1">
-                  <span>
-                    <PencilSquareIcon className="h-4 w-4" />
-                  </span>
-                  Add review
-                </div>
-              </Button>
+              <ReviewsButton />
             ) : (
               <p>Sign in to write a review.</p>
             )}
