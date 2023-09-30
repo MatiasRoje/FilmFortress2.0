@@ -3,12 +3,13 @@
 import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Button from "./Button";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Watchlist } from "@/types/watchlists";
 import useWatchlist from "@/hooks/useWatchlist";
 import Carousel from "./Carousel";
 import { Rating } from "@/types/ratings";
+import Spinner from "./Spinner";
 
 type WatchlistSectionProps = {
   watchlists: Watchlist[];
@@ -61,7 +62,7 @@ function WatchlistSection({ watchlists, ratings }: WatchlistSectionProps) {
         </h2>
       </Link>
 
-      {!isAuthenticated ? (
+      {!isAuthenticated && (
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <span>
             <PlusCircleIcon className="h-12 w-12 p-2" />
@@ -77,7 +78,8 @@ function WatchlistSection({ watchlists, ratings }: WatchlistSectionProps) {
             Login
           </Button>
         </div>
-      ) : watchlist && watchlist.movieIds.length === 0 ? (
+      )}
+      {isAuthenticated && !watchlist && (
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <span>
             <PlusCircleIcon className="h-12 w-12 p-2" />
@@ -96,13 +98,16 @@ function WatchlistSection({ watchlists, ratings }: WatchlistSectionProps) {
             Browse popular movies
           </Link>
         </div>
-      ) : (
-        <Carousel
-          mediaCollection={movies}
-          ratings={ratings}
-          watchlists={watchlists}
-        />
       )}
+      <Suspense fallback={<Spinner dimensions="w-12 h-12" />}>
+        {isAuthenticated && watchlist && (
+          <Carousel
+            mediaCollection={movies}
+            ratings={ratings}
+            watchlists={watchlists}
+          />
+        )}
+      </Suspense>
     </section>
   );
 }
