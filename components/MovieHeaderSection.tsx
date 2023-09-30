@@ -20,7 +20,7 @@ function MovieHeaderSection({
   const userRating = ratings.find(rating => rating.movieId === movie.id);
 
   return (
-    <section className="relative my-6 flex gap-8">
+    <section className="px relative my-6 flex gap-8 pr-4">
       <div
         className="absolute inset-0 rounded bg-cover bg-center"
         style={{

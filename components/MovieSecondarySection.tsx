@@ -1,6 +1,7 @@
 import { MovieDetails } from "@/types/movies";
 import Image from "next/image";
 import Link from "next/link";
+import ShareLinkButton from "./ShareLinkButton";
 
 type MovieSecondarySectionProps = {
   movie: MovieDetails;
@@ -9,16 +10,19 @@ type MovieSecondarySectionProps = {
 function MovieSecondarySection({ movie }: MovieSecondarySectionProps) {
   return (
     <section className="mb-6 flex flex-col gap-8">
-      <ul className="flex gap-2 pr-1">
-        {movie.genres.map(genre => (
-          <li
-            key={genre.id}
-            className="rounded-full border px-2 py-1 hover:bg-neutral-700"
-          >
-            <Link href="">{genre.name}</Link>
-          </li>
-        ))}
-      </ul>
+      <div className="flex items-center justify-between">
+        <ul className="flex gap-2 pr-1">
+          {movie.genres.map(genre => (
+            <li
+              key={genre.id}
+              className="rounded-full border px-2 py-1 hover:bg-neutral-700"
+            >
+              <Link href="">{genre.name}</Link>
+            </li>
+          ))}
+        </ul>
+        <ShareLinkButton />
+      </div>
       <div className="flex">
         <ul className="flex gap-3">
           {movie.cast.map(cast => (

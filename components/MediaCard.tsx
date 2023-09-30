@@ -5,7 +5,7 @@ import { SparklesIcon } from "@heroicons/react/24/outline";
 import { Movie } from "@/types/movies";
 import { TvShow } from "@/types/tv";
 import RateModal from "./RateModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Rating } from "@/types/ratings";
 import { Watchlist } from "@/types/watchlists";
 import MediaCartWatchlistSection from "./MediaCartWatchlistSection";

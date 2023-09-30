@@ -3,13 +3,12 @@
 import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Button from "./Button";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Watchlist } from "@/types/watchlists";
 import useWatchlist from "@/hooks/useWatchlist";
 import Carousel from "./Carousel";
 import { Rating } from "@/types/ratings";
-import Spinner from "./Spinner";
 
 type WatchlistSectionProps = {
   watchlists: Watchlist[];
@@ -44,7 +43,7 @@ function WatchlistSection({ watchlists, ratings }: WatchlistSectionProps) {
   return (
     <section className="my-4 flex flex-col gap-4">
       <Link
-        href="/users/:id/watchlist"
+        href={`/users/${user?.id}/watchlist`}
         onMouseEnter={handleHoverIn}
         onMouseLeave={handleHoverOut}
       >
@@ -93,21 +92,39 @@ function WatchlistSection({ watchlists, ratings }: WatchlistSectionProps) {
           </div>
           <Link
             href="/movies"
+            className="rounded bg-neutral-600 px-6 py-2 transition duration-300 hover:bg-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
+          >
+            Browse popular movies
+          </Link>
+        </div>
+      )}
+      {isAuthenticated && watchlist && watchlist.movieIds.length === 0 && (
+        <div className="flex flex-col items-center justify-center gap-4 text-center">
+          <span>
+            <PlusCircleIcon className="h-12 w-12 p-2" />
+          </span>
+          <div>
+            <p className="font-semibold">Your Watchlist is empty</p>
+            <p>
+              Create a list of TV shows and movies to help you remember what
+              you&apos;d like to watch.
+            </p>
+          </div>
+          <Link
+            href="/movies"
             className="focus:ring- rounded bg-neutral-600 px-6 py-2 transition duration-300 hover:bg-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
           >
             Browse popular movies
           </Link>
         </div>
       )}
-      <Suspense fallback={<Spinner dimensions="w-12 h-12" />}>
-        {isAuthenticated && watchlist && (
-          <Carousel
-            mediaCollection={movies}
-            ratings={ratings}
-            watchlists={watchlists}
-          />
-        )}
-      </Suspense>
+      {isAuthenticated && watchlist && (
+        <Carousel
+          mediaCollection={movies}
+          ratings={ratings}
+          watchlists={watchlists}
+        />
+      )}
     </section>
   );
 }
