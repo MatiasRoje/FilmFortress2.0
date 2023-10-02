@@ -9,6 +9,7 @@ import { Watchlist } from "@/types/watchlists";
 import useWatchlist from "@/hooks/useWatchlist";
 import Carousel from "./Carousel";
 import { Rating } from "@/types/ratings";
+import Spinner from "./Spinner";
 
 type WatchlistSectionProps = {
   watchlists: Watchlist[];
@@ -30,7 +31,7 @@ function WatchlistSection({ watchlists, ratings }: WatchlistSectionProps) {
     }
   }, [user, watchlists]);
 
-  const movies = useWatchlist(watchlist?.movieIds);
+  const { movies, isLoading } = useWatchlist(watchlist?.movieIds);
 
   function handleHoverIn() {
     setIsHovered(true);
@@ -118,7 +119,12 @@ function WatchlistSection({ watchlists, ratings }: WatchlistSectionProps) {
           </Link>
         </div>
       )}
-      {isAuthenticated && watchlist && (
+      {isLoading && isAuthenticated && watchlist && (
+        <div className="my-10 flex items-center justify-center">
+          <Spinner dimensions="w-12 h-12" />
+        </div>
+      )}
+      {!isLoading && isAuthenticated && watchlist && (
         <Carousel
           mediaCollection={movies}
           ratings={ratings}

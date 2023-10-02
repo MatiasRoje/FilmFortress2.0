@@ -9,16 +9,6 @@ type ButtonProps = {
 };
 
 function Button({ onClick, children, paddingX = "px-4", href }: ButtonProps) {
-  if (onClick)
-    return (
-      <button
-        onClick={onClick}
-        className={`bg-main-500 text-main-50 ${paddingX} rounded py-2 outline-none transition-colors duration-300 hover:bg-main-600 focus:outline-none focus:ring focus:ring-main-400 focus:ring-offset-2`}
-      >
-        {children}
-      </button>
-    );
-
   if (href)
     return (
       <Link
@@ -28,6 +18,15 @@ function Button({ onClick, children, paddingX = "px-4", href }: ButtonProps) {
         {children}
       </Link>
     );
+
+  return (
+    <button
+      onClick={onClick}
+      className={`bg-main-500 text-main-50 ${paddingX} rounded py-2 outline-none transition-colors duration-300 hover:bg-main-600 focus:outline-none focus:ring focus:ring-main-400 focus:ring-offset-2`}
+    >
+      {children}
+    </button>
+  );
 }
 
 export default Button;

@@ -35,7 +35,7 @@ function LoginForm() {
           id="email"
           onChange={e => setEmail(e.target.value)}
           value={email}
-          className="rin w-[36rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400"
+          className="w-[36rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400"
         />
       </div>
 

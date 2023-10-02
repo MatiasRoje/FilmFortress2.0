@@ -6,7 +6,6 @@ import { getMovies, getRandomMovieFromCollection } from "@/lib/movies";
 import { getRatings } from "@/lib/ratings";
 import { getSeries } from "@/lib/tv";
 import { getWatchlists } from "@/lib/watchlists";
-import { Suspense } from "react";
 
 async function Home() {
   const moviesByPopularity = await getMovies("popular");
@@ -30,9 +29,9 @@ async function Home() {
           watchlists={watchlists}
         />
       </div>
-      <Suspense fallback={<Spinner dimensions="w-12 h-12" />}>
-        <WatchlistSection watchlists={watchlists} ratings={ratings} />
-      </Suspense>
+
+      <WatchlistSection watchlists={watchlists} ratings={ratings} />
+
       <div className="flex flex-col gap-4">
         <h3 className="flex gap-2 text-2xl font-bold">
           <span className="rounded border-l-4 border-main-400"></span>Top 10

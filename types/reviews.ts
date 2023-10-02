@@ -15,3 +15,10 @@ export type ReviewObject = {
   updated_at: string;
   url: string;
 };
+
+export type UserReview = {
+  content: string;
+  userId: number;
+  movieId: number;
+  createdAt: Date;
+};

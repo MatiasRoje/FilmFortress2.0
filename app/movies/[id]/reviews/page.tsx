@@ -17,6 +17,7 @@ function ReviewsPage() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [movie, setMovie] = useState<string | MovieDetails>("");
   const { isAuthenticated } = useAuth();
+  const [tempReview, setTempReview] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -58,7 +59,7 @@ function ReviewsPage() {
               priority
             />
             {isAuthenticated ? (
-              <ReviewsButton />
+              <ReviewsButton setTempReview={setTempReview} media={movie} />
             ) : (
               <p>Sign in to write a review.</p>
             )}

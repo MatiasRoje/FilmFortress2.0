@@ -34,13 +34,13 @@ function MovieHeaderUserSection({
   const inWatchlist = watchlist?.movieIds.includes(movie.id);
 
   useEffect(() => {
-    if (user) {
+    if (user && isAuthenticated) {
       const watchlist = watchlists.find(
         watchlist => watchlist.userId === user.id
       );
       setWatchlist(watchlist);
     }
-  }, [user, watchlists]);
+  }, [user, watchlists, isAuthenticated]);
 
   function handleClick() {
     setIsOpen(true);
@@ -90,7 +90,7 @@ function MovieHeaderUserSection({
       </div>
       <div className="justify-baseline flex flex-col items-center">
         <p className="text-sm text-gray-200">Your Rating</p>
-        {userRating && (
+        {isAuthenticated && userRating && (
           <p className="flex items-center gap-1">
             <span className="px-1 py-2">
               <SparklesIcon className="h-8 w-8 text-yellow-500" />
@@ -98,7 +98,7 @@ function MovieHeaderUserSection({
             {userRating.rating}
           </p>
         )}
-        {tempRating && (
+        {isAuthenticated && tempRating && (
           <p className="flex items-center gap-1">
             <span className="px-1 py-2">
               <SparklesIcon className="h-8 w-8 text-yellow-500" />
@@ -106,7 +106,17 @@ function MovieHeaderUserSection({
             {tempRating}
           </p>
         )}
-        {!userRating && !tempRating && (
+        {isAuthenticated && !userRating && !tempRating && (
+          <p>
+            <span>
+              <SparklesIcon
+                className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
+                onClick={handleClick}
+              />
+            </span>
+          </p>
+        )}
+        {!isAuthenticated && (
           <p>
             <span>
               <SparklesIcon
@@ -118,7 +128,7 @@ function MovieHeaderUserSection({
         )}
       </div>
       <div className="flex flex-col items-center justify-center">
-        {userRating && (
+        {isAuthenticated && userRating && (
           <>
             <p className="text-sm text-gray-200">Watched</p>
             <p className="flex items-center">
@@ -128,7 +138,7 @@ function MovieHeaderUserSection({
             </p>
           </>
         )}
-        {tempRating && (
+        {isAuthenticated && tempRating && (
           <>
             <p className="text-sm text-gray-200">Watched</p>
             <p className="flex items-center">
@@ -162,6 +172,19 @@ function MovieHeaderUserSection({
           </>
         )}
         {!userRating && !tempRating && watchlist && !inWatchlist && (
+          <>
+            <p className="text-sm text-gray-200">Add to Watchlist</p>
+            <p>
+              <span>
+                <PlusCircleIcon
+                  className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
+                  onClick={handleAddMovieToWatchlist}
+                />
+              </span>
+            </p>
+          </>
+        )}
+        {!isAuthenticated && (
           <>
             <p className="text-sm text-gray-200">Add to Watchlist</p>
             <p>
