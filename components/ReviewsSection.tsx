@@ -30,16 +30,13 @@ function ReviewsSection({
     rating => rating.userId === user?.id && rating.movieId === media.id
   );
 
-  let currentUserReview;
+  let userReview;
   if (isAuthenticated && usersReviews)
-    currentUserReview = usersReviews
+    userReview = usersReviews
       .filter(
         review => review.userId === user?.id && review.movieId === media.id
       )
       .at(0);
-
-  console.log(currentUserReview);
-  console.log(userRating);
 
   return (
     <section className="my-8 flex flex-col gap-8">
@@ -52,10 +49,10 @@ function ReviewsSection({
         </div>
         <ReviewsButton setTempReview={setTempReview} media={media} />
       </div>
-      {currentUserReview ? (
+      {userReview ? (
         <div className="flex">
           <UserReviewCard
-            review={currentUserReview}
+            review={userReview}
             width={"max-w-max"}
             userRating={userRating}
           />

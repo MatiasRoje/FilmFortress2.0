@@ -13,7 +13,7 @@ function Button({ onClick, children, paddingX = "px-4", href }: ButtonProps) {
     return (
       <Link
         href={href}
-        className={`bg-main-500 text-main-50 ${paddingX} rounded py-2 outline-none transition-colors duration-300 hover:bg-main-600 focus:bg-main-600 focus:outline-none focus:ring focus:ring-main-400 focus:ring-offset-2`}
+        className={`bg-main-500 text-main-50 ${paddingX} rounded py-2 outline-none transition-colors duration-300 hover:bg-main-600 focus:bg-main-600 focus:outline-none focus:outline focus:outline-offset-1 focus:outline-main-500`}
       >
         {children}
       </Link>
@@ -22,7 +22,7 @@ function Button({ onClick, children, paddingX = "px-4", href }: ButtonProps) {
   return (
     <button
       onClick={onClick}
-      className={`bg-main-500 text-main-50 ${paddingX} rounded py-2 outline-none transition-colors duration-300 hover:bg-main-600 focus:outline-none focus:ring focus:ring-main-400 focus:ring-offset-2`}
+      className={`bg-main-500 text-main-50 ${paddingX} rounded py-2 outline-none transition-colors duration-300 hover:bg-main-600 focus:bg-main-600 focus:outline-none focus:outline focus:outline-offset-1 focus:outline-main-500`}
     >
       {children}
     </button>

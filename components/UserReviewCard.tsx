@@ -14,7 +14,7 @@ function UserReviewCard({ review, width, userRating }: ReviewCardProps) {
   const { user } = useAuth();
 
   return (
-    <div className="grow rounded bg-neutral-700 p-4">
+    <div className="grow rounded border-2 border-main-400 bg-neutral-700 p-4">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-lg font-semibold">Review by {user?.username} </p>
