@@ -17,7 +17,7 @@ const ratingSchema = new Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 ratingSchema.index({ movieId: 1, userId: 1 }, { unique: true });

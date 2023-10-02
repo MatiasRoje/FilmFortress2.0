@@ -7,6 +7,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   UserCircleIcon,
+  PlusCircleIcon,
 } from "@heroicons/react/24/solid";
 import { Menu } from "@headlessui/react";
 
@@ -18,89 +19,111 @@ function NavBarUserSection() {
   }
 
   return isAuthenticated ? (
-    <li>
-      <Menu as="div" className="relative">
-        {({ open }) => (
-          <>
-            <Menu.Button
-              className={`flex px-3 py-1 gap-1 items-center justify-center rounded focus:outline-none hover:bg-neutral-700 ${
-                open && "bg-neutral-700"
-              }`}
-            >
-              <span>
-                <UserCircleIcon className="w-6 h-6" />
-              </span>
-              {user?.username}
-              {open ? (
+    <>
+      <li className="ml-auto rounded px-3 py-1 hover:bg-neutral-700">
+        <Link href={`/users/${user?.id}/watchlist`}>
+          <div className="flex gap-1">
+            <span>
+              <PlusCircleIcon className="h-6 w-6" />
+            </span>
+            Watchlist
+          </div>
+        </Link>
+      </li>
+      <li>
+        <Menu as="div" className="relative">
+          {({ open }) => (
+            <>
+              <Menu.Button
+                className={`flex items-center justify-center gap-1 rounded px-3 py-1 hover:bg-neutral-700 focus:outline-none ${
+                  open && "bg-neutral-700"
+                }`}
+              >
                 <span>
-                  <ChevronUpIcon className="w-4 h-4" />
+                  <UserCircleIcon className="h-6 w-6" />
                 </span>
-              ) : (
-                <span>
-                  <ChevronDownIcon className="w-4 h-4" />
-                </span>
-              )}
-            </Menu.Button>
-            <Menu.Items className="origin-top-right absolute mt-2 right-0 z-50 flex flex-col rounded bg-neutral-700 focus:outline-none">
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    className={`py-2 px-4 rounded min-w-max ${
-                      active && "bg-neutral-600"
-                    }`}
-                    href={`/users/${user?.id}/watchlist`}
-                  >
-                    Your watchlist
-                  </Link>
+                {user?.username}
+                {open ? (
+                  <span>
+                    <ChevronUpIcon className="h-4 w-4" />
+                  </span>
+                ) : (
+                  <span>
+                    <ChevronDownIcon className="h-4 w-4" />
+                  </span>
                 )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    className={`py-2 px-4 rounded min-w-max ${
-                      active && "bg-neutral-600"
-                    }`}
-                    href={`/users/${user?.id}/ratings`}
-                  >
-                    Your ratings
-                  </Link>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    className={`py-2 px-4 rounded min-w-max ${
-                      active && "bg-neutral-600"
-                    }`}
-                    href={`/users/${user?.id}/lists`}
-                  >
-                    Your lists
-                  </Link>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`py-2 px-4 rounded text-left min-w-max ${
-                      active && "bg-neutral-600"
-                    }`}
-                    onClick={handleSignOut}
-                  >
-                    Sign out
-                  </button>
-                )}
-              </Menu.Item>
-            </Menu.Items>
-          </>
-        )}
-      </Menu>
-    </li>
+              </Menu.Button>
+              <Menu.Items className="absolute right-0 z-50 mt-2 flex origin-top-right flex-col rounded bg-neutral-700 focus:outline-none">
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      className={`min-w-max rounded px-4 py-2 ${
+                        active && "bg-neutral-600"
+                      }`}
+                      href={`/users/${user?.id}/reviews`}
+                    >
+                      Your reviews
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      className={`min-w-max rounded px-4 py-2 ${
+                        active && "bg-neutral-600"
+                      }`}
+                      href={`/users/${user?.id}/watchlist`}
+                    >
+                      Your watchlist
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      className={`min-w-max rounded px-4 py-2 ${
+                        active && "bg-neutral-600"
+                      }`}
+                      href={`/users/${user?.id}/ratings`}
+                    >
+                      Your ratings
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      className={`min-w-max rounded px-4 py-2 text-left ${
+                        active && "bg-neutral-600"
+                      }`}
+                      onClick={handleSignOut}
+                    >
+                      Sign out
+                    </button>
+                  )}
+                </Menu.Item>
+              </Menu.Items>
+            </>
+          )}
+        </Menu>
+      </li>
+    </>
   ) : (
-    <li>
-      <Button>
-        <Link href="/login">Sign in</Link>
-      </Button>
-    </li>
+    <>
+      <li className="ml-auto rounded px-3 py-1 hover:bg-neutral-700">
+        <Link href="/login">
+          <div className="flex gap-1">
+            <span>
+              <PlusCircleIcon className="h-6 w-6" />
+            </span>
+            Watchlist
+          </div>
+        </Link>
+      </li>
+      <li>
+        <Button href="/login">Sign in</Button>
+      </li>
+    </>
   );
 }
 

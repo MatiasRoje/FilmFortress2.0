@@ -15,6 +15,7 @@ const config: Config = {
       },
       colors: {
         main: {
+          50: "#f1f5f5",
           100: "#709e9b",
           200: "#588e8b",
           300: "#417e7a",
@@ -28,6 +29,9 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-poppins)", "sans-serif"],
+      },
+      height: {
+        screen: "100dvh",
       },
     },
   },
