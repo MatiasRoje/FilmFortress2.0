@@ -17,7 +17,6 @@ function MovieHeaderSection({
 }: MovieHeaderSectionProps) {
   const directors = movie.directors.map(director => director.name);
   const writers = movie.writers.map(writer => writer.name);
-  const userRating = ratings.find(rating => rating.movieId === movie.id);
 
   return (
     <section className="px relative my-6 flex gap-8 pr-4">
@@ -45,11 +44,7 @@ function MovieHeaderSection({
             <span>{movie.runtime}</span>
           </div>
         </div>
-        <MovieHeaderUserSection
-          movie={movie}
-          userRating={userRating}
-          watchlists={watchlists}
-        />
+        <MovieHeaderUserSection movie={movie} watchlists={watchlists} />
         <p className="italic">{movie.tagline}</p>
         <div className="flex flex-col gap-2">
           <p className="text-lg font-bold">Overview</p>

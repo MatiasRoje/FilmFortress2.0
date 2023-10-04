@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import Button from "./Button";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";

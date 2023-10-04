@@ -7,7 +7,9 @@ import { poppins } from "./fonts";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import "./globals.css";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider } from "@/providers/AuthContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -27,11 +29,13 @@ export default function RootLayout({
     <html lang="en" className={`${poppins.variable}`}>
       <body className="container mx-auto flex min-h-screen flex-col border-none bg-neutral-800 px-4 py-4 text-neutral-50">
         <AuthProvider>
-          <header>
-            <NavBar />
-          </header>
-          {children}
-          <Footer />
+          <ReactQueryProvider>
+            <header>
+              <NavBar />
+            </header>
+            {children}
+            <Footer />
+          </ReactQueryProvider>
         </AuthProvider>
       </body>
     </html>

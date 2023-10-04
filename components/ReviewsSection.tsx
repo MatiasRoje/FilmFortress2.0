@@ -6,7 +6,7 @@ import ReviewCard from "./ReviewCard";
 import ReviewsButton from "./ReviewsButton";
 import { useState } from "react";
 import { MovieDetails } from "@/types/movies";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import { Rating } from "@/types/ratings";
 import UserReviewCard from "./UserReviewCard";
 

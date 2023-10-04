@@ -1,7 +1,9 @@
+import { Rating } from "@/types/ratings";
+
 export async function postRating(
   rating: number,
   movieId: number,
-  userId: number,
+  userId: number
 ) {
   try {
     const res = await fetch("http://localhost:3000/api/ratings", {
@@ -19,7 +21,7 @@ export async function postRating(
 
 export async function getRatings() {
   try {
-    const res = await fetch("http:/localhost:3000/api/ratings", {
+    const res = await fetch("http://localhost:3000/api/ratings", {
       cache: "no-store",
     });
 
@@ -31,4 +33,31 @@ export async function getRatings() {
   } catch (error) {
     console.log("Error loading ratings:", error);
   }
+}
+
+export async function getUserRatings(
+  userId: number | undefined
+): Promise<Rating[]> {
+  if (userId) {
+    const { ratings } = await getRatings();
+    const userRatings = ratings.filter(
+      (rating: Rating) => rating.userId === userId
+    );
+    return userRatings;
+  }
+  return [];
+}
+
+export type PostUserRatingParams = {
+  rating: number;
+  movieId: number;
+  userId: number;
+};
+
+export async function postUserRating({
+  rating,
+  movieId,
+  userId,
+}: PostUserRatingParams) {
+  return await postRating(rating, movieId, userId);
 }

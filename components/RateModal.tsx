@@ -4,23 +4,24 @@ import StarRating from "./StarRating";
 import Button from "./Button";
 import { Movie, MovieDetails } from "@/types/movies";
 import { TvShow } from "@/types/tv";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
-import { postRating } from "@/lib/ratings";
+import { PostUserRatingParams, postRating } from "@/lib/ratings";
+import { UseMutationResult } from "@tanstack/react-query";
 
 type RateModalProps = {
   isOpen: boolean;
   setIsOpen: (boolean: boolean) => void;
   media: Movie | MovieDetails | TvShow;
-  setTempRating: (rating: number) => void;
+  mutation: UseMutationResult<
+    Response | undefined,
+    unknown,
+    PostUserRatingParams,
+    unknown
+  >;
 };
 
-function RateModal({
-  isOpen,
-  setIsOpen,
-  media,
-  setTempRating,
-}: RateModalProps) {
+function RateModal({ isOpen, setIsOpen, media, mutation }: RateModalProps) {
   const router = useRouter();
   let titleRef = useRef<HTMLHeadingElement | null>(null);
   const [userRating, setUserRating] = useState(0);
@@ -30,14 +31,19 @@ function RateModal({
     if (!isAuthenticated) router.push("/login");
 
     if (user && media && userRating) {
-      const res = await postRating(userRating, media.id, user.id);
-
-      if (res && res.ok) {
-        setIsOpen(false);
-        setTempRating(userRating);
-      } else {
-        throw new Error("Failed to create a rating");
-      }
+      mutation.mutate(
+        {
+          rating: userRating,
+          movieId: media.id,
+          userId: user?.id,
+        },
+        {
+          onSuccess: () => {
+            // Invalidate and refetch
+            setIsOpen(false);
+          },
+        }
+      );
     }
   }
 

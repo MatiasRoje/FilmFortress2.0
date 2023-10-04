@@ -1,7 +1,7 @@
 import { UserReview } from "@/types/reviews";
 import { StarIcon } from "@heroicons/react/24/solid";
 import ExpandableText from "./ExpandableText";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import { Rating } from "@/types/ratings";
 
 type ReviewCardProps = {

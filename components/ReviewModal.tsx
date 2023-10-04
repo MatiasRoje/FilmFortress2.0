@@ -3,7 +3,7 @@ import { useState } from "react";
 import Button from "./Button";
 import { Movie, MovieDetails } from "@/types/movies";
 import { TvShow } from "@/types/tv";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
 import { postReview } from "@/lib/reviews";
 

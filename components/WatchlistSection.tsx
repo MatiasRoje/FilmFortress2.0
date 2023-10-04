@@ -4,7 +4,7 @@ import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Button from "./Button";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import { Watchlist } from "@/types/watchlists";
 import useWatchlist from "@/hooks/useWatchlist";
 import Carousel from "./Carousel";

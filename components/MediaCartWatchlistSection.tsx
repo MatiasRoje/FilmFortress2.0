@@ -1,4 +1,4 @@
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import { postMovieToWatchlist } from "@/lib/watchlists";
 import { Movie } from "@/types/movies";
 import { Rating } from "@/types/ratings";

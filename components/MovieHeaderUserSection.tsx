@@ -9,29 +9,42 @@ import {
 import { useEffect, useState } from "react";
 import RateModal from "./RateModal";
 import { MovieDetails } from "@/types/movies";
-import { Rating } from "@/types/ratings";
 import { Watchlist } from "@/types/watchlists";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
 import { postMovieToWatchlist } from "@/lib/watchlists";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postUserRating } from "@/lib/ratings";
+import { useUserRatings } from "@/hooks/useUserRatings";
 
 type MovieHeaderUserSectionProps = {
   movie: MovieDetails;
-  userRating: Rating | undefined;
   watchlists: Watchlist[];
 };
 
 function MovieHeaderUserSection({
   movie,
-  userRating,
   watchlists,
 }: MovieHeaderUserSectionProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [tempRating, setTempRating] = useState<string | number>("");
   const { isAuthenticated, user } = useAuth();
   const [watchlist, setWatchlist] = useState<undefined | Watchlist>(undefined);
   const inWatchlist = watchlist?.movieIds.includes(movie.id);
+
+  const queryClient = useQueryClient();
+
+  const { isLoading, userRatings } = useUserRatings(user?.id);
+
+  const userRating = userRatings?.find(rating => rating.movieId === movie.id);
+
+  const ratingMutation = useMutation({
+    mutationFn: postUserRating,
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["ratings"] });
+    },
+  });
 
   useEffect(() => {
     if (user && isAuthenticated) {
@@ -94,19 +107,11 @@ function MovieHeaderUserSection({
           <p className="flex items-center gap-1">
             <span className="px-1 py-2">
               <SparklesIcon className="h-8 w-8 text-yellow-500" />
-            </span>{" "}
+            </span>
             {userRating.rating}
           </p>
         )}
-        {isAuthenticated && tempRating && (
-          <p className="flex items-center gap-1">
-            <span className="px-1 py-2">
-              <SparklesIcon className="h-8 w-8 text-yellow-500" />
-            </span>{" "}
-            {tempRating}
-          </p>
-        )}
-        {isAuthenticated && !userRating && !tempRating && (
+        {isAuthenticated && !userRating && (
           <p>
             <span>
               <SparklesIcon
@@ -138,52 +143,6 @@ function MovieHeaderUserSection({
             </p>
           </>
         )}
-        {isAuthenticated && tempRating && (
-          <>
-            <p className="text-sm text-gray-200">Watched</p>
-            <p className="flex items-center">
-              <span className="px-1 py-2">
-                <CheckCircleIcon className="h-8 w-8 text-green-500" />
-              </span>
-            </p>
-          </>
-        )}
-        {!userRating && !tempRating && !watchlist && (
-          <>
-            <p className="text-sm text-gray-200">Add to Watchlist</p>
-            <p>
-              <span>
-                <PlusCircleIcon
-                  className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
-                  onClick={handleAddMovieToWatchlist}
-                />
-              </span>
-            </p>
-          </>
-        )}
-        {!userRating && !tempRating && watchlist && inWatchlist && (
-          <>
-            <p className="text-sm text-gray-200">Watchlisted</p>
-            <p className="flex items-center">
-              <span>
-                <PlusCircleIcon className="h-12 w-12 rounded p-2 text-yellow-400 transition duration-300 hover:bg-neutral-600" />
-              </span>
-            </p>
-          </>
-        )}
-        {!userRating && !tempRating && watchlist && !inWatchlist && (
-          <>
-            <p className="text-sm text-gray-200">Add to Watchlist</p>
-            <p>
-              <span>
-                <PlusCircleIcon
-                  className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
-                  onClick={handleAddMovieToWatchlist}
-                />
-              </span>
-            </p>
-          </>
-        )}
         {!isAuthenticated && (
           <>
             <p className="text-sm text-gray-200">Add to Watchlist</p>
@@ -202,7 +161,7 @@ function MovieHeaderUserSection({
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         media={movie}
-        setTempRating={setTempRating}
+        mutation={ratingMutation}
       />
     </div>
   );

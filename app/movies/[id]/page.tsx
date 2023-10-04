@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import ReviewsSection from "@/components/ReviewsSection";
 import MovieHeaderSection from "@/components/MovieHeaderSection";
 import MovieSecondarySection from "@/components/MovieSecondarySection";
-import { getRatings } from "@/lib/ratings";
+import { getRatings, getUserRatings } from "@/lib/ratings";
 import { getWatchlists } from "@/lib/watchlists";
 import { Review } from "@/types/reviews";
 import { getReviews, getReviewsFromMovie } from "@/lib/reviews";

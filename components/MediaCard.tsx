@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Rating } from "@/types/ratings";
 import { Watchlist } from "@/types/watchlists";
 import MediaCartWatchlistSection from "./MediaCartWatchlistSection";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 
 type MediaCardProps = {
   media: Movie | TvShow;

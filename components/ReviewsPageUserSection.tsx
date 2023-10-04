@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import ReviewsButton from "@/components/ReviewsButton";
 import ReviewCard from "./ReviewCard";
 import { Rating } from "@/types/ratings";

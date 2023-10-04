@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Button from "./Button";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
