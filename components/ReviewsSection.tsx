@@ -38,6 +38,8 @@ function ReviewsSection({
       )
       .at(0);
 
+  // TODO: Concat reviews with userReviews
+
   return (
     <section className="my-8 flex flex-col gap-8">
       <div className="flex items-center gap-4">
@@ -45,7 +47,9 @@ function ReviewsSection({
           <Link href={`/movies/${media.id}/reviews`}>
             <h3 className="text-xl font-semibold hover:underline">Reviews</h3>
           </Link>
-          <span>—{reviews.length}</span>
+          <span>
+            —{userReview ? [...reviews, userReview].length : reviews.length}
+          </span>
         </div>
         <ReviewsButton setTempReview={setTempReview} media={media} />
       </div>

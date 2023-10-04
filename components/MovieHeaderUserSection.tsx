@@ -7,15 +7,18 @@ import {
   SparklesIcon,
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
-import RateModal from "./RateModal";
+import RatingModal from "./RatingModal";
 import { MovieDetails } from "@/types/movies";
 import { Watchlist } from "@/types/watchlists";
 import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
 import { postMovieToWatchlist } from "@/lib/watchlists";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postUserRating } from "@/lib/ratings";
+import { deleteRatingApi, postRating, updateRatingApi } from "@/lib/ratings";
 import { useUserRatings } from "@/hooks/useUserRatings";
+import { useCreateRating } from "@/hooks/useCreateRating";
+import { useDeleteRating } from "@/hooks/useDeleteRating";
+import { useUpdateRating } from "@/hooks/useUpdateRating";
 
 type MovieHeaderUserSectionProps = {
   movie: MovieDetails;
@@ -34,17 +37,13 @@ function MovieHeaderUserSection({
 
   const queryClient = useQueryClient();
 
-  const { isLoading, userRatings } = useUserRatings(user?.id);
+  const { userRatings } = useUserRatings(user?.id);
 
   const userRating = userRatings?.find(rating => rating.movieId === movie.id);
 
-  const ratingMutation = useMutation({
-    mutationFn: postUserRating,
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["ratings"] });
-    },
-  });
+  const { createRating } = useCreateRating();
+  const { deleteRating } = useDeleteRating();
+  const { updateRating } = useUpdateRating();
 
   useEffect(() => {
     if (user && isAuthenticated) {
@@ -104,7 +103,10 @@ function MovieHeaderUserSection({
       <div className="justify-baseline flex flex-col items-center">
         <p className="text-sm text-gray-200">Your Rating</p>
         {isAuthenticated && userRating && (
-          <p className="flex items-center gap-1">
+          <p
+            className="flex items-center gap-1 rounded px-1 hover:cursor-pointer hover:bg-neutral-600"
+            onClick={handleClick}
+          >
             <span className="px-1 py-2">
               <SparklesIcon className="h-8 w-8 text-yellow-500" />
             </span>
@@ -157,11 +159,14 @@ function MovieHeaderUserSection({
           </>
         )}
       </div>
-      <RateModal
+      <RatingModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         media={movie}
-        mutation={ratingMutation}
+        userRatingApi={userRating}
+        createRating={createRating}
+        deleteRating={deleteRating}
+        updateRating={updateRating}
       />
     </div>
   );

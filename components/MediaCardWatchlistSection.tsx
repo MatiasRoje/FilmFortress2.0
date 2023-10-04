@@ -8,19 +8,19 @@ import { PlusCircleIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type MediaCartWatchlistSectionProps = {
+type MediaCardWatchlistSectionProps = {
   watchlists: Watchlist[];
   media: Movie | TvShow;
   userRating: Rating | undefined;
   tempRating: string | number;
 };
 
-function MediaCartWatchlistSection({
+function MediaCardWatchlistSection({
   media,
   watchlists,
   userRating,
   tempRating,
-}: MediaCartWatchlistSectionProps) {
+}: MediaCardWatchlistSectionProps) {
   const router = useRouter();
   const { user, isAuthenticated } = useAuth();
   const [watchlist, setWatchlist] = useState<undefined | Watchlist>(undefined);
@@ -101,4 +101,4 @@ function MediaCartWatchlistSection({
   );
 }
 
-export default MediaCartWatchlistSection;
+export default MediaCardWatchlistSection;

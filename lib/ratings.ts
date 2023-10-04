@@ -1,19 +1,14 @@
-import { Rating } from "@/types/ratings";
+import { Rating, RatingApi } from "@/types/ratings";
 
-export async function postRating(
-  rating: number,
-  movieId: number,
-  userId: number
-) {
+export async function postRating({ rating, movieId, userId }: Rating) {
   try {
-    const res = await fetch("http://localhost:3000/api/ratings", {
+    return await fetch("http://localhost:3000/api/ratings", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({ rating, movieId, userId }),
     });
-    return res;
   } catch (error) {
     console.log("Error posting rating: ", error);
   }
@@ -35,29 +30,47 @@ export async function getRatings() {
   }
 }
 
+export async function deleteRatingApi(id: string) {
+  try {
+    return await fetch(`http://localhost:3000/api/ratings?id=${id}`, {
+      method: "DELETE",
+    });
+  } catch (error) {
+    console.log("Error deleting rating: ", error);
+  }
+}
+
+export type UpdateRatingParams = {
+  rating: RatingApi;
+  newRating: number;
+};
+
+export async function updateRatingApi({
+  rating,
+  newRating,
+}: UpdateRatingParams) {
+  try {
+    return await fetch(`http://localhost:3000/api/ratings/${rating._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ newRating }),
+    });
+  } catch (error) {
+    console.log("Error updating rating: ", error);
+  }
+}
+
 export async function getUserRatings(
   userId: number | undefined
-): Promise<Rating[]> {
+): Promise<RatingApi[]> {
   if (userId) {
     const { ratings } = await getRatings();
     const userRatings = ratings.filter(
-      (rating: Rating) => rating.userId === userId
+      (rating: RatingApi) => rating.userId === userId
     );
     return userRatings;
   }
   return [];
-}
-
-export type PostUserRatingParams = {
-  rating: number;
-  movieId: number;
-  userId: number;
-};
-
-export async function postUserRating({
-  rating,
-  movieId,
-  userId,
-}: PostUserRatingParams) {
-  return await postRating(rating, movieId, userId);
 }

@@ -6,7 +6,7 @@ import { Movie, MovieDetails } from "@/types/movies";
 import { TvShow } from "@/types/tv";
 import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
-import { PostUserRatingParams, postRating } from "@/lib/ratings";
+import { PostUserRatingParams } from "@/lib/ratings";
 import { UseMutationResult } from "@tanstack/react-query";
 
 type RateModalProps = {
@@ -21,7 +21,12 @@ type RateModalProps = {
   >;
 };
 
-function RateModal({ isOpen, setIsOpen, media, mutation }: RateModalProps) {
+function RatingEditDeleteModal({
+  isOpen,
+  setIsOpen,
+  media,
+  mutation,
+}: RateModalProps) {
   const router = useRouter();
   let titleRef = useRef<HTMLHeadingElement | null>(null);
   const [userRating, setUserRating] = useState(0);
@@ -86,4 +91,4 @@ function RateModal({ isOpen, setIsOpen, media, mutation }: RateModalProps) {
   );
 }
 
-export default RateModal;
+export default RatingEditDeleteModal;

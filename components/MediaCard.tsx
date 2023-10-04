@@ -4,11 +4,11 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import { SparklesIcon } from "@heroicons/react/24/outline";
 import { Movie } from "@/types/movies";
 import { TvShow } from "@/types/tv";
-import RateModal from "./RateModal";
+import RatingModal from "./RatingModal";
 import { useState } from "react";
 import { Rating } from "@/types/ratings";
 import { Watchlist } from "@/types/watchlists";
-import MediaCartWatchlistSection from "./MediaCartWatchlistSection";
+import MediaCardWatchlistSection from "./MediaCardWatchlistSection";
 import { useAuth } from "@/providers/AuthContext";
 
 type MediaCardProps = {
@@ -41,7 +41,7 @@ function MediaCard({ media, ratings, watchlists }: MediaCardProps) {
           className="h-[17rem] w-auto max-w-none rounded-t"
         />
       </Link>
-      <MediaCartWatchlistSection
+      <MediaCardWatchlistSection
         media={media}
         watchlists={watchlists}
         userRating={userRating}
@@ -91,12 +91,7 @@ function MediaCard({ media, ratings, watchlists }: MediaCardProps) {
         </p>
         <p className="mt-auto text-sm">{media.releaseDate}</p>
       </div>
-      <RateModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        media={media}
-        setTempRating={setTempRating}
-      />
+      <RatingModal isOpen={isOpen} setIsOpen={setIsOpen} media={media} />
     </li>
   );
 }
