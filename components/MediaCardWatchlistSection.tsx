@@ -1,69 +1,41 @@
 import { useAuth } from "@/providers/AuthContext";
-import { postMovieToWatchlist } from "@/lib/watchlists";
 import { Movie } from "@/types/movies";
 import { Rating } from "@/types/ratings";
-import { TvShow } from "@/types/tv";
-import { Watchlist } from "@/types/watchlists";
 import { PlusCircleIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useUserWatchlist } from "@/hooks/useUserWatchlist";
+import { useAddMovieToWatchlist } from "@/hooks/useAddMovieToWatchlist";
+import { useDeleteMovieFromWatchlist } from "@/hooks/useDeleteMovieFromWatchlist";
 
 type MediaCardWatchlistSectionProps = {
-  watchlists: Watchlist[];
-  media: Movie | TvShow;
+  movie: Movie;
   userRating: Rating | undefined;
-  tempRating: string | number;
 };
 
 function MediaCardWatchlistSection({
-  media,
-  watchlists,
+  movie,
   userRating,
-  tempRating,
 }: MediaCardWatchlistSectionProps) {
   const router = useRouter();
   const { user, isAuthenticated } = useAuth();
-  const [watchlist, setWatchlist] = useState<undefined | Watchlist>(undefined);
-  const inWatchlist = watchlist?.movieIds.includes(media.id);
 
-  useEffect(() => {
-    if (user) {
-      const watchlist = watchlists.find(
-        watchlist => watchlist.userId === user.id
-      );
-      setWatchlist(watchlist);
-    }
-  }, [user, watchlists]);
+  const { userWatchlist } = useUserWatchlist(user?.id);
+  const inWatchlist = userWatchlist?.movieIds?.includes(movie.id);
+  const { addMovie } = useAddMovieToWatchlist();
+  const { deleteMovie } = useDeleteMovieFromWatchlist();
 
-  async function handleAddMovieToWatchlist() {
+  function handleAddMovie() {
     if (!isAuthenticated) router.push("/login");
 
-    if (user) {
-      const res = await postMovieToWatchlist(media.id, user.id);
-
-      if (res && res.ok) {
-        setWatchlist((prevWatchlist: Watchlist | undefined) => {
-          if (!prevWatchlist) {
-            // If there is no previous watchlist, create a new one
-            return {
-              userId: user.id,
-              movieIds: [media.id],
-              name: "Watchlist",
-            };
-          } else {
-            // If there is a previous watchlist, update movieIds
-            return {
-              ...prevWatchlist,
-              movieIds: [...prevWatchlist.movieIds, media.id],
-            };
-          }
-        });
-      } else {
-        throw new Error("Failed to add the movie to the watchlist");
-      }
-    }
+    addMovie({ movieId: movie.id, userId: user?.id });
   }
 
+  function handleDeleteMovie() {
+    const newMovieIds = userWatchlist.movieIds.filter(
+      (movieId: number) => movieId !== movie.id
+    );
+    deleteMovie({ watchlist: userWatchlist, newMovieIds });
+  }
   return (
     <>
       {userRating && (
@@ -71,29 +43,27 @@ function MediaCardWatchlistSection({
           <CheckCircleIcon className="absolute top-0 z-10 h-9 w-9 text-green-500" />
         </p>
       )}
-      {tempRating && (
-        <p>
-          <CheckCircleIcon className="absolute top-0 z-10 h-9 w-9 text-green-500" />
-        </p>
-      )}
-      {!userRating && !tempRating && !watchlist && (
+      {!userRating && !userWatchlist && (
         <p>
           <PlusCircleIcon
             className="absolute top-0 z-10 h-9 w-9 hover:cursor-pointer hover:text-yellow-400"
-            onClick={handleAddMovieToWatchlist}
+            onClick={handleAddMovie}
           />
         </p>
       )}
-      {!userRating && !tempRating && watchlist && inWatchlist && (
+      {!userRating && userWatchlist && inWatchlist && (
         <p>
-          <PlusCircleIcon className="absolute top-0 z-10 h-9 w-9 text-yellow-400 hover:cursor-pointer" />
+          <PlusCircleIcon
+            className="absolute top-0 z-10 h-9 w-9 text-yellow-400 hover:cursor-pointer"
+            onClick={handleDeleteMovie}
+          />
         </p>
       )}
-      {!userRating && !tempRating && watchlist && !inWatchlist && (
+      {!userRating && userWatchlist && !inWatchlist && (
         <p>
           <PlusCircleIcon
             className="absolute top-0 z-10 h-9 w-9 hover:cursor-pointer hover:text-yellow-400"
-            onClick={handleAddMovieToWatchlist}
+            onClick={handleAddMovie}
           />
         </p>
       )}

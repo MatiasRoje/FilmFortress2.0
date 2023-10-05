@@ -4,13 +4,12 @@ import Button from "./Button";
 import { Movie, MovieDetails } from "@/types/movies";
 import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
-import { postReview } from "@/lib/reviews";
 import { useCreateReview } from "@/hooks/useCreateReview";
 import { UserReview } from "@/types/reviews";
 import { useUpdateReview } from "@/hooks/useUpdateReview";
 
 type ReviewModalProps = {
-  userReviewApi: UserReview | undefined;
+  userReviewApi?: UserReview | undefined;
   isOpen: boolean;
   setIsOpen: (boolean: boolean) => void;
   movie: Movie | MovieDetails;

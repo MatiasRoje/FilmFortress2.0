@@ -151,7 +151,7 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
       <RatingModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        media={movie}
+        movie={movie}
         userRatingApi={userRating}
       />
     </div>

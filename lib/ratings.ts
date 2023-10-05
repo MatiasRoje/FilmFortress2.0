@@ -2,7 +2,7 @@ import { Rating, RatingApi } from "@/types/ratings";
 
 export async function postRating({ rating, movieId, userId }: Rating) {
   try {
-    return await fetch("http://localhost:3000/api/ratings", {
+    return await fetch("/api/ratings", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -16,7 +16,7 @@ export async function postRating({ rating, movieId, userId }: Rating) {
 
 export async function getRatings() {
   try {
-    const res = await fetch("http://localhost:3000/api/ratings", {
+    const res = await fetch("/api/ratings", {
       cache: "no-store",
     });
 
@@ -32,7 +32,7 @@ export async function getRatings() {
 
 export async function deleteRatingApi(id: string) {
   try {
-    return await fetch(`http://localhost:3000/api/ratings?id=${id}`, {
+    return await fetch(`/api/ratings?id=${id}`, {
       method: "DELETE",
     });
   } catch (error) {
@@ -50,7 +50,7 @@ export async function updateRatingApi({
   newRating,
 }: UpdateRatingParams) {
   try {
-    return await fetch(`http://localhost:3000/api/ratings/${rating._id}`, {
+    return await fetch(`/api/ratings/${rating._id}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",

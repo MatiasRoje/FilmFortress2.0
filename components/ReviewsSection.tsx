@@ -9,23 +9,15 @@ import { useAuth } from "@/providers/AuthContext";
 import UserReviewCard from "./UserReviewCard";
 import { useUserRatings } from "@/hooks/useUserRatings";
 import { useUserReviews } from "@/hooks/useUserReviews";
-import {
-  ConvertUserReviewToReviewTMDB,
-  getUserReviewForMovie,
-} from "@/lib/reviews";
+import { ConvertUserReviewToReviewTMDB } from "@/lib/reviews";
 import { useUserReviewForMovie } from "@/hooks/useUserReviewForMovie";
 
 type ReviewsSectionProps = {
   movie: MovieDetails;
   reviews: ReviewTMDB[];
-  allUserReviews: UserReview[];
 };
 
-function ReviewsSection({
-  movie,
-  reviews,
-  allUserReviews,
-}: ReviewsSectionProps) {
+function ReviewsSection({ movie, reviews }: ReviewsSectionProps) {
   const { user, isAuthenticated } = useAuth();
 
   const { userRatings } = useUserRatings(user?.id);

@@ -70,7 +70,7 @@ export async function postMovieToWatchlist({
 
 export async function getWatchlists() {
   try {
-    const res = await fetch("http:/localhost:3000/api/watchlists", {
+    const res = await fetch("/api/watchlists", {
       cache: "no-store",
     });
 

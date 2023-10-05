@@ -18,7 +18,7 @@ export async function getReviewsFromMovie(movieId: number) {
 
 export async function getReviews() {
   try {
-    const res = await fetch("http://localhost:3000/api/reviews", {
+    const res = await fetch("/api/reviews", {
       cache: "no-store",
     });
 
@@ -57,7 +57,7 @@ export async function getUserReviews(userId: number | undefined) {
 
 export async function getUserReviewForMovie(movieId: number) {
   try {
-    const res = await fetch("http://localhost:3000/api/reviews", {
+    const res = await fetch("/api/reviews", {
       cache: "no-store",
     });
 

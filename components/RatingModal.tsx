@@ -14,17 +14,17 @@ import { useDeleteRating } from "@/hooks/useDeleteRating";
 import { useUpdateRating } from "@/hooks/useUpdateRating";
 
 type RateModalProps = {
-  userRatingApi: RatingApi | undefined;
+  userRatingApi?: RatingApi | undefined;
   isOpen: boolean;
   setIsOpen: (boolean: boolean) => void;
-  media: Movie | MovieDetails | TvShow;
+  movie: Movie | MovieDetails;
 };
 
 function RatingModal({
   userRatingApi,
   isOpen,
   setIsOpen,
-  media,
+  movie,
 }: RateModalProps) {
   const router = useRouter();
   let titleRef = useRef<HTMLHeadingElement | null>(null);
@@ -52,11 +52,11 @@ function RatingModal({
       );
     }
 
-    if (!userRatingApi && user && media && userRating) {
+    if (!userRatingApi && user && movie && userRating) {
       createRating(
         {
           rating: userRating,
-          movieId: media.id,
+          movieId: movie.id,
           userId: user?.id,
         },
         {
@@ -89,7 +89,7 @@ function RatingModal({
             RATE THIS
           </Dialog.Title>
           <h2 className="text-center text-xl font-bold" ref={titleRef}>
-            {media.title}
+            {movie.title}
           </h2>
           {userRatingApi ? (
             <StarRating

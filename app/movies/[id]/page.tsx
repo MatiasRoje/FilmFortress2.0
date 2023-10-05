@@ -31,18 +31,13 @@ export async function generateMetadata({
 
 async function MoviePage({ params: { id } }: MoviePageProps) {
   const movie = await getMovie(id);
-  const { reviews: allUserReviews } = await getReviews();
   const reviews: ReviewTMDB[] = await getReviewsFromMovie(id);
 
   return (
     <main>
       <MovieHeaderSection movie={movie} />
       <MovieSecondarySection movie={movie} />
-      <ReviewsSection
-        movie={movie}
-        reviews={reviews}
-        allUserReviews={allUserReviews}
-      />
+      <ReviewsSection movie={movie} reviews={reviews} />
     </main>
   );
 }
