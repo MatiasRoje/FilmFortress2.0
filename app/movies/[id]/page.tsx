@@ -6,7 +6,11 @@ import MovieSecondarySection from "@/components/MovieSecondarySection";
 import { getRatings, getUserRatings } from "@/lib/ratings";
 import { getUserWatchlist, getWatchlists } from "@/lib/watchlists";
 import { ReviewTMDB, UserReview } from "@/types/reviews";
-import { getReviews, getReviewsFromMovie } from "@/lib/reviews";
+import {
+  getReviews,
+  getReviewsFromMovie,
+  getUserReviewForMovie,
+} from "@/lib/reviews";
 
 type MoviePageParams = {
   id: number;

@@ -9,7 +9,11 @@ import { useAuth } from "@/providers/AuthContext";
 import UserReviewCard from "./UserReviewCard";
 import { useUserRatings } from "@/hooks/useUserRatings";
 import { useUserReviews } from "@/hooks/useUserReviews";
-import { ConvertUserReviewToReviewTMDB } from "@/lib/reviews";
+import {
+  ConvertUserReviewToReviewTMDB,
+  getUserReviewForMovie,
+} from "@/lib/reviews";
+import { useUserReviewForMovie } from "@/hooks/useUserReviewForMovie";
 
 type ReviewsSectionProps = {
   movie: MovieDetails;
@@ -37,25 +41,26 @@ function ReviewsSection({
 
   // Concat reviews with userReviews for handling the case when the user is not Authentificated but his
   // review is still published on the website
-  const allReviews = [
-    ...allUserReviews
-      .filter((review: UserReview) => review.movieId === movie.id)
-      .map(review => ConvertUserReviewToReviewTMDB(review)),
-    ...reviews,
-  ].sort((a, b) => {
-    // Convert date strings to Date objects
-    const dateA = new Date(a.createdDate);
-    const dateB = new Date(b.createdDate);
+  const { userReviewForMovie } = useUserReviewForMovie(movie.id);
+  const notAuthenticatedUserReview =
+    ConvertUserReviewToReviewTMDB(userReviewForMovie);
 
-    // Compare the Date objects
-    if (dateA < dateB) {
-      return -1;
-    }
-    if (dateA > dateB) {
-      return 1;
-    }
-    return 0; // Dates are equal
-  });
+  const allReviews = notAuthenticatedUserReview
+    ? [notAuthenticatedUserReview, ...reviews].sort((a, b) => {
+        // Convert date strings to Date objects
+        const dateA = new Date(a.createdDate);
+        const dateB = new Date(b.createdDate);
+
+        // Compare the Date objects
+        if (dateA < dateB) {
+          return -1;
+        }
+        if (dateA > dateB) {
+          return 1;
+        }
+        return 0; // Dates are equal
+      })
+    : reviews;
 
   const mostRecentReview = allReviews.at(-1);
 

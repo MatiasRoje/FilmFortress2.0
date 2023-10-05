@@ -8,6 +8,7 @@ export function useCreateReview() {
     mutationFn: postReview,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["userReview"] });
     },
   });
 

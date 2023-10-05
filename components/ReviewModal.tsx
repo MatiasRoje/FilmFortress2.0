@@ -69,8 +69,12 @@ function ReviewModal({
     <Dialog
       open={isOpen}
       onClose={() => {
-        setIsOpen(false);
-        setUserReview("");
+        if (userReviewApi) {
+          setIsOpen(false);
+        } else {
+          setIsOpen(false);
+          setUserReview("");
+        }
       }}
       className="relative z-50"
     >

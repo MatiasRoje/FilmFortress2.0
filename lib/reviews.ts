@@ -55,6 +55,27 @@ export async function getUserReviews(userId: number | undefined) {
   }
 }
 
+export async function getUserReviewForMovie(movieId: number) {
+  try {
+    const res = await fetch("http://localhost:3000/api/reviews", {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch reviews");
+    }
+
+    const { reviews } = await res.json();
+    const userReviews = reviews.find(
+      (review: UserReview) => review.movieId === movieId
+    );
+    if (userReviews) return userReviews;
+    return {};
+  } catch (error) {
+    console.log("Error loading reviews:", error);
+  }
+}
+
 type PostReviewParams = {
   content: string;
   movieId: number;
@@ -128,13 +149,17 @@ export function StripReview(reviewObject: ReviewObject): ReviewTMDB {
   };
 }
 
-export function ConvertUserReviewToReviewTMDB(review: UserReview): ReviewTMDB {
+export function ConvertUserReviewToReviewTMDB(
+  review: UserReview
+): ReviewTMDB | undefined {
   const { userRatings } = useUserRatings(1);
   const userRating = userRatings?.find(
-    rating => rating.movieId === review.movieId
+    rating => rating.movieId === review?.movieId
   );
 
-  return {
+  if (!review) return;
+
+  const convertedReview = {
     id: review._id,
     author: "Alice",
     rating: userRating?.rating,
@@ -145,4 +170,8 @@ export function ConvertUserReviewToReviewTMDB(review: UserReview): ReviewTMDB {
       year: "numeric",
     }),
   };
+
+  if (convertedReview.content) {
+    return convertedReview;
+  } else return undefined;
 }

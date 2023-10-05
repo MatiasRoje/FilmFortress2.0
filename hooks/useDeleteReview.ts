@@ -8,6 +8,7 @@ export function useDeleteReview() {
     mutationFn: deleteReviewApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ["userReview"] });
     },
   });
 
