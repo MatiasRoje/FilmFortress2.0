@@ -9,16 +9,12 @@ import {
 import { useState } from "react";
 import RatingModal from "./RatingModal";
 import { MovieDetails } from "@/types/movies";
-import { Watchlist } from "@/types/watchlists";
 import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
-import { postMovieToWatchlist } from "@/lib/watchlists";
 import { useUserRatings } from "@/hooks/useUserRatings";
-import { useCreateRating } from "@/hooks/useCreateRating";
-import { useDeleteRating } from "@/hooks/useDeleteRating";
-import { useUpdateRating } from "@/hooks/useUpdateRating";
 import { useUserWatchlist } from "@/hooks/useUserWatchlist";
 import { useAddMovieToWatchlist } from "@/hooks/useAddMovieToWatchlist";
+import { useDeleteMovieFromWatchlist } from "@/hooks/useDeleteMovieFromWatchlist";
 
 type MovieHeaderUserSectionProps = {
   movie: MovieDetails;
@@ -31,22 +27,27 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
 
   const { userRatings } = useUserRatings(user?.id);
   const userRating = userRatings?.find(rating => rating.movieId === movie.id);
-  const { createRating } = useCreateRating();
-  const { deleteRating } = useDeleteRating();
-  const { updateRating } = useUpdateRating();
 
   const { userWatchlist } = useUserWatchlist(user?.id);
   const inWatchlist = userWatchlist?.movieIds?.includes(movie.id);
   const { addMovie } = useAddMovieToWatchlist();
+  const { deleteMovie } = useDeleteMovieFromWatchlist();
 
   function handleClick() {
     setIsOpen(true);
   }
 
-  async function handleAddMovie() {
+  function handleAddMovie() {
     if (!isAuthenticated) router.push("/login");
 
     addMovie({ movieId: movie.id, userId: user?.id });
+  }
+
+  function handleDeleteMovie() {
+    const newMovieIds = userWatchlist.movieIds.filter(
+      (movieId: number) => movieId !== movie.id
+    );
+    deleteMovie({ watchlist: userWatchlist, newMovieIds });
   }
 
   return (
@@ -79,7 +80,7 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
           <p>
             <span>
               <SparklesIcon
-                className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
+                className="h-12 w-12 rounded p-2 transition duration-300 hover:cursor-pointer hover:bg-neutral-600 hover:text-yellow-400"
                 onClick={handleClick}
               />
             </span>
@@ -89,7 +90,7 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
           <p>
             <span>
               <SparklesIcon
-                className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
+                className="h-12 w-12 rounded p-2 transition duration-300 hover:cursor-pointer hover:bg-neutral-600 hover:text-yellow-400"
                 onClick={handleClick}
               />
             </span>
@@ -113,7 +114,7 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
             <p>
               <span>
                 <PlusCircleIcon
-                  className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
+                  className="h-12 w-12 rounded p-2 transition duration-300 hover:cursor-pointer hover:bg-neutral-600 hover:text-yellow-400"
                   onClick={handleAddMovie}
                 />
               </span>
@@ -122,10 +123,13 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
         )}
         {!userRating && userWatchlist && inWatchlist && (
           <>
-            <p className="text-sm text-gray-200">Watchlisted</p>
+            <p className="text-sm text-gray-200">In your Watchlist</p>
             <p className="flex items-center">
               <span>
-                <PlusCircleIcon className="h-12 w-12 rounded p-2 text-yellow-400 transition duration-300 hover:bg-neutral-600" />
+                <PlusCircleIcon
+                  className=" h-12 w-12 rounded p-2 text-yellow-400 transition duration-300 hover:cursor-pointer hover:bg-neutral-600"
+                  onClick={handleDeleteMovie}
+                />
               </span>
             </p>
           </>
@@ -136,7 +140,7 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
             <p>
               <span>
                 <PlusCircleIcon
-                  className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
+                  className="h-12 w-12 rounded p-2 transition duration-300 hover:cursor-pointer hover:bg-neutral-600 hover:text-yellow-400"
                   onClick={handleAddMovie}
                 />
               </span>
@@ -149,9 +153,6 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
         setIsOpen={setIsOpen}
         media={movie}
         userRatingApi={userRating}
-        createRating={createRating}
-        deleteRating={deleteRating}
-        updateRating={updateRating}
       />
     </div>
   );

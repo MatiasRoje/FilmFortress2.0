@@ -5,7 +5,7 @@ export type Watchlist = {
 };
 
 export type WatchlistApi = {
-  id: string;
+  _id: string;
   name: string;
   movieIds: number[];
   userId: number;

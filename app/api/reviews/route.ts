@@ -15,3 +15,10 @@ export async function GET() {
   const reviews = await Review.find();
   return NextResponse.json({ reviews });
 }
+
+export async function DELETE(request: NextRequest) {
+  const id = request.nextUrl.searchParams.get("id");
+  await connectMongoDB();
+  await Review.findByIdAndDelete(id);
+  return NextResponse.json({ message: "Review deleted" }, { status: 200 });
+}

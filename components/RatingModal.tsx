@@ -6,33 +6,18 @@ import { Movie, MovieDetails } from "@/types/movies";
 import { TvShow } from "@/types/tv";
 import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
-import { UseMutateFunction, UseMutationResult } from "@tanstack/react-query";
+import { UseMutateFunction } from "@tanstack/react-query";
 import { Rating, RatingApi } from "@/types/ratings";
 import { UpdateRatingParams } from "@/lib/ratings";
+import { useCreateRating } from "@/hooks/useCreateRating";
+import { useDeleteRating } from "@/hooks/useDeleteRating";
+import { useUpdateRating } from "@/hooks/useUpdateRating";
 
 type RateModalProps = {
   userRatingApi: RatingApi | undefined;
   isOpen: boolean;
   setIsOpen: (boolean: boolean) => void;
   media: Movie | MovieDetails | TvShow;
-  createRating: UseMutateFunction<
-    Response | undefined,
-    unknown,
-    Rating,
-    unknown
-  >;
-  deleteRating: UseMutateFunction<
-    Response | undefined,
-    unknown,
-    string,
-    unknown
-  >;
-  updateRating: UseMutateFunction<
-    Response | undefined,
-    unknown,
-    UpdateRatingParams,
-    unknown
-  >;
 };
 
 function RatingModal({
@@ -40,14 +25,15 @@ function RatingModal({
   isOpen,
   setIsOpen,
   media,
-  createRating,
-  deleteRating,
-  updateRating,
 }: RateModalProps) {
   const router = useRouter();
   let titleRef = useRef<HTMLHeadingElement | null>(null);
   const [userRating, setUserRating] = useState(0);
   const { user, isAuthenticated } = useAuth();
+
+  const { createRating } = useCreateRating();
+  const { deleteRating } = useDeleteRating();
+  const { updateRating } = useUpdateRating();
 
   function handleClick() {
     if (!isAuthenticated) router.push("/login");

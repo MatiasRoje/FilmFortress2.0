@@ -5,7 +5,7 @@ import MovieHeaderSection from "@/components/MovieHeaderSection";
 import MovieSecondarySection from "@/components/MovieSecondarySection";
 import { getRatings, getUserRatings } from "@/lib/ratings";
 import { getUserWatchlist, getWatchlists } from "@/lib/watchlists";
-import { Review } from "@/types/reviews";
+import { ReviewTMDB, UserReview } from "@/types/reviews";
 import { getReviews, getReviewsFromMovie } from "@/lib/reviews";
 
 type MoviePageParams = {
@@ -27,19 +27,17 @@ export async function generateMetadata({
 
 async function MoviePage({ params: { id } }: MoviePageProps) {
   const movie = await getMovie(id);
-  const { ratings } = await getRatings();
-  const { reviews: usersReviews } = await getReviews();
-  const reviews: Review[] = await getReviewsFromMovie(id);
+  const { reviews: allUserReviews } = await getReviews();
+  const reviews: ReviewTMDB[] = await getReviewsFromMovie(id);
 
   return (
     <main>
       <MovieHeaderSection movie={movie} />
       <MovieSecondarySection movie={movie} />
       <ReviewsSection
-        media={movie}
+        movie={movie}
         reviews={reviews}
-        usersReviews={usersReviews}
-        ratings={ratings}
+        allUserReviews={allUserReviews}
       />
     </main>
   );

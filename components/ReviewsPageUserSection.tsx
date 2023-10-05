@@ -1,7 +1,7 @@
 "use client";
 
 import { MovieDetails } from "@/types/movies";
-import { Review, UserReview } from "@/types/reviews";
+import { ReviewTMDB, UserReview } from "@/types/reviews";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -14,7 +14,7 @@ import UserReviewCard from "./UserReviewCard";
 
 type ReviewsPageUserSectionProps = {
   movie: MovieDetails;
-  reviews: Review[];
+  reviews: ReviewTMDB[];
   usersReviews: UserReview[];
   ratings: Rating[];
 };

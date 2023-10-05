@@ -1,9 +1,9 @@
-import { Review } from "@/types/reviews";
+import { ReviewTMDB } from "@/types/reviews";
 import { StarIcon } from "@heroicons/react/24/solid";
 import ExpandableText from "./ExpandableText";
 
 type ReviewCardProps = {
-  review: Review;
+  review: ReviewTMDB;
   width: string;
 };
 
