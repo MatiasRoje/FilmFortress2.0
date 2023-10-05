@@ -6,7 +6,10 @@ export function useUserRatings(userId: number | undefined) {
     isLoading,
     data: userRatings,
     error,
-  } = useQuery(["ratings", userId], () => getUserRatings(userId));
+  } = useQuery({
+    queryKey: ["ratings", userId],
+    queryFn: () => getUserRatings(userId),
+  });
 
   return { isLoading, userRatings, error };
 }

@@ -6,85 +6,47 @@ import {
   PlusCircleIcon,
   SparklesIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import RatingModal from "./RatingModal";
 import { MovieDetails } from "@/types/movies";
 import { Watchlist } from "@/types/watchlists";
 import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
 import { postMovieToWatchlist } from "@/lib/watchlists";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteRatingApi, postRating, updateRatingApi } from "@/lib/ratings";
 import { useUserRatings } from "@/hooks/useUserRatings";
 import { useCreateRating } from "@/hooks/useCreateRating";
 import { useDeleteRating } from "@/hooks/useDeleteRating";
 import { useUpdateRating } from "@/hooks/useUpdateRating";
+import { useUserWatchlist } from "@/hooks/useUserWatchlist";
+import { useAddMovieToWatchlist } from "@/hooks/useAddMovieToWatchlist";
 
 type MovieHeaderUserSectionProps = {
   movie: MovieDetails;
-  watchlists: Watchlist[];
 };
 
-function MovieHeaderUserSection({
-  movie,
-  watchlists,
-}: MovieHeaderUserSectionProps) {
+function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, user } = useAuth();
-  const [watchlist, setWatchlist] = useState<undefined | Watchlist>(undefined);
-  const inWatchlist = watchlist?.movieIds.includes(movie.id);
-
-  const queryClient = useQueryClient();
 
   const { userRatings } = useUserRatings(user?.id);
-
   const userRating = userRatings?.find(rating => rating.movieId === movie.id);
-
   const { createRating } = useCreateRating();
   const { deleteRating } = useDeleteRating();
   const { updateRating } = useUpdateRating();
 
-  useEffect(() => {
-    if (user && isAuthenticated) {
-      const watchlist = watchlists.find(
-        watchlist => watchlist.userId === user.id
-      );
-      setWatchlist(watchlist);
-    }
-  }, [user, watchlists, isAuthenticated]);
+  const { userWatchlist } = useUserWatchlist(user?.id);
+  const inWatchlist = userWatchlist?.movieIds?.includes(movie.id);
+  const { addMovie } = useAddMovieToWatchlist();
 
   function handleClick() {
     setIsOpen(true);
   }
 
-  async function handleAddMovieToWatchlist() {
+  async function handleAddMovie() {
     if (!isAuthenticated) router.push("/login");
 
-    if (user) {
-      const res = await postMovieToWatchlist(movie.id, user.id);
-
-      if (res && res.ok) {
-        setWatchlist((prevWatchlist: Watchlist | undefined) => {
-          if (!prevWatchlist) {
-            // If there is no previous watchlist, create a new one
-            return {
-              userId: user.id,
-              movieIds: [movie.id],
-              name: "Watchlist",
-            };
-          } else {
-            // If there is a previous watchlist, update movieIds
-            return {
-              ...prevWatchlist,
-              movieIds: [...prevWatchlist.movieIds, movie.id],
-            };
-          }
-        });
-      } else {
-        throw new Error("Failed to add the movie to the watchlist");
-      }
-    }
+    addMovie({ movieId: movie.id, userId: user?.id });
   }
 
   return (
@@ -135,7 +97,7 @@ function MovieHeaderUserSection({
         )}
       </div>
       <div className="flex flex-col items-center justify-center">
-        {isAuthenticated && userRating && (
+        {userRating && (
           <>
             <p className="text-sm text-gray-200">Watched</p>
             <p className="flex items-center">
@@ -145,14 +107,37 @@ function MovieHeaderUserSection({
             </p>
           </>
         )}
-        {!isAuthenticated && (
+        {!userRating && !userWatchlist && (
           <>
             <p className="text-sm text-gray-200">Add to Watchlist</p>
             <p>
               <span>
                 <PlusCircleIcon
                   className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
-                  onClick={handleAddMovieToWatchlist}
+                  onClick={handleAddMovie}
+                />
+              </span>
+            </p>
+          </>
+        )}
+        {!userRating && userWatchlist && inWatchlist && (
+          <>
+            <p className="text-sm text-gray-200">Watchlisted</p>
+            <p className="flex items-center">
+              <span>
+                <PlusCircleIcon className="h-12 w-12 rounded p-2 text-yellow-400 transition duration-300 hover:bg-neutral-600" />
+              </span>
+            </p>
+          </>
+        )}
+        {!userRating && userWatchlist && !inWatchlist && (
+          <>
+            <p className="text-sm text-gray-200">Add to Watchlist</p>
+            <p>
+              <span>
+                <PlusCircleIcon
+                  className="h-12 w-12 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
+                  onClick={handleAddMovie}
                 />
               </span>
             </p>

@@ -1,20 +1,12 @@
 import Image from "next/image";
 import { MovieDetails } from "@/types/movies";
-import { Rating } from "@/types/ratings";
 import MovieHeaderUserSection from "./MovieHeaderUserSection";
-import { Watchlist } from "@/types/watchlists";
 
 type MovieHeaderSectionProps = {
   movie: MovieDetails;
-  ratings: Rating[];
-  watchlists: Watchlist[];
 };
 
-function MovieHeaderSection({
-  movie,
-  ratings,
-  watchlists,
-}: MovieHeaderSectionProps) {
+function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
   const directors = movie.directors.map(director => director.name);
   const writers = movie.writers.map(writer => writer.name);
 
@@ -44,7 +36,7 @@ function MovieHeaderSection({
             <span>{movie.runtime}</span>
           </div>
         </div>
-        <MovieHeaderUserSection movie={movie} watchlists={watchlists} />
+        <MovieHeaderUserSection movie={movie} />
         <p className="italic">{movie.tagline}</p>
         <div className="flex flex-col gap-2">
           <p className="text-lg font-bold">Overview</p>
