@@ -9,7 +9,7 @@ const imageUrlLight = process.env.NEXT_PUBLIC_TMDB_IMG_LIGHT;
 export async function getMovies(
   query: string,
   queryString: string = "language=en-US&page=1"
-): Promise<Movie[]> {
+) {
   if (!query) {
     const res = await fetch(
       `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&${queryString}`,
@@ -18,8 +18,11 @@ export async function getMovies(
       }
     );
     const data = await res.json();
-    const movies = data.results;
-    return movies.map((movie: any) => StripMovie(movie));
+    const movies = data.results?.map((movie: any) => StripMovie(movie));
+    return {
+      movies,
+      totalPages: data.total_pages,
+    };
   }
   const res = await fetch(
     `https://api.themoviedb.org/3/movie/${query}?api_key=${apiKey}&${queryString}`,
@@ -28,8 +31,11 @@ export async function getMovies(
     }
   );
   const data = await res.json();
-  const movies = data.results;
-  return movies.map((movie: any) => StripMovie(movie));
+  const movies = data.results?.map((movie: any) => StripMovie(movie));
+  return {
+    movies,
+    totalPages: data.total_pages,
+  };
 }
 
 export async function getMovie(id: number): Promise<MovieDetails> {

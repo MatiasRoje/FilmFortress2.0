@@ -1,4 +1,6 @@
 import MoviesPageUserSection from "@/components/MoviesPageUserSection";
+import SortSearch from "@/components/SortSearch";
+import UserScoreSearch from "@/components/UserScoreSearch";
 import { getMovies } from "@/lib/movies";
 import { findKeyByValue, findValueByKey } from "@/lib/utility";
 import Link from "next/link";
@@ -130,7 +132,19 @@ async function MoviesPage({
   }
 
   const queryString = querystring.stringify(searchParams);
-  const movies = await getMovies(query!, queryString);
+  const { movies, totalPages } = await getMovies(query!, queryString);
+
+  const genreQuery = findValueByKey(searchParams, "with_genres");
+
+  let queryWithoutGenres;
+  if (genreQuery) {
+    const { with_genres, ...newSearchParams } = searchParams;
+    queryWithoutGenres = newSearchParams;
+  }
+
+  console.log(queryWithoutGenres);
+  const newQueryWithoutGenres = querystring.stringify(queryWithoutGenres);
+  console.log(newQueryWithoutGenres);
 
   const genreArray = searchParams.with_genres
     ? typeof searchParams.with_genres === "string"
@@ -179,15 +193,19 @@ async function MoviesPage({
             </li>
           </ul>
           <div>
+            <SortSearch searchParams={searchParams} />
+          </div>
+          <div>
             <h3>Genres</h3>
             <ul className="flex w-56 flex-wrap gap-1 gap-y-4">
               {GENRES.map(genre => (
                 <li key={genre.id}>
                   <Link
-                    href={`/movies?include_adult=false&language=en-US&page=1${addGenreToQuery(
-                      searchParams,
-                      genre.id.toString()
-                    )}`}
+                    href={`/movies?${
+                      newQueryWithoutGenres
+                        ? newQueryWithoutGenres
+                        : "include_adult=false&language=en-US&page=1"
+                    }${addGenreToQuery(searchParams, genre.id.toString())}`}
                     className={`rounded-full border px-2 py-1 ${
                       genreArray.includes(genre.id.toString())
                         ? "bg-neutral-700"
@@ -199,6 +217,7 @@ async function MoviesPage({
                 </li>
               ))}
             </ul>
+            <UserScoreSearch searchParams={searchParams} />
           </div>
         </div>
         <MoviesPageUserSection movies={movies} />
