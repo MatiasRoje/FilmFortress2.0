@@ -26,8 +26,8 @@ function MediaCard({ movie }: MediaCardProps) {
   }
 
   return (
-    <li className="relative px-3" style={{ flex: "0 0 16.66%" }}>
-      <Link href={`/movies/${movie.id}`}>
+    <li className="relative">
+      <Link href={`/movies/${movie.id}`} className="w-max">
         <Image
           src={movie.posterPath}
           alt=""
@@ -38,7 +38,7 @@ function MediaCard({ movie }: MediaCardProps) {
       </Link>
       <MediaCardWatchlistSection movie={movie} userRating={userRating} />
 
-      <div className="flex h-36 flex-col gap-2 rounded-b bg-neutral-700 p-2">
+      <div className="flex h-36 w-[180px] flex-col gap-2 rounded-b bg-neutral-700 p-2">
         <div className="flex items-center gap-3">
           <p className="flex items-center justify-center gap-1">
             <span>
@@ -60,7 +60,7 @@ function MediaCard({ movie }: MediaCardProps) {
           {!userRating && (
             <p>
               <SparklesIcon
-                className="h-9 w-9 rounded p-2 transition duration-300 hover:bg-neutral-600 hover:text-yellow-400"
+                className="h-9 w-9 rounded p-2 transition duration-300 hover:cursor-pointer hover:bg-neutral-600 hover:text-yellow-400"
                 onClick={handleClick}
               />
             </p>

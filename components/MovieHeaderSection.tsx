@@ -11,7 +11,7 @@ function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
   const writers = movie.writers.map(writer => writer.name);
 
   return (
-    <section className="px relative my-6 flex gap-8 pr-4">
+    <section className="relative my-6 flex gap-8 pr-4">
       <div
         className="absolute inset-0 rounded bg-cover bg-center"
         style={{

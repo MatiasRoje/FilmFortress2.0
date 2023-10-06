@@ -1,0 +1,20 @@
+"use client";
+
+import { Movie } from "@/types/movies";
+import MediaCard from "./MediaCard";
+
+type MoviesPageUserSectionProps = {
+  movies: Movie[];
+};
+
+function MoviesPageUserSection({ movies }: MoviesPageUserSectionProps) {
+  return (
+    <ul className="ml-auto grid grid-cols-5 gap-6 gap-y-4">
+      {movies.map(movie => (
+        <MediaCard movie={movie} key={movie.id} />
+      ))}
+    </ul>
+  );
+}
+
+export default MoviesPageUserSection;

@@ -12,11 +12,21 @@ function NavBar() {
             <Image src="/logo.png" alt="logo" width="64" height="64"></Image>
           </Link>
         </li>
-        <li className="ml-2 rounded px-3 py-1 hover:bg-neutral-700">
-          <Link href="/movies">Movies</Link>
+        <li>
+          <Link
+            href="/movies"
+            className="ml-2 rounded px-3 py-1 hover:cursor-pointer hover:bg-neutral-700"
+          >
+            Movies
+          </Link>
         </li>
-        <li className="ml-2 rounded px-3 py-1 hover:bg-neutral-700">
-          <Link href="/">TV Shows</Link>
+        <li>
+          <Link
+            href="/"
+            className="ml-2 rounded px-3 py-1 hover:cursor-pointer hover:bg-neutral-700"
+          >
+            TV Shows
+          </Link>
         </li>
         <SearchBar />
         <NavBarUserSection />

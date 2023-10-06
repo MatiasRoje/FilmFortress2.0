@@ -67,7 +67,7 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
         <p className="text-sm text-gray-200">Your Rating</p>
         {isAuthenticated && userRating && (
           <p
-            className="flex items-center gap-1 rounded px-1 hover:cursor-pointer hover:bg-neutral-600"
+            className="flex items-center gap-1 rounded pr-2 hover:cursor-pointer hover:bg-neutral-600"
             onClick={handleClick}
           >
             <span className="px-1 py-2">

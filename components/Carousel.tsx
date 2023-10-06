@@ -38,7 +38,9 @@ const Carousel = ({ mediaCollection }: CarouselProps) => {
         <ChevronLeftIcon className="h-12 w-12" />
       </button>
       <ul
-        className="flex transition ease-out"
+        className={`${
+          mediaCollection.length < 6 ? "flex" : "grid grid-flow-col"
+        } gap-7 transition ease-out`}
         style={{
           transform: `translateX(${translateX}%)`,
           transitionDuration: "1500ms",

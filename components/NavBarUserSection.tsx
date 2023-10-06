@@ -20,14 +20,15 @@ function NavBarUserSection() {
 
   return isAuthenticated ? (
     <>
-      <li className="ml-auto rounded px-3 py-1 hover:bg-neutral-700">
-        <Link href={`/users/${user?.id}/watchlist`}>
-          <div className="flex gap-1">
-            <span>
-              <PlusCircleIcon className="h-6 w-6" />
-            </span>
-            Watchlist
-          </div>
+      <li className="ml-auto">
+        <Link
+          href={`/users/${user?.id}/watchlist`}
+          className="flex gap-1 rounded px-3 py-1 hover:bg-neutral-700"
+        >
+          <span>
+            <PlusCircleIcon className="h-6 w-6" />
+          </span>
+          Watchlist
         </Link>
       </li>
       <li>

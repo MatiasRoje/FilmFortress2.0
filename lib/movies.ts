@@ -6,9 +6,12 @@ const imageUrl = process.env.NEXT_PUBLIC_TMDB_IMG_URL;
 const imageUrlLight = process.env.NEXT_PUBLIC_TMDB_IMG_LIGHT;
 
 // queries: top_rated, popular
-export async function getMovies(query: string): Promise<Movie[]> {
+export async function getMovies(
+  query: string,
+  queryString: string = "language=en-US&page=1"
+): Promise<Movie[]> {
   const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${query}?api_key=${apiKey}&language=en-US&page=1`,
+    `https://api.themoviedb.org/3/movie/${query}?api_key=${apiKey}&${queryString}`,
     {
       next: { revalidate: 3600 },
     }
