@@ -14,10 +14,14 @@ function MovieSecondarySection({ movie }: MovieSecondarySectionProps) {
         <ul className="flex gap-2 pr-1">
           {movie.genres.map(genre => (
             <li
-              key={genre.id}
+              key={genre.name}
               className="rounded-full border px-2 py-1 hover:bg-neutral-700"
             >
-              <Link href="">{genre.name}</Link>
+              <Link
+                href={`/movies?include_adult=false&language=en-US&page=1&with_genres=${genre.id}`}
+              >
+                {genre.name}
+              </Link>
             </li>
           ))}
         </ul>

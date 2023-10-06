@@ -10,6 +10,17 @@ export async function getMovies(
   query: string,
   queryString: string = "language=en-US&page=1"
 ): Promise<Movie[]> {
+  if (!query) {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&${queryString}`,
+      {
+        next: { revalidate: 3600 },
+      }
+    );
+    const data = await res.json();
+    const movies = data.results;
+    return movies.map((movie: any) => StripMovie(movie));
+  }
   const res = await fetch(
     `https://api.themoviedb.org/3/movie/${query}?api_key=${apiKey}&${queryString}`,
     {

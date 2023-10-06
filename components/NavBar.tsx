@@ -14,7 +14,7 @@ function NavBar() {
         </li>
         <li>
           <Link
-            href="/movies"
+            href="/movies?popular&language=en-US&page=1"
             className="ml-2 rounded px-3 py-1 hover:cursor-pointer hover:bg-neutral-700"
           >
             Movies

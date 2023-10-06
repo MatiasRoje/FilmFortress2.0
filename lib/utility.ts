@@ -27,3 +27,13 @@ export function findKeyByValue<T>(
   }
   return null;
 }
+
+export function findValueByKey<T>(
+  obj: Record<string, T>,
+  targetKey: string
+): T | null {
+  if (obj.hasOwnProperty(targetKey)) {
+    return obj[targetKey];
+  }
+  return null;
+}
