@@ -9,7 +9,7 @@ type MoviesPageUserSectionProps = {
 
 function MoviesPageUserSection({ movies }: MoviesPageUserSectionProps) {
   return (
-    <ul className="ml-auto grid grid-cols-5 gap-6 gap-y-4">
+    <ul className="ml-auto grid grid-cols-5 gap-4 gap-y-4">
       {movies.map(movie => (
         <MediaCard movie={movie} key={movie.id} />
       ))}

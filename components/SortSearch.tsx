@@ -3,9 +3,10 @@
 import querystring from "querystring";
 
 import React, { useState } from "react";
-import { Listbox } from "@headlessui/react";
+import { Disclosure, Listbox } from "@headlessui/react";
 import Link from "next/link";
 import { findValueByKey } from "@/lib/utility";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 
 const sortingOptions = [
   { id: 1, name: "Popularity descending", action: "&sort_by=popularity.desc" },
@@ -40,32 +41,71 @@ function SortSearch({
   const queryString = querystring.stringify(searchParams);
 
   return (
-    <Listbox value={selectedOption} onChange={setSelectedOption}>
-      <Listbox.Button
-        onClick={() => setIsOpen(prev => !prev)}
-        className="text-sm"
-      >
-        {selectedOption.name}
-      </Listbox.Button>
-      {isOpen && (
-        <Listbox.Options static>
-          {sortingOptions.map(option => (
-            <Listbox.Option key={option.id} value={option}>
-              <Link
-                href={`/movies?${queryString}${option.action}`}
-                onClick={() => {
-                  setIsOpen(false);
-                  setSelectedOption(option);
-                }}
-                className="text-sm"
+    <Disclosure as="div" className="rounded bg-neutral-700 px-4 py-3">
+      {({ open }) => (
+        <>
+          <Disclosure.Button className="inline-flex w-full items-center justify-between py-2">
+            <h3>Sort</h3>
+            {open ? (
+              <p>
+                <ChevronUpIcon className="h-4 w-4" />
+              </p>
+            ) : (
+              <p>
+                <ChevronDownIcon className="h-4 w-4" />
+              </p>
+            )}
+          </Disclosure.Button>
+          <Disclosure.Panel>
+            <Listbox
+              value={selectedOption}
+              onChange={setSelectedOption}
+              as="div"
+              className="flex flex-col items-center justify-center"
+            >
+              <Listbox.Button
+                onClick={() => setIsOpen(prev => !prev)}
+                className={`mb-1 w-full rounded bg-neutral-600 px-4 py-2 text-sm transition-colors duration-300 hover:bg-neutral-500 ${
+                  isOpen ? "bg-neutral-500" : ""
+                }`}
               >
-                {option.name}
-              </Link>
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
+                {selectedOption.name}
+              </Listbox.Button>
+              {isOpen && (
+                <Listbox.Options
+                  static
+                  as="div"
+                  className="w-full list-none rounded bg-neutral-500 px-4 py-2"
+                >
+                  {sortingOptions.map(option => (
+                    <Listbox.Option
+                      key={option.id}
+                      value={option}
+                      className="rounded px-1 py-0.5 hover:bg-neutral-400"
+                    >
+                      {({ active, selected }) => (
+                        <Link
+                          href={`/movies?${queryString}${option.action}`}
+                          onClick={() => {
+                            setIsOpen(false);
+                            setSelectedOption(option);
+                          }}
+                          className={`text-sm  ${active && "bg-neutral-400"} ${
+                            selected && "underline"
+                          }`}
+                        >
+                          {option.name}
+                        </Link>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              )}
+            </Listbox>
+          </Disclosure.Panel>
+        </>
       )}
-    </Listbox>
+    </Disclosure>
   );
 }
 

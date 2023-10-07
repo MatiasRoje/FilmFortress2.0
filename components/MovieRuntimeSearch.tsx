@@ -5,15 +5,15 @@ import querystring from "querystring";
 import { findValueByKey } from "@/lib/utility";
 import MinMaxInput from "./MinMaxInput";
 
-function UserScoreSearch({
+function MovieRuntimeSearch({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const minScoreQuery = findValueByKey(searchParams, "vote_average.gte");
-  const maxScoreQuery = findValueByKey(searchParams, "vote_average.lte");
+  const minRuntimeQuery = findValueByKey(searchParams, "with_runtime.gte");
+  const maxRuntimeQuery = findValueByKey(searchParams, "with_runtime.lte");
 
-  if (minScoreQuery && maxScoreQuery) {
+  if (minRuntimeQuery && maxRuntimeQuery) {
     delete searchParams["vote_average.gte"];
     delete searchParams["vote_average.lte"];
   }
@@ -22,14 +22,15 @@ function UserScoreSearch({
 
   return (
     <MinMaxInput
-      title="User Score"
+      title="Runtime"
       minValue={0}
-      maxValue={10}
+      maxValue={400}
+      step={20}
+      minQuery="with_runtime.gte"
+      maxQuery="with_runtime.lte"
       queryString={queryString}
-      minQuery="vote_average.gte"
-      maxQuery="vote_average.lte"
     />
   );
 }
 
-export default UserScoreSearch;
+export default MovieRuntimeSearch;

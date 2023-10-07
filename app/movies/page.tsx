@@ -1,3 +1,4 @@
+import MovieRuntimeSearch from "@/components/MovieRuntimeSearch";
 import MoviesPageUserSection from "@/components/MoviesPageUserSection";
 import SortSearch from "@/components/SortSearch";
 import UserScoreSearch from "@/components/UserScoreSearch";
@@ -155,12 +156,14 @@ async function MoviesPage({
   return (
     <main className="py-6">
       <section className="flex">
-        <div className="w-56">
-          <ul>
+        <div className="h-min w-64 rounded">
+          <ul className="mb-5 space-y-2 rounded bg-neutral-700 p-4">
             <li>
               <Link
                 href="/movies?popular&language=en-US&page=1"
-                className={`${query === "popular" ? "underline" : ""}`}
+                className={`text-xl font-semibold ${
+                  query === "popular" ? "underline" : ""
+                }`}
               >
                 Popular
               </Link>
@@ -168,7 +171,7 @@ async function MoviesPage({
             <li>
               <Link
                 href="/movies?now_playing&language=en-US&page=1"
-                className={`whitespace-nowrap ${
+                className={`whitespace-nowrap text-xl font-semibold ${
                   query === "now_playing" ? "underline" : ""
                 }`}
               >
@@ -178,7 +181,9 @@ async function MoviesPage({
             <li>
               <Link
                 href="/movies?upcoming&language=en-US&page=1"
-                className={`${query === "upcoming" ? "underline" : ""}`}
+                className={`text-xl font-semibold ${
+                  query === "upcoming" ? "underline" : ""
+                }`}
               >
                 Upcoming
               </Link>
@@ -186,16 +191,18 @@ async function MoviesPage({
             <li>
               <Link
                 href="/movies?top_rated&language=en-US&page=1"
-                className={`${query === "top_rated" ? "underline" : ""}`}
+                className={`text-xl font-semibold ${
+                  query === "top_rated" ? "underline" : ""
+                }`}
               >
                 Top Rated
               </Link>
             </li>
           </ul>
-          <div>
+          <div className="mb-4">
             <SortSearch searchParams={searchParams} />
           </div>
-          <div>
+          <div className="mb-5 flex flex-col gap-4 space-y-2 rounded bg-neutral-700 p-4">
             <h3>Genres</h3>
             <ul className="flex w-56 flex-wrap gap-1 gap-y-4">
               {GENRES.map(genre => (
@@ -206,9 +213,9 @@ async function MoviesPage({
                         ? newQueryWithoutGenres
                         : "include_adult=false&language=en-US&page=1"
                     }${addGenreToQuery(searchParams, genre.id.toString())}`}
-                    className={`rounded-full border px-2 py-1 ${
+                    className={`rounded-full border px-2 py-1 transition-colors duration-100 hover:bg-neutral-600 ${
                       genreArray.includes(genre.id.toString())
-                        ? "bg-neutral-700"
+                        ? "bg-neutral-600"
                         : ""
                     }`}
                   >
@@ -217,8 +224,9 @@ async function MoviesPage({
                 </li>
               ))}
             </ul>
-            <UserScoreSearch searchParams={searchParams} />
           </div>
+          <UserScoreSearch searchParams={searchParams} />
+          <MovieRuntimeSearch searchParams={searchParams} />
         </div>
         <MoviesPageUserSection movies={movies} />
       </section>

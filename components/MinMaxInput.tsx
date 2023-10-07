@@ -7,13 +7,19 @@ interface MinMaxInputProps {
   minValue: number;
   maxValue: number;
   queryString: string;
+  step?: number;
+  minQuery: string;
+  maxQuery: string;
 }
 
 const MinMaxInput: React.FC<MinMaxInputProps> = ({
   title,
   minValue,
   maxValue,
+  step = 1,
   queryString,
+  minQuery,
+  maxQuery,
 }) => {
   const [min, setMin] = useState<number>(minValue);
   const [max, setMax] = useState<number>(maxValue);
@@ -33,12 +39,12 @@ const MinMaxInput: React.FC<MinMaxInputProps> = ({
   };
 
   return (
-    <form className="my-4">
-      <h3 className="block">{title}</h3>
-      <div className="flex items-start gap-3">
-        <div className="flex flex-col gap-1">
-          <div className="space-x-1">
-            <label>From</label>
+    <form className="mb-5 space-y-2 rounded bg-neutral-700 p-4">
+      <h3>{title}</h3>
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-col gap-2">
+          <div className="space-x-2">
+            <label className="text-sm">From</label>
             <input
               type="number"
               className="rounded border-none p-1 text-sm text-neutral-800 transition-all duration-300 focus:-translate-y-px focus:shadow-lg focus:outline-none"
@@ -46,10 +52,11 @@ const MinMaxInput: React.FC<MinMaxInputProps> = ({
               onChange={handleMinChange}
               min={minValue}
               max={maxValue}
+              step={step}
             />
           </div>
-          <div>
-            <label>To</label>
+          <div className="space-x-2">
+            <label className="text-sm">To</label>
             <input
               type="number"
               className="rounded border-none p-1 text-sm text-neutral-800 transition-all duration-300 focus:-translate-y-px focus:shadow-lg focus:outline-none"
@@ -57,13 +64,13 @@ const MinMaxInput: React.FC<MinMaxInputProps> = ({
               onChange={handleMaxChange}
               min={minValue}
               max={maxValue}
+              step={step}
             />
           </div>
         </div>
         <div>
           <Link
-            // vote_average.gte=8&vote_average.lte=10
-            href={`/movies?${queryString}&vote_average.gte=${min}&vote_average.lte=${max}`}
+            href={`/movies?${queryString}&${minQuery}=${min}&${maxQuery}=${max}`}
             className={`flex items-center gap-1 rounded bg-neutral-600 px-4 py-2 transition duration-300 hover:bg-neutral-500 focus:bg-neutral-500 focus:outline-none focus:outline focus:outline-offset-2 focus:outline-neutral-500`}
           >
             Search
