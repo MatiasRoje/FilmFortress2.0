@@ -86,7 +86,7 @@ function UserReviewCard({
           {userRating?.rating}
         </p>
       </div>
-      <article className={`mt-4 text-justify ${width}`}>
+      <article className={`mt-4 w-full border-t pt-6 text-justify`}>
         {review && <ExpandableText text={review.content} />}
       </article>
       <ReviewModal

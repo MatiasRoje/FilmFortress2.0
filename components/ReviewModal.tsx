@@ -1,7 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import Button from "./Button";
-import { Movie, MovieDetails } from "@/types/movies";
 import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
 import { useCreateReview } from "@/hooks/useCreateReview";

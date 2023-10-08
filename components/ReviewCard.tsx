@@ -22,7 +22,7 @@ function ReviewCard({ review, width }: ReviewCardProps) {
           {review.rating}
         </p>
       </div>
-      <article className={`mt-4 text-justify ${width}`}>
+      <article className={`mt-4 text-justify ${width} border-t pt-6`}>
         {<ExpandableText text={review.content} />}
       </article>
     </div>
