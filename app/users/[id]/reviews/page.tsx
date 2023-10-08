@@ -4,7 +4,7 @@ import { useUserRatings } from "@/hooks/useUserRatings";
 import { useUserReviews } from "@/hooks/useUserReviews";
 import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
@@ -15,6 +15,7 @@ import Spinner from "@/components/Spinner";
 import ExpandableText from "@/components/ExpandableText";
 import ReviewModal from "@/components/ReviewModal";
 import DeleteReviewModal from "@/components/DeleteReviewModal";
+import useRatedMovies from "@/hooks/useRatedMovies";
 
 function UserReviewsPage() {
   const router = useRouter();
@@ -30,7 +31,10 @@ function UserReviewsPage() {
 
   const { userReviews, isLoading: isLoadingReviews } = useUserReviews(user?.id);
   const { userRatings, isLoading: isLoadingRatings } = useUserRatings(user?.id);
-  const movieIdsArray = userReviews?.map(userReview => userReview.movieId);
+  const movieIdsArray = useMemo(
+    () => userReviews?.map(userReview => userReview.movieId),
+    [userReviews]
+  );
 
   const userReviewsWithRating = userReviews?.map(userReview => {
     const userRating = userRatings?.find(

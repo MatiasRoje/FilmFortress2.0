@@ -1,3 +1,5 @@
+import { RatingApi } from "./ratings";
+
 export type Movie = {
   id: number;
   title: string;
@@ -36,3 +38,8 @@ export type MovieDetails = Movie & {
   revenue: string;
   countries: string[];
 };
+
+export type MovieWithRating = Movie &
+  MovieDetails & {
+    rating: RatingApi | undefined; // Replace with the actual type of rating
+  };
