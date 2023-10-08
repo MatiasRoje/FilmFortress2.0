@@ -33,7 +33,14 @@ function ReviewsButton({ movie }: ReviewsButtonProps) {
           Add review
         </div>
       </Button>
-      <ReviewModal isOpen={isOpen} setIsOpen={setIsOpen} movie={movie} />
+      <ReviewModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        movieId={movie.id}
+        movieTitle={movie.title}
+        moviePoster={movie.posterPath}
+        movieReleaseDate={movie.releaseDate}
+      />
     </>
   );
 }

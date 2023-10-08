@@ -7,9 +7,9 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   UserCircleIcon,
-  PlusCircleIcon,
 } from "@heroicons/react/24/solid";
 import { Menu } from "@headlessui/react";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
 function NavBarUserSection() {
   const { user, isAuthenticated, logout } = useAuth();

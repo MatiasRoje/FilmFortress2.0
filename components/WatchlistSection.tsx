@@ -5,7 +5,7 @@ import Link from "next/link";
 import Button from "./Button";
 import { useState } from "react";
 import { useAuth } from "@/providers/AuthContext";
-import useWatchlist from "@/hooks/useWatchlist";
+import useWatchlistMovies from "@/hooks/useWatchlistMovies";
 import Carousel from "./Carousel";
 import Spinner from "./Spinner";
 import { useUserWatchlist } from "@/hooks/useUserWatchlist";
@@ -17,7 +17,7 @@ function WatchlistSection() {
 
   const { userWatchlist } = useUserWatchlist(user?.id);
 
-  const { movies, isLoading } = useWatchlist(userWatchlist?.movieIds);
+  const { movies, isLoading } = useWatchlistMovies(userWatchlist?.movieIds);
 
   function handleHoverIn() {
     setIsHovered(true);

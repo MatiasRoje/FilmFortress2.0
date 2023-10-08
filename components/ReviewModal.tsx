@@ -12,14 +12,20 @@ type ReviewModalProps = {
   userReviewApi?: UserReview | undefined;
   isOpen: boolean;
   setIsOpen: (boolean: boolean) => void;
-  movie: Movie | MovieDetails;
+  movieId: number;
+  movieTitle: string;
+  movieReleaseDate: string;
+  moviePoster: string;
 };
 
 function ReviewModal({
   userReviewApi,
   isOpen,
   setIsOpen,
-  movie,
+  movieId,
+  movieTitle,
+  movieReleaseDate,
+  moviePoster,
 }: ReviewModalProps) {
   const router = useRouter();
   const [userReview, setUserReview] = useState(
@@ -48,12 +54,15 @@ function ReviewModal({
       );
     }
 
-    if (!userReviewApi && user && movie && userReview) {
+    if (!userReviewApi && user && userReview) {
       createReview(
         {
           content: userReview,
-          movieId: movie.id,
           userId: user.id,
+          movieId,
+          movieTitle,
+          movieReleaseDate,
+          moviePoster,
         },
         {
           onSuccess: () => {
@@ -68,12 +77,8 @@ function ReviewModal({
     <Dialog
       open={isOpen}
       onClose={() => {
-        if (userReviewApi) {
-          setIsOpen(false);
-        } else {
-          setIsOpen(false);
-          setUserReview("");
-        }
+        setIsOpen(false);
+        setUserReview("");
       }}
       className="relative z-50"
     >
@@ -88,9 +93,9 @@ function ReviewModal({
             REVIEW THIS
           </Dialog.Title>
           <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-            <h2 className="text-center text-xl font-bold">{movie.title}</h2>
+            <h2 className="text-center text-xl font-bold">{movieTitle}</h2>
             <textarea
-              value={userReview}
+              defaultValue={userReviewApi?.content}
               onChange={e => setUserReview(e.target.value)}
               className="h-80 w-[40rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400"
             ></textarea>

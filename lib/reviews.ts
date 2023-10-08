@@ -1,4 +1,5 @@
 import { useUserRatings } from "@/hooks/useUserRatings";
+import { MovieDetails } from "@/types/movies";
 import { ReviewTMDB, ReviewObject, UserReview } from "@/types/reviews";
 import { User } from "@/types/users";
 
@@ -32,7 +33,9 @@ export async function getReviews() {
   }
 }
 
-export async function getUserReviews(userId: number | undefined) {
+export async function getUserReviews(
+  userId: number | undefined
+): Promise<UserReview[] | undefined> {
   try {
     if (userId) {
       const res = await fetch("/api/reviews", {
@@ -78,14 +81,20 @@ export async function getUserReviewForMovie(movieId: number) {
 
 type PostReviewParams = {
   content: string;
-  movieId: number;
   userId: number;
+  movieId: number;
+  movieTitle: string;
+  movieReleaseDate: string;
+  moviePoster: string;
 };
 
 export async function postReview({
   content,
-  movieId,
   userId,
+  movieId,
+  movieTitle,
+  movieReleaseDate,
+  moviePoster,
 }: PostReviewParams) {
   try {
     const res = await fetch("/api/reviews", {
@@ -93,7 +102,14 @@ export async function postReview({
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ content, movieId, userId }),
+      body: JSON.stringify({
+        content,
+        userId,
+        movieId,
+        movieTitle,
+        movieReleaseDate,
+        moviePoster,
+      }),
     });
     return res;
   } catch (error) {

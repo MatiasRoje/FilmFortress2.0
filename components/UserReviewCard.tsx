@@ -7,18 +7,27 @@ import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
-import { MovieDetails } from "@/types/movies";
-import { useDeleteReview } from "@/hooks/useDeleteReview";
 import DeleteReviewModal from "./DeleteReviewModal";
 
 type ReviewCardProps = {
   review: UserReview | undefined;
   width: string;
   userRating: Rating | undefined;
-  movie: MovieDetails;
+  movieId: number;
+  movieTitle: string;
+  movieReleaseDate: string;
+  moviePoster: string;
 };
 
-function UserReviewCard({ review, width, userRating, movie }: ReviewCardProps) {
+function UserReviewCard({
+  review,
+  width,
+  userRating,
+  movieId,
+  movieTitle,
+  movieReleaseDate,
+  moviePoster,
+}: ReviewCardProps) {
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
@@ -64,7 +73,7 @@ function UserReviewCard({ review, width, userRating, movie }: ReviewCardProps) {
               <DeleteReviewModal
                 deleteIsOpen={deleteIsOpen}
                 setDeleteIsOpen={setDeleteIsOpen}
-                movie={movie}
+                movieTitle={movieTitle}
                 review={review}
               />
             </div>
@@ -84,7 +93,10 @@ function UserReviewCard({ review, width, userRating, movie }: ReviewCardProps) {
         userReviewApi={review}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        movie={movie}
+        movieId={movieId}
+        movieTitle={movieTitle}
+        moviePoster={moviePoster}
+        movieReleaseDate={movieReleaseDate}
       />
     </div>
   );

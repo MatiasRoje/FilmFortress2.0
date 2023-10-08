@@ -8,14 +8,14 @@ import { useDeleteReview } from "@/hooks/useDeleteReview";
 type DeleteReviewModal = {
   deleteIsOpen: boolean;
   setDeleteIsOpen: (boolean: boolean) => void;
-  movie: MovieDetails;
+  movieTitle: string;
   review: UserReview | undefined;
 };
 
 function DeleteReviewModal({
   deleteIsOpen,
   setDeleteIsOpen,
-  movie,
+  movieTitle,
   review,
 }: DeleteReviewModal) {
   let titleRef = useRef<HTMLHeadingElement | null>(null);
@@ -46,7 +46,7 @@ function DeleteReviewModal({
             DELETE REVIEW FOR
           </Dialog.Title>
           <h2 className="text-center text-xl font-bold" ref={titleRef}>
-            {movie.title}
+            {movieTitle}
           </h2>
 
           <SecondaryButton onClick={handleDelete}>

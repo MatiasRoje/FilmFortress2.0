@@ -14,6 +14,18 @@ const reviewSchema = new Schema(
       type: Number,
       required: true,
     },
+    movieTitle: {
+      type: String,
+      required: true,
+    },
+    moviePoster: {
+      type: String,
+      required: true,
+    },
+    movieReleaseDate: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

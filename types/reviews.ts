@@ -11,6 +11,10 @@ export type UserReview = {
   content: string;
   userId: number;
   movieId: number;
+  movieTitle: string;
+  movieReleaseDate: string;
+  moviePoster: string;
+  rating?: number;
   createdAt: Date;
 };
 

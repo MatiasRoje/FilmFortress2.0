@@ -3,14 +3,8 @@ import { Metadata } from "next";
 import ReviewsSection from "@/components/ReviewsSection";
 import MovieHeaderSection from "@/components/MovieHeaderSection";
 import MovieSecondarySection from "@/components/MovieSecondarySection";
-import { getRatings, getUserRatings } from "@/lib/ratings";
-import { getUserWatchlist, getWatchlists } from "@/lib/watchlists";
-import { ReviewTMDB, UserReview } from "@/types/reviews";
-import {
-  getReviews,
-  getReviewsFromMovie,
-  getUserReviewForMovie,
-} from "@/lib/reviews";
+import { ReviewTMDB } from "@/types/reviews";
+import { getReviewsFromMovie } from "@/lib/reviews";
 
 type MoviePageParams = {
   id: number;

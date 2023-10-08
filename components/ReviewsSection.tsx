@@ -74,7 +74,10 @@ function ReviewsSection({ movie, reviews }: ReviewsSectionProps) {
             review={userReview}
             width={"max-w-max"}
             userRating={userRating}
-            movie={movie}
+            movieId={movie.id}
+            movieTitle={movie.title}
+            moviePoster={movie.posterPath}
+            movieReleaseDate={movie.releaseDate}
           />
           <div className="mx-8 flex w-24 items-center">
             <Link
