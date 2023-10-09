@@ -25,6 +25,7 @@ export type Crew = {
 };
 
 export type MovieDetails = Movie & {
+  posterPathMedium: string;
   overview: string;
   tagline: string;
   runtime: string;

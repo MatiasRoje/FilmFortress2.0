@@ -1,11 +1,15 @@
 "use client";
 
+import RatingModal from "@/components/RatingModal";
 import Spinner from "@/components/Spinner";
 import useRatedMovies from "@/hooks/useRatedMovies";
 import { useUserRatings } from "@/hooks/useUserRatings";
-import { StripMovieDetails } from "@/lib/movies";
 import { useAuth } from "@/providers/AuthContext";
 import { MovieDetails, MovieWithRating } from "@/types/movies";
+import { RatingApi } from "@/types/ratings";
+import { SparklesIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -13,6 +17,10 @@ function UserRatingsPage() {
   const router = useRouter();
   const [movieTVToggle, setMovieTVToggle] = useState("movies");
   const { user, isAuthenticated } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<MovieWithRating | null>(
+    null
+  );
 
   const { userRatings, isLoading: isLoadingRatings } = useUserRatings(user?.id);
   const movieIdsArray = useMemo(
@@ -26,8 +34,6 @@ function UserRatingsPage() {
     const userRating = userRatings?.find(rating => rating.movieId === movie.id);
     return { ...movie, rating: userRating };
   });
-
-  console.log(moviesWithRating.at(0)?.writers);
 
   useEffect(() => {
     if (!isAuthenticated) router.push("/login");
@@ -70,7 +76,96 @@ function UserRatingsPage() {
           !isLoadingMovies &&
           movieTVToggle === "movies" &&
           movieIdsArray?.length &&
-          moviesWithRating.map(movie => <p key={movie.id}>{movie.title}</p>)}
+          moviesWithRating.map(movie => (
+            <li key={movie.id} className="flex">
+              <Link href={`/movies/${movie.id}`}>
+                <Image
+                  src={movie.posterPathMedium}
+                  alt={`${movie.title} poster`}
+                  width="150"
+                  height="224"
+                  className="h-full w-full rounded-l"
+                />
+              </Link>
+              <div className="h-56 w-full rounded-r bg-neutral-700 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-6">
+                    <div>
+                      <p className="text-lg font-semibold">
+                        <Link
+                          href={`/movies/${movie.id}`}
+                          className="hover:underline"
+                        >
+                          {movie.title}
+                        </Link>{" "}
+                        <span>({movie.releaseDate.slice(-4)})</span>
+                      </p>
+                      <div className="mb-1.5 flex gap-1">
+                        <p className="text-sm">{movie.runtime}</p>
+                        <p className="text-sm text-neutral-400">|</p>
+                        <p className="text-sm">
+                          {movie.genres.map(genre => genre.name).join(", ")}
+                        </p>
+                      </div>
+                      <p
+                        className="flex max-w-min items-center gap-0.5 rounded pr-2 transition duration-300 hover:cursor-pointer hover:bg-neutral-600"
+                        onClick={() => {
+                          setSelectedMovie(movie);
+                          setIsOpen(true);
+                        }}
+                      >
+                        <span>
+                          <SparklesIcon className="-mr-1 h-9 w-9 py-1.5 text-yellow-400" />
+                        </span>
+                        {movie.rating?.rating}
+                      </p>
+                      <p className="mb-1.5 text-sm italic">
+                        Rated on{" "}
+                        {new Date(movie.rating!.createdAt).toLocaleString(
+                          "en-US",
+                          {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          }
+                        )}
+                      </p>
+                      <p className="mb-1.5 line-clamp-2">{movie.overview}</p>
+                      <div className="flex gap-1">
+                        <p className="text-sm">
+                          {movie.directors.length > 1
+                            ? "Directors:"
+                            : "Director:"}{" "}
+                          {movie.directors
+                            .map(director => director.name)
+                            .join(", ")}
+                        </p>
+                        <p className="text-sm text-neutral-400">|</p>
+                        <p className="text-sm">
+                          Stars:{" "}
+                          {movie.cast
+                            .slice(0, 3)
+                            .map(cast => cast.name)
+                            .join(", ")}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          ))}
+        {!isLoadingRatings && !isLoadingMovies && movieTVToggle === "tv" && (
+          <p>You haven&apos;t rated any TV shows.</p>
+        )}
+        {selectedMovie && (
+          <RatingModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            movie={selectedMovie}
+            userRatingApi={selectedMovie.rating}
+          />
+        )}
       </section>
     </main>
   );

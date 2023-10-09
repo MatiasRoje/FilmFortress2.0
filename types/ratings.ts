@@ -9,6 +9,6 @@ export type RatingApi = {
   createdAt: string;
   movieId: number;
   rating: number;
-  updatedAt: string;
+  updatedAt: Date;
   userId: number;
 };

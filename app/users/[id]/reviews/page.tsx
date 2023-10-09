@@ -15,7 +15,6 @@ import Spinner from "@/components/Spinner";
 import ExpandableText from "@/components/ExpandableText";
 import ReviewModal from "@/components/ReviewModal";
 import DeleteReviewModal from "@/components/DeleteReviewModal";
-import useRatedMovies from "@/hooks/useRatedMovies";
 
 function UserReviewsPage() {
   const router = useRouter();
@@ -84,10 +83,10 @@ function UserReviewsPage() {
           !isLoadingReviews &&
           movieTVToggle === "movies" &&
           movieIdsArray?.length && (
-            <div className="space-y-4">
+            <ul className="space-y-4">
               {userReviewsWithRating &&
                 userReviewsWithRating.map(userReview => (
-                  <div key={userReview._id} className="flex">
+                  <li key={userReview._id} className="flex">
                     <Link href={`/movies/${userReview.movieId}`}>
                       <Image
                         src={userReview.moviePoster}
@@ -97,7 +96,7 @@ function UserReviewsPage() {
                         className="rounded-l"
                       />
                     </Link>
-                    <div className="w-full rounded bg-neutral-700 px-6 py-4">
+                    <div className="w-full rounded-r bg-neutral-700 px-6 py-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-6">
                           <div>
@@ -162,9 +161,9 @@ function UserReviewsPage() {
                         )}
                       </article>
                     </div>
-                  </div>
+                  </li>
                 ))}
-            </div>
+            </ul>
           )}
         {!isLoadingRatings && !isLoadingReviews && movieTVToggle === "tv" && (
           <p>You haven&apos;t rated any TV shows.</p>

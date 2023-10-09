@@ -3,7 +3,8 @@ import { formatMinutesToHoursAndMinutes } from "./utility";
 
 const apiKey = process.env.TMDB_API_KEY;
 const imageUrl = process.env.NEXT_PUBLIC_TMDB_IMG_URL;
-const imageUrlLight = process.env.NEXT_PUBLIC_TMDB_IMG_LIGHT;
+const imageUrlMedium = process.env.NEXT_PUBLIC_TMDB_IMG_MEDIUM;
+const imageUrlLow = process.env.NEXT_PUBLIC_TMDB_IMG_LOW;
 
 // queries: top_rated, popular
 export async function getMovies(
@@ -85,7 +86,7 @@ export function StripMovie(movieObject: any): Movie {
       year: "numeric",
     }),
     voteAverage: movieObject.vote_average,
-    posterPath: imageUrlLight + movieObject.poster_path,
+    posterPath: imageUrlMedium + movieObject.poster_path,
   };
 }
 
@@ -100,6 +101,7 @@ export function StripMovieDetails(movieObject: any): MovieDetails {
     }),
     voteAverage: movieObject.vote_average,
     posterPath: imageUrl + movieObject.poster_path,
+    posterPathMedium: imageUrlMedium + movieObject.poster_path,
     overview: movieObject.overview,
     tagline: movieObject.tagline,
     runtime: formatMinutesToHoursAndMinutes(movieObject.runtime),
@@ -125,7 +127,7 @@ export function StripMovieDetails(movieObject: any): MovieDetails {
 function StripCast(castObject: any): Cast {
   return {
     name: castObject.name,
-    profilePath: imageUrlLight + castObject.profile_path,
+    profilePath: imageUrlMedium + castObject.profile_path,
     character: castObject.character,
   };
 }
