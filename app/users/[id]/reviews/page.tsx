@@ -83,7 +83,7 @@ function UserReviewsPage() {
           !isLoadingReviews &&
           movieTVToggle === "movies" &&
           movieIdsArray?.length && (
-            <ul className="space-y-4">
+            <ul className="space-y-5">
               {userReviewsWithRating &&
                 userReviewsWithRating.map(userReview => (
                   <li key={userReview._id} className="flex">

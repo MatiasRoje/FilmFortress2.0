@@ -1,8 +1,8 @@
-import { Movie } from "@/types/movies";
+import { MovieDetails } from "@/types/movies";
 import { useEffect, useState } from "react";
 
 function useWatchlistMovies(movieIds: number[] | undefined) {
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<MovieDetails[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {

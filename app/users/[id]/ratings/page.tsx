@@ -5,7 +5,7 @@ import Spinner from "@/components/Spinner";
 import useRatedMovies from "@/hooks/useRatedMovies";
 import { useUserRatings } from "@/hooks/useUserRatings";
 import { useAuth } from "@/providers/AuthContext";
-import { MovieDetails, MovieWithRating } from "@/types/movies";
+import { MovieWithRating } from "@/types/movies";
 import { RatingApi } from "@/types/ratings";
 import { SparklesIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
@@ -75,86 +75,83 @@ function UserRatingsPage() {
         {!isLoadingRatings &&
           !isLoadingMovies &&
           movieTVToggle === "movies" &&
-          movieIdsArray?.length &&
-          moviesWithRating.map(movie => (
-            <li key={movie.id} className="flex">
-              <Link href={`/movies/${movie.id}`}>
-                <Image
-                  src={movie.posterPathMedium}
-                  alt={`${movie.title} poster`}
-                  width="150"
-                  height="224"
-                  className="h-full w-full rounded-l"
-                />
-              </Link>
-              <div className="h-56 w-full rounded-r bg-neutral-700 px-6 py-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-6">
-                    <div>
-                      <p className="text-lg font-semibold">
-                        <Link
-                          href={`/movies/${movie.id}`}
-                          className="hover:underline"
-                        >
-                          {movie.title}
-                        </Link>{" "}
-                        <span>({movie.releaseDate.slice(-4)})</span>
-                      </p>
-                      <div className="mb-1.5 flex gap-1">
-                        <p className="text-sm">{movie.runtime}</p>
-                        <p className="text-sm text-neutral-400">|</p>
-                        <p className="text-sm">
-                          {movie.genres.map(genre => genre.name).join(", ")}
-                        </p>
-                      </div>
-                      <p
-                        className="flex max-w-min items-center gap-0.5 rounded pr-2 transition duration-300 hover:cursor-pointer hover:bg-neutral-600"
-                        onClick={() => {
-                          setSelectedMovie(movie);
-                          setIsOpen(true);
-                        }}
+          movieIdsArray?.length && (
+            <ul className="space-y-5">
+              {moviesWithRating.map(movie => (
+                <li key={movie.id} className="flex">
+                  <Link href={`/movies/${movie.id}`}>
+                    <Image
+                      src={movie.posterPathMedium}
+                      alt={`${movie.title} poster`}
+                      width="150"
+                      height="224"
+                      className="h-full w-full rounded-l"
+                    />
+                  </Link>
+                  <div className="h-56 w-full rounded-r bg-neutral-700 px-6 py-4">
+                    <p className="text-lg font-semibold">
+                      <Link
+                        href={`/movies/${movie.id}`}
+                        className="hover:underline"
                       >
-                        <span>
-                          <SparklesIcon className="-mr-1 h-9 w-9 py-1.5 text-yellow-400" />
-                        </span>
-                        {movie.rating?.rating}
+                        {movie.title}
+                      </Link>{" "}
+                      <span>({movie.releaseDate.slice(-4)})</span>
+                    </p>
+                    <div className="mb-1.5 flex gap-1">
+                      <p className="text-sm">{movie.runtime}</p>
+                      <p className="text-sm text-neutral-400">|</p>
+                      <p className="text-sm">
+                        {movie.genres.map(genre => genre.name).join(", ")}
                       </p>
-                      <p className="mb-1.5 text-sm italic">
-                        Rated on{" "}
-                        {new Date(movie.rating!.createdAt).toLocaleString(
-                          "en-US",
-                          {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          }
-                        )}
+                    </div>
+                    <p
+                      className="flex max-w-min items-center gap-0.5 rounded pr-2 transition duration-300 hover:cursor-pointer hover:bg-neutral-600"
+                      onClick={() => {
+                        setSelectedMovie(movie);
+                        setIsOpen(true);
+                      }}
+                    >
+                      <span>
+                        <SparklesIcon className="-mr-1 h-9 w-9 py-1.5 text-yellow-400" />
+                      </span>
+                      {movie.rating?.rating}
+                    </p>
+                    <p className="mb-1.5 text-sm italic">
+                      Rated on{" "}
+                      {new Date(movie.rating!.updatedAt).toLocaleString(
+                        "en-US",
+                        {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        }
+                      )}
+                    </p>
+                    <p className="mb-1.5 line-clamp-2">{movie.overview}</p>
+                    <div className="flex gap-1">
+                      <p className="text-sm">
+                        {movie.directors.length > 1
+                          ? "Directors:"
+                          : "Director:"}{" "}
+                        {movie.directors
+                          .map(director => director.name)
+                          .join(", ")}
                       </p>
-                      <p className="mb-1.5 line-clamp-2">{movie.overview}</p>
-                      <div className="flex gap-1">
-                        <p className="text-sm">
-                          {movie.directors.length > 1
-                            ? "Directors:"
-                            : "Director:"}{" "}
-                          {movie.directors
-                            .map(director => director.name)
-                            .join(", ")}
-                        </p>
-                        <p className="text-sm text-neutral-400">|</p>
-                        <p className="text-sm">
-                          Stars:{" "}
-                          {movie.cast
-                            .slice(0, 3)
-                            .map(cast => cast.name)
-                            .join(", ")}
-                        </p>
-                      </div>
+                      <p className="text-sm text-neutral-400">|</p>
+                      <p className="text-sm">
+                        Stars:{" "}
+                        {movie.cast
+                          .slice(0, 3)
+                          .map(cast => cast.name)
+                          .join(", ")}
+                      </p>
                     </div>
                   </div>
-                </div>
-              </div>
-            </li>
-          ))}
+                </li>
+              ))}
+            </ul>
+          )}
         {!isLoadingRatings && !isLoadingMovies && movieTVToggle === "tv" && (
           <p>You haven&apos;t rated any TV shows.</p>
         )}

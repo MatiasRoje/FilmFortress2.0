@@ -31,11 +31,13 @@ function MediaCardWatchlistSection({
   }
 
   function handleDeleteMovie() {
-    const newMovieIds = userWatchlist.movieIds.filter(
+    const newMovieIds = userWatchlist?.movieIds.filter(
       (movieId: number) => movieId !== movie.id
     );
-    deleteMovie({ watchlist: userWatchlist, newMovieIds });
+    if (userWatchlist && newMovieIds)
+      deleteMovie({ watchlist: userWatchlist, newMovieIds });
   }
+
   return (
     <>
       {userRating && (

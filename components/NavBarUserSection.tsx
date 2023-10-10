@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Menu } from "@headlessui/react";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { useUserWatchlist } from "@/hooks/useUserWatchlist";
 
 function NavBarUserSection() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -17,6 +18,8 @@ function NavBarUserSection() {
   function handleSignOut(): void {
     logout();
   }
+
+  const { userWatchlist } = useUserWatchlist(user?.id);
 
   return isAuthenticated ? (
     <>
@@ -29,6 +32,7 @@ function NavBarUserSection() {
             <PlusCircleIcon className="h-6 w-6" />
           </span>
           Watchlist
+          {userWatchlist && <span>—{userWatchlist.movieIds.length}</span>}
         </Link>
       </li>
       <li>

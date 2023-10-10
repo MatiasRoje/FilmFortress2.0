@@ -1,6 +1,8 @@
 import { WatchlistApi } from "@/types/watchlists";
 
-export async function getUserWatchlist(userId: number | undefined) {
+export async function getUserWatchlist(
+  userId: number | undefined
+): Promise<WatchlistApi | undefined> {
   try {
     if (userId) {
       const res = await fetch("/api/watchlists", {
@@ -17,7 +19,12 @@ export async function getUserWatchlist(userId: number | undefined) {
       );
       return userWatchlist;
     }
-    return {};
+    return {
+      _id: "",
+      name: "",
+      movieIds: [],
+      userId: 0,
+    };
   } catch (error) {
     console.log("Error loading watchlists:", error);
   }
