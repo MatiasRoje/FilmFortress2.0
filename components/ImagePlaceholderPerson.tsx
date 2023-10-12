@@ -6,8 +6,8 @@ type ImagePlaceholderPersonProps = {
 
 function ImagePlaceholderPerson({ dimensions }: ImagePlaceholderPersonProps) {
   return (
-    <div className="flex items-center justify-center rounded bg-neutral-500">
-      <UserIcon className={`${dimensions} p-3 text-neutral-100`} />
+    <div className="flex items-center justify-center rounded bg-neutral-700">
+      <UserIcon className={`${dimensions} p-3 text-neutral-400/80`} />
     </div>
   );
 }

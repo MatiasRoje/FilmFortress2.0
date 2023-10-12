@@ -99,10 +99,13 @@ function ReviewsPageUserSection({
         <div className="flex flex-col gap-4">
           {userReview && (
             <UserReviewCard
-              movie={movie}
               review={userReview}
               width="max-w-4xl"
               userRating={userRating}
+              movieId={movie.id}
+              movieTitle={movie.title}
+              movieReleaseDate={movie.releaseDate}
+              moviePoster={movie.posterPath}
             />
           )}
           {!isAuthenticated &&
