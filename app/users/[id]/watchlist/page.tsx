@@ -1,5 +1,6 @@
 "use client";
 
+import ImagePlaceholderMovie from "@/components/ImagePlaceholderMovie";
 import RatingModal from "@/components/RatingModal";
 import Spinner from "@/components/Spinner";
 import { useDeleteMovieFromWatchlist } from "@/hooks/useDeleteMovieFromWatchlist";
@@ -69,7 +70,7 @@ function UserWatchlistPage() {
         {!isLoading &&
           movieTVToggle === "movies" &&
           !userWatchlist?.movieIds.length && (
-            <p>You haven&apos;t rated any movies.</p>
+            <p>You haven&apos;t added any movies to your Watchlist.</p>
           )}
         {!isLoading &&
           movieTVToggle === "movies" &&
@@ -84,13 +85,20 @@ function UserWatchlistPage() {
                     />
                   </p>
                   <Link href={`/movies/${movie.id}`}>
-                    <Image
-                      src={movie.posterPathMedium}
-                      alt={`${movie.title} poster`}
-                      width="150"
-                      height="224"
-                      className="h-full w-full rounded-l"
-                    />
+                    {movie.posterPathMedium ? (
+                      <Image
+                        src={movie.posterPathMedium}
+                        alt={`${movie.title} poster`}
+                        width="150"
+                        height="224"
+                        className="h-full w-full rounded-l"
+                      />
+                    ) : (
+                      <ImagePlaceholderMovie
+                        dimensions="w-[142px] h-[224px]"
+                        rounded="rounded-l"
+                      />
+                    )}
                   </Link>
                   <div className="h-56 w-full rounded-r bg-neutral-700 px-6 py-4">
                     <p className="text-lg font-semibold">
@@ -145,7 +153,7 @@ function UserWatchlistPage() {
             </ul>
           )}
         {!isLoading && movieTVToggle === "tv" && (
-          <p>You haven&apos;t rated any TV shows.</p>
+          <p>You haven&apos;t added any TV shows to your Watchlist.</p>
         )}
         {selectedMovie && (
           <RatingModal

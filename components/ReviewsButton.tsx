@@ -33,14 +33,24 @@ function ReviewsButton({ movie }: ReviewsButtonProps) {
           Add review
         </div>
       </Button>
-      <ReviewModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        movieId={movie.id}
-        movieTitle={movie.title}
-        moviePoster={movie.posterPath}
-        movieReleaseDate={movie.releaseDate}
-      />
+      {movie.posterPath ? (
+        <ReviewModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          movieId={movie.id}
+          movieTitle={movie.title}
+          moviePoster={movie.posterPath}
+          movieReleaseDate={movie.releaseDate}
+        />
+      ) : (
+        <ReviewModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          movieId={movie.id}
+          movieTitle={movie.title}
+          movieReleaseDate={movie.releaseDate}
+        />
+      )}
     </>
   );
 }

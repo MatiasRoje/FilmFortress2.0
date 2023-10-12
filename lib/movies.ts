@@ -85,51 +85,96 @@ export async function getCasting(movieId: number) {
 // NOTE Helper functions
 
 export function stripMovie(movieObject: any): Movie {
-  return {
-    id: movieObject.id,
-    title: movieObject.title,
-    releaseDate: new Date(movieObject.release_date).toLocaleString("en-US", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    }),
-    voteAverage: movieObject.vote_average,
-    posterPath: imageUrlMedium + movieObject.poster_path,
-  };
+  if (movieObject.poster_path) {
+    return {
+      id: movieObject.id,
+      title: movieObject.title,
+      releaseDate: new Date(movieObject.release_date).toLocaleString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+      voteAverage: movieObject.vote_average,
+      posterPath: imageUrlMedium + movieObject.poster_path,
+    };
+  } else {
+    return {
+      id: movieObject.id,
+      title: movieObject.title,
+      releaseDate: new Date(movieObject.release_date).toLocaleString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+      voteAverage: movieObject.vote_average,
+    };
+  }
 }
 
 export function stripMovieDetails(movieObject: any): MovieDetails {
-  return {
-    id: movieObject.id,
-    title: movieObject.title,
-    releaseDate: new Date(movieObject.release_date).toLocaleString("en-US", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    }),
-    voteAverage: movieObject.vote_average,
-    posterPath: imageUrl + movieObject.poster_path,
-    posterPathMedium: imageUrlMedium + movieObject.poster_path,
-    overview: movieObject.overview,
-    tagline: movieObject.tagline,
-    runtime: formatMinutesToHoursAndMinutes(movieObject.runtime),
-    genres: movieObject.genres,
-    cast: movieObject.cast.slice(0, 6).map((cast: any) => stripCast(cast)),
-    directors: movieObject.crew
-      .filter(({ job }: any) => job === "Director")
-      .map((crew: any) => stripCrew(crew)),
-    writers: movieObject.crew
-      .filter(({ job }: any) => job === "Writer")
-      .map((crew: any) => stripCrew(crew)),
-    backgropPath: imageUrl + movieObject.backdrop_path,
-    status: movieObject.status,
-    budget: `$${movieObject.budget.toLocaleString("en-US")}`,
-    revenue: `$${movieObject.revenue.toLocaleString("en-US")}`,
-    countries: movieObject.production_countries.map(
-      (country: { iso_3166_1: string }) =>
-        countryCodeToFlagEmoji(country.iso_3166_1)
-    ),
-  };
+  if (movieObject.poster_path) {
+    return {
+      id: movieObject.id,
+      title: movieObject.title,
+      releaseDate: new Date(movieObject.release_date).toLocaleString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+      voteAverage: movieObject.vote_average,
+      posterPath: imageUrl + movieObject.poster_path,
+      posterPathMedium: imageUrlMedium + movieObject.poster_path,
+      overview: movieObject.overview,
+      tagline: movieObject.tagline,
+      runtime: formatMinutesToHoursAndMinutes(movieObject.runtime),
+      genres: movieObject.genres,
+      cast: movieObject.cast.slice(0, 6).map((cast: any) => stripCast(cast)),
+      directors: movieObject.crew
+        .filter(({ job }: any) => job === "Director")
+        .map((crew: any) => stripCrew(crew)),
+      writers: movieObject.crew
+        .filter(({ job }: any) => job === "Writer")
+        .map((crew: any) => stripCrew(crew)),
+      backgropPath: imageUrl + movieObject.backdrop_path,
+      status: movieObject.status,
+      budget: `$${movieObject.budget.toLocaleString("en-US")}`,
+      revenue: `$${movieObject.revenue.toLocaleString("en-US")}`,
+      countries: movieObject.production_countries.map(
+        (country: { iso_3166_1: string }) =>
+          countryCodeToFlagEmoji(country.iso_3166_1)
+      ),
+    };
+  } else {
+    return {
+      id: movieObject.id,
+      title: movieObject.title,
+      releaseDate: new Date(movieObject.release_date).toLocaleString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+      voteAverage: movieObject.vote_average,
+      overview: movieObject.overview,
+      tagline: movieObject.tagline,
+      runtime: formatMinutesToHoursAndMinutes(movieObject.runtime),
+      genres: movieObject.genres,
+      cast: movieObject.cast.slice(0, 6).map((cast: any) => stripCast(cast)),
+      directors: movieObject.crew
+        .filter(({ job }: any) => job === "Director")
+        .map((crew: any) => stripCrew(crew)),
+      writers: movieObject.crew
+        .filter(({ job }: any) => job === "Writer")
+        .map((crew: any) => stripCrew(crew)),
+      backgropPath: imageUrl + movieObject.backdrop_path,
+      status: movieObject.status,
+      budget: `$${movieObject.budget.toLocaleString("en-US")}`,
+      revenue: `$${movieObject.revenue.toLocaleString("en-US")}`,
+      countries: movieObject.production_countries.map(
+        (country: { iso_3166_1: string }) =>
+          countryCodeToFlagEmoji(country.iso_3166_1)
+      ),
+    };
+  }
 }
 
 function stripCredits(creditsObjet: any): Credits {

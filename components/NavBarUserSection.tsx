@@ -58,7 +58,7 @@ function NavBarUserSection() {
                   </span>
                 )}
               </Menu.Button>
-              <Menu.Items className="absolute right-0 z-50 mt-2 flex origin-top-right flex-col rounded bg-neutral-700 focus:outline-none">
+              <Menu.Items className="absolute right-0 z-50 mt-2 flex origin-top-right flex-col rounded bg-neutral-700 shadow-lg focus:outline-none">
                 <Menu.Item>
                   {({ active }) => (
                     <Link

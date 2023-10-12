@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { MovieDetails } from "@/types/movies";
 import MovieHeaderUserSection from "./MovieHeaderUserSection";
+import ImagePlaceholderMovie from "./ImagePlaceholderMovie";
 
 type MovieHeaderSectionProps = {
   movie: MovieDetails;
@@ -19,14 +20,22 @@ function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
           filter: "brightness(50%) contrast(110%) grayscale(90%) opacity(50%)",
         }}
       ></div>
-      <Image
-        src={movie.posterPath}
-        alt=""
-        width="300"
-        height="450"
-        className="relative z-10 rounded-l"
-        priority
-      />
+      {movie.posterPath ? (
+        <Image
+          src={movie.posterPath}
+          alt=""
+          width="300"
+          height="450"
+          className="relative z-10 rounded-l"
+          priority
+        />
+      ) : (
+        <ImagePlaceholderMovie
+          dimensions="w-[300px] h-[450px]"
+          rounded="rounded-l"
+        />
+      )}
+
       <div className="pr- relative z-10 flex flex-col gap-4 py-8">
         <div>
           <h1 className="text-3xl">{movie.title}</h1>

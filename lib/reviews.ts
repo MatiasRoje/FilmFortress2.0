@@ -85,7 +85,7 @@ type PostReviewParams = {
   movieId: number;
   movieTitle: string;
   movieReleaseDate: string;
-  moviePoster: string;
+  moviePoster?: string;
 };
 
 export async function postReview({

@@ -7,6 +7,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Spinner from "./Spinner";
+import ImagePlaceholderMovie from "./ImagePlaceholderMovie";
 
 function SearchBar() {
   const router = useRouter();
@@ -51,15 +52,19 @@ function SearchBar() {
                     className={`flex p-2 ${active ? "bg-neutral-500" : ""}`}
                   >
                     <div>
-                      <Image
-                        src={movie.posterPath}
-                        alt=""
-                        width={75}
-                        height={150}
-                        className="max-w-none rounded"
-                        placeholder="empty"
-                        quality={1}
-                      />
+                      {movie.posterPath ? (
+                        <Image
+                          src={movie.posterPath}
+                          alt=""
+                          width={80}
+                          height={160}
+                          className="h-[7.5rem] w-20 max-w-none rounded"
+                          placeholder="empty"
+                          quality={1}
+                        />
+                      ) : (
+                        <ImagePlaceholderMovie dimensions="h-[7.5rem] w-20" />
+                      )}
                     </div>
                     <div className="p-2">
                       <p className="font-semibold">{movie.title}</p>

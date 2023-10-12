@@ -15,6 +15,7 @@ import Spinner from "@/components/Spinner";
 import ExpandableText from "@/components/ExpandableText";
 import ReviewModal from "@/components/ReviewModal";
 import DeleteReviewModal from "@/components/DeleteReviewModal";
+import ImagePlaceholderMovie from "@/components/ImagePlaceholderMovie";
 
 function UserReviewsPage() {
   const router = useRouter();
@@ -78,7 +79,9 @@ function UserReviewsPage() {
         {!isLoadingRatings &&
           !isLoadingReviews &&
           movieTVToggle === "movies" &&
-          !movieIdsArray?.length && <p>You haven&apos;t rated any movies.</p>}
+          !movieIdsArray?.length && (
+            <p>You haven&apos;t reviewed any movies.</p>
+          )}
         {!isLoadingRatings &&
           !isLoadingReviews &&
           movieTVToggle === "movies" &&
@@ -88,13 +91,20 @@ function UserReviewsPage() {
                 userReviewsWithRating.map(userReview => (
                   <li key={userReview._id} className="flex">
                     <Link href={`/movies/${userReview.movieId}`}>
-                      <Image
-                        src={userReview.moviePoster}
-                        alt={`${userReview.movieTitle} poster`}
-                        width="150"
-                        height="225"
-                        className="rounded-l"
-                      />
+                      {userReview.moviePoster ? (
+                        <Image
+                          src={userReview.moviePoster}
+                          alt={`${userReview.movieTitle} poster`}
+                          width="150"
+                          height="225"
+                          className="rounded-l"
+                        />
+                      ) : (
+                        <ImagePlaceholderMovie
+                          dimensions="w-[127px] h-[191px]"
+                          rounded="rounded-l"
+                        />
+                      )}
                     </Link>
                     <div className="w-full rounded-r bg-neutral-700 px-6 py-4">
                       <div className="flex items-center justify-between">
@@ -166,7 +176,7 @@ function UserReviewsPage() {
             </ul>
           )}
         {!isLoadingRatings && !isLoadingReviews && movieTVToggle === "tv" && (
-          <p>You haven&apos;t rated any TV shows.</p>
+          <p>You haven&apos;t reviewed any TV shows.</p>
         )}
         {selectedReview && (
           <ReviewModal

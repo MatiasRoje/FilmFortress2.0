@@ -14,7 +14,7 @@ type ReviewModalProps = {
   movieId: number;
   movieTitle: string;
   movieReleaseDate: string;
-  moviePoster: string;
+  moviePoster?: string;
 };
 
 function ReviewModal({
@@ -54,21 +54,38 @@ function ReviewModal({
     }
 
     if (!userReviewApi && user && userReview) {
-      createReview(
-        {
-          content: userReview,
-          userId: user.id,
-          movieId,
-          movieTitle,
-          movieReleaseDate,
-          moviePoster,
-        },
-        {
-          onSuccess: () => {
-            setIsOpen(false);
+      if (moviePoster) {
+        createReview(
+          {
+            content: userReview,
+            userId: user.id,
+            movieId,
+            movieTitle,
+            movieReleaseDate,
+            moviePoster,
           },
-        }
-      );
+          {
+            onSuccess: () => {
+              setIsOpen(false);
+            },
+          }
+        );
+      } else {
+        createReview(
+          {
+            content: userReview,
+            userId: user.id,
+            movieId,
+            movieTitle,
+            movieReleaseDate,
+          },
+          {
+            onSuccess: () => {
+              setIsOpen(false);
+            },
+          }
+        );
+      }
     }
   }
 

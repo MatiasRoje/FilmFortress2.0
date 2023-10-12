@@ -9,6 +9,7 @@ import { useState } from "react";
 import MediaCardWatchlistSection from "./MediaCardWatchlistSection";
 import { useAuth } from "@/providers/AuthContext";
 import { useUserRatings } from "@/hooks/useUserRatings";
+import ImagePlaceholderMovie from "./ImagePlaceholderMovie";
 
 type MediaCardProps = {
   movie: Movie | TvShow;
@@ -28,13 +29,17 @@ function MediaCard({ movie }: MediaCardProps) {
   return (
     <li className="relative">
       <Link href={`/movies/${movie.id}`} className="w-max">
-        <Image
-          src={movie.posterPath}
-          alt=""
-          width="180"
-          height="270"
-          className="h-[17rem] w-auto max-w-none rounded-t"
-        />
+        {movie.posterPath ? (
+          <Image
+            src={movie.posterPath}
+            alt=""
+            width="180"
+            height="270"
+            className="h-[17rem] w-auto max-w-none rounded-t"
+          />
+        ) : (
+          <ImagePlaceholderMovie dimensions="w-[180px] h-[270px]" />
+        )}
       </Link>
       <MediaCardWatchlistSection movie={movie} userRating={userRating} />
 

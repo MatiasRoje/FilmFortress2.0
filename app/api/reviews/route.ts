@@ -12,16 +12,31 @@ export async function POST(request: NextRequest) {
     movieReleaseDate,
   } = await request.json();
   await connectMongoDB();
-  await Review.create({
-    content,
-    userId,
-    movieId,
-    movieTitle,
-    moviePoster,
-    movieReleaseDate,
-  });
+  if (moviePoster) {
+    await Review.create({
+      content,
+      userId,
+      movieId,
+      movieTitle,
+      moviePoster,
+      movieReleaseDate,
+    });
 
-  return NextResponse.json({ message: "Review created" }, { status: 201 });
+    return NextResponse.json({ message: "Review created" }, { status: 201 });
+  } else {
+    await Review.create({
+      content,
+      userId,
+      movieId,
+      movieTitle,
+      movieReleaseDate,
+    });
+
+    return NextResponse.json(
+      { message: "Review created without poster" },
+      { status: 201 }
+    );
+  }
 }
 
 export async function GET() {

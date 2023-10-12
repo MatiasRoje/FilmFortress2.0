@@ -5,7 +5,7 @@ export type Movie = {
   title: string;
   releaseDate: string;
   voteAverage: number;
-  posterPath: string;
+  posterPath?: string;
 };
 
 export type Genre = {
@@ -26,7 +26,7 @@ export type Crew = {
 };
 
 export type MovieDetails = Movie & {
-  posterPathMedium: string;
+  posterPathMedium?: string;
   overview: string;
   tagline: string;
   runtime: string;

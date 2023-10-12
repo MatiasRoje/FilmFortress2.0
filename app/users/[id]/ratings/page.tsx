@@ -1,5 +1,6 @@
 "use client";
 
+import ImagePlaceholderMovie from "@/components/ImagePlaceholderMovie";
 import RatingModal from "@/components/RatingModal";
 import Spinner from "@/components/Spinner";
 import useRatedMovies from "@/hooks/useRatedMovies";
@@ -80,13 +81,20 @@ function UserRatingsPage() {
               {moviesWithRating.map(movie => (
                 <li key={movie.id} className="flex">
                   <Link href={`/movies/${movie.id}`}>
-                    <Image
-                      src={movie.posterPathMedium}
-                      alt={`${movie.title} poster`}
-                      width="150"
-                      height="224"
-                      className="h-full w-full rounded-l"
-                    />
+                    {movie.posterPathMedium ? (
+                      <Image
+                        src={movie.posterPathMedium}
+                        alt={`${movie.title} poster`}
+                        width="150"
+                        height="224"
+                        className="h-full w-full rounded-l"
+                      />
+                    ) : (
+                      <ImagePlaceholderMovie
+                        dimensions="h-56 w-[142px]"
+                        rounded="rounded-l"
+                      />
+                    )}
                   </Link>
                   <div className="h-56 w-full rounded-r bg-neutral-700 px-6 py-4">
                     <p className="text-lg font-semibold">

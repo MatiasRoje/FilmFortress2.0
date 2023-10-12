@@ -2,6 +2,7 @@ import { MovieDetails } from "@/types/movies";
 import Image from "next/image";
 import Link from "next/link";
 import ShareLinkButton from "./ShareLinkButton";
+import ImagePlaceholderPerson from "./ImagePlaceholderPerson";
 
 type MovieSecondarySectionProps = {
   movie: MovieDetails;
@@ -31,13 +32,20 @@ function MovieSecondarySection({ movie }: MovieSecondarySectionProps) {
         <ul className="flex gap-3">
           {movie.cast.map(cast => (
             <li key={cast.name} className="rounded bg-neutral-700">
-              <Image
-                src={cast.profilePath}
-                alt=""
-                width="144"
-                height="175"
-                className="rounded-t"
-              />
+              {cast.profilePath ? (
+                <Image
+                  src={cast.profilePath}
+                  alt=""
+                  width="144"
+                  height="176"
+                  className="rounded-t"
+                />
+              ) : (
+                <ImagePlaceholderPerson
+                  dimensions="w-36 h-[216px]"
+                  rounded="rounded-t"
+                />
+              )}
               <div className="w-36 p-2">
                 <p className="font-semibold">{cast.name}</p>
                 <p className="text-sm">{cast.character}</p>

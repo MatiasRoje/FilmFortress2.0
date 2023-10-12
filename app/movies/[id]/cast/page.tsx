@@ -1,5 +1,6 @@
 import CastList from "@/components/CastList";
 import CrewList from "@/components/CrewList";
+import ImagePlaceholderMovie from "@/components/ImagePlaceholderMovie";
 import { getCasting, getMovie } from "@/lib/movies";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -20,14 +21,18 @@ async function CastPage({ params: { id } }: CastPageProps) {
   return (
     <section className="my-6 flex gap-8">
       <div className="flex flex-col items-center gap-4">
-        <Image
-          src={movie.posterPath}
-          alt=""
-          width="300"
-          height="450"
-          className="relative rounded"
-          priority
-        />
+        {movie.posterPath ? (
+          <Image
+            src={movie.posterPath}
+            alt=""
+            width="300"
+            height="450"
+            className="relative rounded"
+            priority
+          />
+        ) : (
+          <ImagePlaceholderMovie dimensions="w-[300px] h-[450px]" />
+        )}
         <Link
           href={`/movies/${movie.id}`}
           className={`absolute top-1/2 z-10 flex -translate-y-full transform items-center rounded-full border border-white bg-neutral-600/25 p-2 text-neutral-50 transition duration-300 hover:border-yellow-400 hover:text-yellow-400`}

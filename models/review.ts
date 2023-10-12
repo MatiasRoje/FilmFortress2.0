@@ -20,7 +20,6 @@ const reviewSchema = new Schema(
     },
     moviePoster: {
       type: String,
-      required: true,
     },
     movieReleaseDate: {
       type: String,

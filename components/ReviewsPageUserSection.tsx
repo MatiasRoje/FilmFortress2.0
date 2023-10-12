@@ -13,6 +13,7 @@ import { useUserRatings } from "@/hooks/useUserRatings";
 import { useUserReviews } from "@/hooks/useUserReviews";
 import { useUserReviewForMovie } from "@/hooks/useUserReviewForMovie";
 import { ConvertUserReviewToReviewTMDB } from "@/lib/reviews";
+import ImagePlaceholderMovie from "./ImagePlaceholderMovie";
 
 type ReviewsPageUserSectionProps = {
   movie: MovieDetails;
@@ -65,14 +66,18 @@ function ReviewsPageUserSection({
   return (
     <section className="my-6 flex gap-8">
       <div className="flex flex-col items-center gap-4">
-        <Image
-          src={movie.posterPath}
-          alt=""
-          width="300"
-          height="450"
-          className="relative rounded"
-          priority
-        />
+        {movie.posterPath ? (
+          <Image
+            src={movie.posterPath}
+            alt=""
+            width="300"
+            height="450"
+            className="relative rounded"
+            priority
+          />
+        ) : (
+          <ImagePlaceholderMovie dimensions="w-[300px] h-[450px]" />
+        )}
         {!isAuthenticated ? (
           <p>Sign in to write a review.</p>
         ) : userReview ? (
@@ -97,10 +102,10 @@ function ReviewsPageUserSection({
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          {userReview && (
+          {userReview && movie.posterPath && (
             <UserReviewCard
               review={userReview}
-              width="max-w-4xl"
+              width="w-full"
               userRating={userRating}
               movieId={movie.id}
               movieTitle={movie.title}

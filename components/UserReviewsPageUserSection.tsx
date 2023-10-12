@@ -15,6 +15,7 @@ import { UserReview } from "@/types/reviews";
 import Image from "next/image";
 import Link from "next/link";
 import Spinner from "./Spinner";
+import ImagePlaceholderMovie from "./ImagePlaceholderMovie";
 
 function UserReviewsPageUserSection() {
   const router = useRouter();
@@ -85,13 +86,17 @@ function UserReviewsPageUserSection() {
                 userReviewsWithRating.map(userReview => (
                   <div key={userReview._id} className="flex">
                     <Link href={`/movies/${userReview.movieId}`}>
-                      <Image
-                        src={userReview.moviePoster}
-                        alt={`${userReview.movieTitle} poster`}
-                        width="150"
-                        height="225"
-                        className="rounded-l"
-                      />
+                      {userReview.moviePoster ? (
+                        <Image
+                          src={userReview.moviePoster}
+                          alt={`${userReview.movieTitle} poster`}
+                          width="150"
+                          height="225"
+                          className="rounded-l"
+                        />
+                      ) : (
+                        <ImagePlaceholderMovie dimensions="w-[150px] h-[225px]" />
+                      )}
                     </Link>
                     <div className="w-full rounded bg-neutral-700 px-6 py-4">
                       <div className="flex items-center justify-between">

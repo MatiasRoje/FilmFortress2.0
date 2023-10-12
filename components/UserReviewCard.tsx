@@ -16,7 +16,7 @@ type ReviewCardProps = {
   movieId: number;
   movieTitle: string;
   movieReleaseDate: string;
-  moviePoster: string;
+  moviePoster?: string;
 };
 
 function UserReviewCard({
@@ -86,7 +86,7 @@ function UserReviewCard({
           {userRating?.rating}
         </p>
       </div>
-      <article className={`mt-4 w-full border-t pt-6 text-justify`}>
+      <article className={`mt-4 ${width} border-t pt-6 text-justify`}>
         {review && <ExpandableText text={review.content} />}
       </article>
       <ReviewModal
