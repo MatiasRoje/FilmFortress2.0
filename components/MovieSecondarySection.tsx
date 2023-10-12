@@ -45,7 +45,10 @@ function MovieSecondarySection({ movie }: MovieSecondarySectionProps) {
             </li>
           ))}
           <li className="flex w-24 items-center">
-            <Link href="" className="rounded px-2 py-1 hover:underline">
+            <Link
+              href={`/movies/${movie.id}/cast`}
+              className="rounded px-2 py-1 hover:underline"
+            >
               Full Cast & Crew
             </Link>
           </li>

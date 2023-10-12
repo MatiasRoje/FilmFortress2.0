@@ -1,4 +1,4 @@
-import { Cast, Crew, Movie, MovieDetails } from "@/types/movies";
+import { Cast, Credits, Crew, Movie, MovieDetails } from "@/types/movies";
 import { formatMinutesToHoursAndMinutes } from "./utility";
 
 const apiKey = process.env.TMDB_API_KEY;
@@ -19,7 +19,7 @@ export async function getMovies(
       }
     );
     const data = await res.json();
-    const movies = data.results?.map((movie: any) => StripMovie(movie));
+    const movies = data.results?.map((movie: any) => stripMovie(movie));
     return {
       movies,
       totalPages: data.total_pages,
@@ -32,7 +32,7 @@ export async function getMovies(
     }
   );
   const data = await res.json();
-  const movies = data.results?.map((movie: any) => StripMovie(movie));
+  const movies = data.results?.map((movie: any) => stripMovie(movie));
   return {
     movies,
     totalPages: data.total_pages,
@@ -48,7 +48,7 @@ export async function getMovie(id: number): Promise<MovieDetails> {
     `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=en-US`
   );
   const credits = await resCredits.json();
-  return StripMovieDetails({ ...details, ...credits });
+  return stripMovieDetails({ ...details, ...credits });
 }
 
 export async function searchMovies(query: string) {
@@ -63,7 +63,7 @@ export async function searchMovies(query: string) {
 
   const moviePromises: Promise<Movie>[] = data.results
     .slice(0, 8)
-    .map((movie: any) => StripMovie(movie));
+    .map((movie: any) => stripMovie(movie));
   const moviesData = await Promise.all(moviePromises);
   return moviesData;
 }
@@ -74,9 +74,17 @@ export async function getRandomMovieFromCollection(movies: Movie[]) {
   return movieDetails;
 }
 
+export async function getCasting(movieId: number) {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`
+  );
+  const credits = await res.json();
+  return stripCredits(credits);
+}
+
 // NOTE Helper functions
 
-export function StripMovie(movieObject: any): Movie {
+export function stripMovie(movieObject: any): Movie {
   return {
     id: movieObject.id,
     title: movieObject.title,
@@ -90,7 +98,7 @@ export function StripMovie(movieObject: any): Movie {
   };
 }
 
-export function StripMovieDetails(movieObject: any): MovieDetails {
+export function stripMovieDetails(movieObject: any): MovieDetails {
   return {
     id: movieObject.id,
     title: movieObject.title,
@@ -106,13 +114,13 @@ export function StripMovieDetails(movieObject: any): MovieDetails {
     tagline: movieObject.tagline,
     runtime: formatMinutesToHoursAndMinutes(movieObject.runtime),
     genres: movieObject.genres,
-    cast: movieObject.cast.slice(0, 6).map((cast: any) => StripCast(cast)),
+    cast: movieObject.cast.slice(0, 6).map((cast: any) => stripCast(cast)),
     directors: movieObject.crew
       .filter(({ job }: any) => job === "Director")
-      .map((crew: any) => StripCrew(crew)),
+      .map((crew: any) => stripCrew(crew)),
     writers: movieObject.crew
       .filter(({ job }: any) => job === "Writer")
-      .map((crew: any) => StripCrew(crew)),
+      .map((crew: any) => stripCrew(crew)),
     backgropPath: imageUrl + movieObject.backdrop_path,
     status: movieObject.status,
     budget: `$${movieObject.budget.toLocaleString("en-US")}`,
@@ -124,19 +132,62 @@ export function StripMovieDetails(movieObject: any): MovieDetails {
   };
 }
 
-function StripCast(castObject: any): Cast {
+function stripCredits(creditsObjet: any): Credits {
+  const groupedCrew: Record<string, any[]> = {};
+
+  creditsObjet.crew.forEach((crewMember: any) => {
+    const department = crewMember.department;
+    const name = crewMember.name;
+
+    if (!groupedCrew[department]) {
+      groupedCrew[department] = [];
+    }
+
+    // Check if the crew member with the same name already exists in the department
+    const existingCrewMember = groupedCrew[department].find(
+      member => member.name === name
+    );
+
+    if (existingCrewMember) {
+      // If the crew member exists, append the new job to their existing entry
+      existingCrewMember.job += `, ${crewMember.job}`;
+    } else {
+      // If the crew member doesn't exist, add a new entry
+      groupedCrew[department].push(stripCrew(crewMember));
+    }
+  });
+
   return {
-    name: castObject.name,
-    profilePath: imageUrlMedium + castObject.profile_path,
-    character: castObject.character,
+    cast: creditsObjet.cast.map((cast: any) => stripCast(cast)),
+    crew: groupedCrew,
   };
 }
 
-function StripCrew(crewObject: any): Crew {
-  return {
-    name: crewObject.name,
-    job: crewObject.name,
-  };
+function stripCast(castObject: any): Cast {
+  if (castObject.profile_path) {
+    return {
+      name: castObject.name,
+      profilePath: imageUrlMedium + castObject.profile_path,
+      character: castObject.character,
+    };
+  } else {
+    return { name: castObject.name, character: castObject.character };
+  }
+}
+
+function stripCrew(crewObject: any): Crew {
+  if (crewObject.profile_path) {
+    return {
+      name: crewObject.name,
+      profilePath: imageUrlMedium + crewObject.profile_path,
+      job: crewObject.job,
+    };
+  } else {
+    return {
+      name: crewObject.name,
+      job: crewObject.job,
+    };
+  }
 }
 
 function countryCodeToFlagEmoji(countryCode: string): string {

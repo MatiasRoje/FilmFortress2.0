@@ -15,13 +15,14 @@ export type Genre = {
 
 export type Cast = {
   name: string;
-  profilePath: string;
+  profilePath?: string;
   character: string;
 };
 
 export type Crew = {
   name: string;
   job: string;
+  profilePath?: string;
 };
 
 export type MovieDetails = Movie & {
@@ -44,3 +45,8 @@ export type MovieWithRating = Movie &
   MovieDetails & {
     rating: RatingApi | undefined; // Replace with the actual type of rating
   };
+
+export type Credits = {
+  cast: any;
+  crew: any;
+};
