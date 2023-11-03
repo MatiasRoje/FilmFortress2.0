@@ -113,7 +113,7 @@ function ReviewModal({
             <textarea
               defaultValue={userReviewApi?.content}
               onChange={e => setUserReview(e.target.value)}
-              className="h-80 w-full rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400 lg:w-[40rem]"
+              className="h-80 w-full rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400 sm:w-[30rem] lg:w-[40rem]"
             ></textarea>
             <div className="flex justify-center">
               {userReview.length > 0 ? (

@@ -40,7 +40,7 @@ const Carousel = ({ mediaCollection }: CarouselProps) => {
       <ul
         className={`${
           mediaCollection.length < 6 ? "flex" : "grid grid-flow-col"
-        } scroll-snap-x gap-2 transition ease-out lg:gap-7`}
+        } snap-x gap-2 transition ease-out lg:gap-7`}
         style={{
           transform: `translateX(${translateX}%)`,
           transitionDuration: "1500ms",
