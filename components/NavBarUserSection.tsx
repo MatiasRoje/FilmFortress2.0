@@ -23,7 +23,7 @@ function NavBarUserSection() {
 
   return isAuthenticated ? (
     <>
-      <li className="ml-auto">
+      <li>
         <Link
           href={`/users/${user?.id}/watchlist`}
           className="flex gap-1 rounded px-3 py-1 hover:bg-neutral-700"

@@ -52,14 +52,14 @@ function UserWatchlistPage() {
               Movies{" "}
               <span className="text-sm">—{userWatchlist?.movieIds.length}</span>
             </button>
-            <button
+            {/* <button
               className={`pb-1 font-semibold hover:cursor-pointer ${
                 movieTVToggle === "tv" && "underline underline-offset-8"
               }`}
               onClick={() => setMovieTVToggle("tv")}
             >
               TV <span className="text-sm">—{0}</span>
-            </button>
+            </button> */}
           </div>
         </div>
         {isLoading && (
@@ -152,9 +152,9 @@ function UserWatchlistPage() {
               ))}
             </ul>
           )}
-        {!isLoading && movieTVToggle === "tv" && (
+        {/* {!isLoading && movieTVToggle === "tv" && (
           <p>You haven&apos;t added any TV shows to your Watchlist.</p>
-        )}
+        )} */}
         {selectedMovie && (
           <RatingModal
             isOpen={isOpen}

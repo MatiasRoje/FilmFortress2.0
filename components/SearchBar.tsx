@@ -31,10 +31,11 @@ function SearchBar() {
   }, [pathname]);
 
   return (
-    <div className="relative flex items-center justify-center gap-1">
+    <li className="relative mx-auto flex items-center justify-center gap-1">
       <Combobox onChange={handleChange}>
         <Combobox.Input
-          placeholder="Search movies, tv shows..."
+          // placeholder="Search movies, tv shows..."
+          placeholder="Search movies"
           className="w-[36rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:-translate-y-px focus:shadow-lg focus:outline-none"
           value={query}
           onChange={event => setQuery(event.target.value)}
@@ -76,7 +77,7 @@ function SearchBar() {
             ))}
         </Combobox.Options>
       </Combobox>
-    </div>
+    </li>
   );
 }
 

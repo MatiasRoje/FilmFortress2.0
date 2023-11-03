@@ -20,14 +20,14 @@ function NavBar() {
             Movies
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link
             href="/"
             className="ml-2 rounded px-3 py-1 hover:cursor-pointer hover:bg-neutral-700"
           >
             TV Shows
           </Link>
-        </li>
+        </li> */}
         <SearchBar />
         <NavBarUserSection />
       </ul>

@@ -16,8 +16,9 @@ function HeroSection({ movie }: HeroSectionProps) {
       ></div>
       <div className="z-10 flex flex-col gap-1 px-6 pt-16">
         <h1 className="text-4xl font-bold">Welcome to FilmFortress.</h1>
-        <p className="text-xl font-semibold">
-          Countless movies and TV shows waiting to be discovered.
+        <p className="text-lg font-semibold">
+          {/* Countless movies and TV shows waiting to be discovered. */}
+          Countless movies waiting to be discovered.
         </p>
       </div>
     </section>

@@ -54,14 +54,14 @@ function UserRatingsPage() {
             >
               Movies <span className="text-sm">—{movieIdsArray?.length}</span>
             </button>
-            <button
+            {/* <button
               className={`pb-1 font-semibold hover:cursor-pointer ${
                 movieTVToggle === "tv" && "underline underline-offset-8"
               }`}
               onClick={() => setMovieTVToggle("tv")}
             >
               TV <span className="text-sm">—{0}</span>
-            </button>
+            </button> */}
           </div>
         </div>
         {(isLoadingRatings || isLoadingMovies) && (
@@ -160,9 +160,9 @@ function UserRatingsPage() {
               ))}
             </ul>
           )}
-        {!isLoadingRatings && !isLoadingMovies && movieTVToggle === "tv" && (
+        {/* {!isLoadingRatings && !isLoadingMovies && movieTVToggle === "tv" && (
           <p>You haven&apos;t rated any TV shows.</p>
-        )}
+        )} */}
         {selectedMovie && (
           <RatingModal
             isOpen={isOpen}

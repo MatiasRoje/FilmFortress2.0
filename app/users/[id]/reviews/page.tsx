@@ -61,14 +61,14 @@ function UserReviewsPage() {
                 —{movieIdsArray ? movieIdsArray.length : 0}
               </span>
             </button>
-            <button
+            {/* <button
               className={`pb-1 font-semibold hover:cursor-pointer ${
                 movieTVToggle === "tv" && "underline underline-offset-8"
               }`}
               onClick={() => setMovieTVToggle("tv")}
             >
               TV <span className="text-sm">—{0}</span>
-            </button>
+            </button> */}
           </div>
         </div>
         {(isLoadingRatings || isLoadingReviews) && (
@@ -175,9 +175,9 @@ function UserReviewsPage() {
                 ))}
             </ul>
           )}
-        {!isLoadingRatings && !isLoadingReviews && movieTVToggle === "tv" && (
+        {/* {!isLoadingRatings && !isLoadingReviews && movieTVToggle === "tv" && (
           <p>You haven&apos;t reviewed any TV shows.</p>
-        )}
+        )} */}
         {selectedReview && (
           <ReviewModal
             userReviewApi={selectedReview}
