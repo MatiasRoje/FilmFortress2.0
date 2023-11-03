@@ -27,7 +27,7 @@ function MediaCard({ movie }: MediaCardProps) {
   }
 
   return (
-    <li className="relative">
+    <li className="scroll-snap-start relative">
       <Link href={`/movies/${movie.id}`} className="w-max">
         {movie.posterPath ? (
           <Image

@@ -26,7 +26,7 @@ function NavBarUserSection() {
       <li>
         <Link
           href={`/users/${user?.id}/watchlist`}
-          className="flex gap-1 rounded px-3 py-1 hover:bg-neutral-700"
+          className="hidden gap-1 rounded px-3 py-1 hover:bg-neutral-700 md:flex"
         >
           <span>
             <PlusCircleIcon className="h-6 w-6" />
@@ -115,7 +115,7 @@ function NavBarUserSection() {
     </>
   ) : (
     <>
-      <li className="ml-auto rounded px-3 py-1 hover:bg-neutral-700">
+      <li className="ml-auto hidden rounded px-3 py-1 hover:bg-neutral-700 md:block">
         <Link href="/login">
           <div className="flex gap-1">
             <span>
