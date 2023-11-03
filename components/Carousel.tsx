@@ -15,7 +15,6 @@ type MediaCollectionProps = Movie | TvShow;
 const Carousel = ({ mediaCollection }: CarouselProps) => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(0);
-  // hello
 
   // Number will be calculated depending of how many movies should be displayed, usually they will be displayed in multiples of 6
   const translateX = -currentPage * (mediaCollection.length > 10 ? 100 : 66.68);
