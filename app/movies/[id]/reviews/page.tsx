@@ -1,8 +1,7 @@
-import { Review } from "@/types/reviews";
+import { ReviewTMDB } from "@/types/reviews";
 import ReviewsPageUserSection from "@/components/ReviewsPageUserSection";
 import { getMovie } from "@/lib/movies";
-import { getReviews, getReviewsFromMovie } from "@/lib/reviews";
-import { getRatings } from "@/lib/ratings";
+import { getReviewsFromMovie } from "@/lib/reviews";
 
 type ReviewsPageParams = {
   params: {
@@ -12,18 +11,11 @@ type ReviewsPageParams = {
 
 async function ReviewsPage({ params }: ReviewsPageParams) {
   const movie = await getMovie(params.id);
-  const reviews: Review[] = await getReviewsFromMovie(movie.id);
-  const { ratings } = await getRatings();
-  const { reviews: usersReviews } = await getReviews();
+  const reviews: ReviewTMDB[] = await getReviewsFromMovie(movie.id);
 
   return (
     <main>
-      <ReviewsPageUserSection
-        movie={movie}
-        reviews={reviews}
-        ratings={ratings}
-        usersReviews={usersReviews}
-      />
+      <ReviewsPageUserSection movie={movie} reviews={reviews} />
     </main>
   );
 }

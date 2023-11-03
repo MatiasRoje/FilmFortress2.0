@@ -1,26 +1,18 @@
 import Image from "next/image";
 import { MovieDetails } from "@/types/movies";
-import { Rating } from "@/types/ratings";
 import MovieHeaderUserSection from "./MovieHeaderUserSection";
-import { Watchlist } from "@/types/watchlists";
+import ImagePlaceholderMovie from "./ImagePlaceholderMovie";
 
 type MovieHeaderSectionProps = {
   movie: MovieDetails;
-  ratings: Rating[];
-  watchlists: Watchlist[];
 };
 
-function MovieHeaderSection({
-  movie,
-  ratings,
-  watchlists,
-}: MovieHeaderSectionProps) {
+function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
   const directors = movie.directors.map(director => director.name);
   const writers = movie.writers.map(writer => writer.name);
-  const userRating = ratings.find(rating => rating.movieId === movie.id);
 
   return (
-    <section className="px relative my-6 flex gap-8 pr-4">
+    <section className="relative my-6 flex gap-8 pr-4">
       <div
         className="absolute inset-0 rounded bg-cover bg-center"
         style={{
@@ -28,14 +20,22 @@ function MovieHeaderSection({
           filter: "brightness(50%) contrast(110%) grayscale(90%) opacity(50%)",
         }}
       ></div>
-      <Image
-        src={movie.posterPath}
-        alt=""
-        width="300"
-        height="450"
-        className="relative z-10 rounded-l"
-        priority
-      />
+      {movie.posterPath ? (
+        <Image
+          src={movie.posterPath}
+          alt=""
+          width="300"
+          height="450"
+          className="relative z-10 rounded-l"
+          priority
+        />
+      ) : (
+        <ImagePlaceholderMovie
+          dimensions="w-[300px] h-[450px]"
+          rounded="rounded-l"
+        />
+      )}
+
       <div className="pr- relative z-10 flex flex-col gap-4 py-8">
         <div>
           <h1 className="text-3xl">{movie.title}</h1>
@@ -45,11 +45,7 @@ function MovieHeaderSection({
             <span>{movie.runtime}</span>
           </div>
         </div>
-        <MovieHeaderUserSection
-          movie={movie}
-          userRating={userRating}
-          watchlists={watchlists}
-        />
+        <MovieHeaderUserSection movie={movie} />
         <p className="italic">{movie.tagline}</p>
         <div className="flex flex-col gap-2">
           <p className="text-lg font-bold">Overview</p>

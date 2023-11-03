@@ -1,41 +1,90 @@
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import Button from "./Button";
-import { Movie, MovieDetails } from "@/types/movies";
-import { TvShow } from "@/types/tv";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
-import { postReview } from "@/lib/reviews";
+import { useCreateReview } from "@/hooks/useCreateReview";
+import { UserReview } from "@/types/reviews";
+import { useUpdateReview } from "@/hooks/useUpdateReview";
 
 type ReviewModalProps = {
+  userReviewApi?: UserReview | undefined;
   isOpen: boolean;
   setIsOpen: (boolean: boolean) => void;
-  media: Movie | MovieDetails | TvShow;
-  setTempReview: (review: string) => void;
+  movieId: number;
+  movieTitle: string;
+  movieReleaseDate: string;
+  moviePoster?: string;
 };
 
 function ReviewModal({
+  userReviewApi,
   isOpen,
   setIsOpen,
-  media,
-  setTempReview,
+  movieId,
+  movieTitle,
+  movieReleaseDate,
+  moviePoster,
 }: ReviewModalProps) {
   const router = useRouter();
-  const [userReview, setUserReview] = useState("");
+  const [userReview, setUserReview] = useState(
+    userReviewApi ? userReviewApi.content : ""
+  );
   const { user, isAuthenticated } = useAuth();
+
+  const { createReview } = useCreateReview();
+  const { updateReview } = useUpdateReview();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!isAuthenticated) router.push("/login");
 
-    if (user && media && userReview) {
-      const res = await postReview(userReview, media.id, user.id);
+    if (userReviewApi) {
+      updateReview(
+        {
+          review: userReviewApi,
+          newContent: userReview,
+        },
+        {
+          onSuccess: () => {
+            setIsOpen(false);
+          },
+        }
+      );
+    }
 
-      if (res && res.ok) {
-        setIsOpen(false);
-        setTempReview(userReview);
+    if (!userReviewApi && user && userReview) {
+      if (moviePoster) {
+        createReview(
+          {
+            content: userReview,
+            userId: user.id,
+            movieId,
+            movieTitle,
+            movieReleaseDate,
+            moviePoster,
+          },
+          {
+            onSuccess: () => {
+              setIsOpen(false);
+            },
+          }
+        );
       } else {
-        throw new Error("Failed to create a review");
+        createReview(
+          {
+            content: userReview,
+            userId: user.id,
+            movieId,
+            movieTitle,
+            movieReleaseDate,
+          },
+          {
+            onSuccess: () => {
+              setIsOpen(false);
+            },
+          }
+        );
       }
     }
   }
@@ -60,9 +109,9 @@ function ReviewModal({
             REVIEW THIS
           </Dialog.Title>
           <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-            <h2 className="text-center text-xl font-bold">{media.title}</h2>
+            <h2 className="text-center text-xl font-bold">{movieTitle}</h2>
             <textarea
-              value={userReview}
+              defaultValue={userReviewApi?.content}
               onChange={e => setUserReview(e.target.value)}
               className="h-80 w-[40rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400"
             ></textarea>

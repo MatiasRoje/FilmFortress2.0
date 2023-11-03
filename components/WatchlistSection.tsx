@@ -3,35 +3,21 @@
 import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Button from "./Button";
-import { useEffect, useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { Watchlist } from "@/types/watchlists";
-import useWatchlist from "@/hooks/useWatchlist";
+import { useState } from "react";
+import { useAuth } from "@/providers/AuthContext";
+import useWatchlistMovies from "@/hooks/useWatchlistMovies";
 import Carousel from "./Carousel";
-import { Rating } from "@/types/ratings";
 import Spinner from "./Spinner";
+import { useUserWatchlist } from "@/hooks/useUserWatchlist";
 
-type WatchlistSectionProps = {
-  watchlists: Watchlist[];
-  ratings: Rating[];
-};
-
-function WatchlistSection({ watchlists, ratings }: WatchlistSectionProps) {
+function WatchlistSection() {
   const [isHovered, setIsHovered] = useState(false);
   const { isAuthenticated } = useAuth();
   const { user } = useAuth();
-  const [watchlist, setWatchlist] = useState<undefined | Watchlist>(undefined);
 
-  useEffect(() => {
-    if (user) {
-      const watchlist = watchlists.find(
-        watchlist => watchlist.userId === user.id
-      );
-      setWatchlist(watchlist);
-    }
-  }, [user, watchlists]);
+  const { userWatchlist } = useUserWatchlist(user?.id);
 
-  const { movies, isLoading } = useWatchlist(watchlist?.movieIds);
+  const { movies, isLoading } = useWatchlistMovies(userWatchlist?.movieIds);
 
   function handleHoverIn() {
     setIsHovered(true);
@@ -79,7 +65,7 @@ function WatchlistSection({ watchlists, ratings }: WatchlistSectionProps) {
           </Button>
         </div>
       )}
-      {isAuthenticated && !watchlist && (
+      {isAuthenticated && !userWatchlist && (
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <span>
             <PlusCircleIcon className="h-12 w-12 p-2" />
@@ -99,37 +85,35 @@ function WatchlistSection({ watchlists, ratings }: WatchlistSectionProps) {
           </Link>
         </div>
       )}
-      {isAuthenticated && watchlist && watchlist.movieIds.length === 0 && (
-        <div className="flex flex-col items-center justify-center gap-4 text-center">
-          <span>
-            <PlusCircleIcon className="h-12 w-12 p-2" />
-          </span>
-          <div>
-            <p className="font-semibold">Your Watchlist is empty</p>
-            <p>
-              Create a list of TV shows and movies to help you remember what
-              you&apos;d like to watch.
-            </p>
+      {isAuthenticated &&
+        userWatchlist &&
+        userWatchlist.movieIds.length === 0 && (
+          <div className="flex flex-col items-center justify-center gap-4 text-center">
+            <span>
+              <PlusCircleIcon className="h-12 w-12 p-2" />
+            </span>
+            <div>
+              <p className="font-semibold">Your Watchlist is empty</p>
+              <p>
+                Create a list of TV shows and movies to help you remember what
+                you&apos;d like to watch.
+              </p>
+            </div>
+            <Link
+              href="/movies"
+              className="focus:ring- rounded bg-neutral-600 px-6 py-2 transition duration-300 hover:bg-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
+            >
+              Browse popular movies
+            </Link>
           </div>
-          <Link
-            href="/movies"
-            className="focus:ring- rounded bg-neutral-600 px-6 py-2 transition duration-300 hover:bg-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
-          >
-            Browse popular movies
-          </Link>
-        </div>
-      )}
-      {isLoading && isAuthenticated && watchlist && (
+        )}
+      {isLoading && isAuthenticated && userWatchlist && (
         <div className="my-10 flex items-center justify-center">
           <Spinner dimensions="w-12 h-12" />
         </div>
       )}
-      {!isLoading && isAuthenticated && watchlist && (
-        <Carousel
-          mediaCollection={movies}
-          ratings={ratings}
-          watchlists={watchlists}
-        />
+      {!isLoading && isAuthenticated && userWatchlist && (
+        <Carousel mediaCollection={movies} />
       )}
     </section>
   );

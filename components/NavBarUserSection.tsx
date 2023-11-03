@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import Button from "./Button";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   UserCircleIcon,
-  PlusCircleIcon,
 } from "@heroicons/react/24/solid";
 import { Menu } from "@headlessui/react";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { useUserWatchlist } from "@/hooks/useUserWatchlist";
 
 function NavBarUserSection() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -18,16 +19,20 @@ function NavBarUserSection() {
     logout();
   }
 
+  const { userWatchlist } = useUserWatchlist(user?.id);
+
   return isAuthenticated ? (
     <>
-      <li className="ml-auto rounded px-3 py-1 hover:bg-neutral-700">
-        <Link href={`/users/${user?.id}/watchlist`}>
-          <div className="flex gap-1">
-            <span>
-              <PlusCircleIcon className="h-6 w-6" />
-            </span>
-            Watchlist
-          </div>
+      <li>
+        <Link
+          href={`/users/${user?.id}/watchlist`}
+          className="flex gap-1 rounded px-3 py-1 hover:bg-neutral-700"
+        >
+          <span>
+            <PlusCircleIcon className="h-6 w-6" />
+          </span>
+          Watchlist
+          {userWatchlist && <span>—{userWatchlist.movieIds.length}</span>}
         </Link>
       </li>
       <li>
@@ -53,7 +58,7 @@ function NavBarUserSection() {
                   </span>
                 )}
               </Menu.Button>
-              <Menu.Items className="absolute right-0 z-50 mt-2 flex origin-top-right flex-col rounded bg-neutral-700 focus:outline-none">
+              <Menu.Items className="absolute right-0 z-50 mt-2 flex origin-top-right flex-col rounded bg-neutral-700 shadow-lg focus:outline-none">
                 <Menu.Item>
                   {({ active }) => (
                     <Link

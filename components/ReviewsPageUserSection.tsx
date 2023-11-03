@@ -1,44 +1,63 @@
 "use client";
 
 import { MovieDetails } from "@/types/movies";
-import { Review, UserReview } from "@/types/reviews";
+import { ReviewTMDB, UserReview } from "@/types/reviews";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import ReviewsButton from "@/components/ReviewsButton";
 import ReviewCard from "./ReviewCard";
-import { Rating } from "@/types/ratings";
 import UserReviewCard from "./UserReviewCard";
+import { useUserRatings } from "@/hooks/useUserRatings";
+import { useUserReviews } from "@/hooks/useUserReviews";
+import { useUserReviewForMovie } from "@/hooks/useUserReviewForMovie";
+import { ConvertUserReviewToReviewTMDB } from "@/lib/reviews";
+import ImagePlaceholderMovie from "./ImagePlaceholderMovie";
 
 type ReviewsPageUserSectionProps = {
   movie: MovieDetails;
-  reviews: Review[];
-  usersReviews: UserReview[];
-  ratings: Rating[];
+  reviews: ReviewTMDB[];
 };
 
 function ReviewsPageUserSection({
   movie,
   reviews,
-  usersReviews,
-  ratings,
 }: ReviewsPageUserSectionProps) {
   const router = useRouter();
-  const [tempReview, setTempReview] = useState("");
-  const { user, isAuthenticated } = useAuth();
-  const userRating = ratings.find(
-    rating => rating.userId === user?.id && rating.movieId === movie.id
-  );
+  const { isAuthenticated, user } = useAuth();
 
-  let userReview;
-  if (isAuthenticated && usersReviews)
-    userReview = usersReviews
-      .filter(
-        review => review.userId === user?.id && review.movieId === movie.id
-      )
-      .at(0);
+  const { userRatings } = useUserRatings(user?.id);
+  const userRating = userRatings?.find(rating => rating.movieId === movie.id);
+
+  const { userReviews } = useUserReviews(user?.id);
+  const userReview = userReviews
+    ?.filter(
+      (review: UserReview) =>
+        review.userId === user?.id && review.movieId === movie.id
+    )
+    .at(0);
+
+  const { userReviewForMovie } = useUserReviewForMovie(movie.id);
+  const notAuthenticatedUserReview =
+    ConvertUserReviewToReviewTMDB(userReviewForMovie);
+
+  const allReviews = notAuthenticatedUserReview
+    ? [notAuthenticatedUserReview, ...reviews].sort((a, b) => {
+        // Convert date strings to Date objects
+        const dateA = new Date(a.createdDate);
+        const dateB = new Date(b.createdDate);
+
+        // Compare the Date objects
+        if (dateA < dateB) {
+          return -1;
+        }
+        if (dateA > dateB) {
+          return 1;
+        }
+        return 0; // Dates are equal
+      })
+    : reviews;
 
   const handleClickBack = () => {
     router.push(`/movies/${movie.id}`);
@@ -47,18 +66,24 @@ function ReviewsPageUserSection({
   return (
     <section className="my-6 flex gap-8">
       <div className="flex flex-col items-center gap-4">
-        <Image
-          src={movie.posterPath}
-          alt=""
-          width="300"
-          height="450"
-          className="relative rounded"
-          priority
-        />
-        {isAuthenticated ? (
-          <ReviewsButton setTempReview={setTempReview} media={movie} />
+        {movie.posterPath ? (
+          <Image
+            src={movie.posterPath}
+            alt=""
+            width="300"
+            height="450"
+            className="relative rounded"
+            priority
+          />
         ) : (
+          <ImagePlaceholderMovie dimensions="w-[300px] h-[450px]" />
+        )}
+        {!isAuthenticated ? (
           <p>Sign in to write a review.</p>
+        ) : userReview ? (
+          ""
+        ) : (
+          <ReviewsButton movie={movie} />
         )}
         <button
           onClick={handleClickBack}
@@ -77,14 +102,27 @@ function ReviewsPageUserSection({
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          {userReview && (
+          {userReview && movie.posterPath && (
             <UserReviewCard
               review={userReview}
-              width="max-w-4xl"
+              width="w-full"
               userRating={userRating}
+              movieId={movie.id}
+              movieTitle={movie.title}
+              movieReleaseDate={movie.releaseDate}
+              moviePoster={movie.posterPath}
             />
           )}
-          {reviews &&
+          {!isAuthenticated &&
+            allReviews &&
+            allReviews
+              .slice()
+              .reverse()
+              .map(review => (
+                <ReviewCard key={review.id} review={review} width="max-w-4xl" />
+              ))}
+          {isAuthenticated &&
+            reviews &&
             reviews
               .slice()
               .reverse()

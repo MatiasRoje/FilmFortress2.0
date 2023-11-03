@@ -5,18 +5,14 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import MediaCard from "./MediaCard";
 import { Movie } from "@/types/movies";
 import { TvShow } from "@/types/tv";
-import { Rating } from "@/types/ratings";
-import { Watchlist } from "@/types/watchlists";
 
 type CarouselProps = {
   mediaCollection: Movie[] | TvShow[];
-  ratings: Rating[];
-  watchlists: Watchlist[];
 };
 
 type MediaCollectionProps = Movie | TvShow;
 
-const Carousel = ({ mediaCollection, ratings, watchlists }: CarouselProps) => {
+const Carousel = ({ mediaCollection }: CarouselProps) => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -42,19 +38,16 @@ const Carousel = ({ mediaCollection, ratings, watchlists }: CarouselProps) => {
         <ChevronLeftIcon className="h-12 w-12" />
       </button>
       <ul
-        className="flex transition ease-out"
+        className={`${
+          mediaCollection.length < 6 ? "flex" : "grid grid-flow-col"
+        } gap-7 transition ease-out`}
         style={{
           transform: `translateX(${translateX}%)`,
           transitionDuration: "1500ms",
         }}
       >
-        {mediaCollection.map((media: MediaCollectionProps) => (
-          <MediaCard
-            media={media}
-            key={media.id}
-            ratings={ratings}
-            watchlists={watchlists}
-          />
+        {mediaCollection.map((movie: MediaCollectionProps) => (
+          <MediaCard movie={movie} key={movie.id} />
         ))}
       </ul>
       <button

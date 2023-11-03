@@ -1,9 +1,8 @@
-import Loading from "@/app/loading";
-import { Movie } from "@/types/movies";
+import { MovieDetails } from "@/types/movies";
 import { useEffect, useState } from "react";
 
-function useWatchlist(movieIds: number[] | undefined) {
-  const [movies, setMovies] = useState<Movie[]>([]);
+function useWatchlistMovies(movieIds: number[] | undefined) {
+  const [movies, setMovies] = useState<MovieDetails[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -37,4 +36,4 @@ function useWatchlist(movieIds: number[] | undefined) {
   return { movies, isLoading };
 }
 
-export default useWatchlist;
+export default useWatchlistMovies;

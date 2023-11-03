@@ -1,76 +1,114 @@
 "use client";
 
-import { Review, UserReview } from "@/types/reviews";
+import { ReviewTMDB, UserReview } from "@/types/reviews";
 import Link from "next/link";
 import ReviewCard from "./ReviewCard";
 import ReviewsButton from "./ReviewsButton";
-import { useState } from "react";
 import { MovieDetails } from "@/types/movies";
-import { useAuth } from "@/contexts/AuthContext";
-import { Rating } from "@/types/ratings";
+import { useAuth } from "@/providers/AuthContext";
 import UserReviewCard from "./UserReviewCard";
+import { useUserRatings } from "@/hooks/useUserRatings";
+import { useUserReviews } from "@/hooks/useUserReviews";
+import { ConvertUserReviewToReviewTMDB } from "@/lib/reviews";
+import { useUserReviewForMovie } from "@/hooks/useUserReviewForMovie";
 
 type ReviewsSectionProps = {
-  media: MovieDetails;
-  reviews: Review[];
-  usersReviews: UserReview[];
-  ratings: Rating[];
+  movie: MovieDetails;
+  reviews: ReviewTMDB[];
 };
 
-function ReviewsSection({
-  media,
-  reviews,
-  usersReviews,
-  ratings,
-}: ReviewsSectionProps) {
-  const lastReviewFromApi = reviews.at(-1);
-  const [tempReview, setTempReview] = useState("");
+function ReviewsSection({ movie, reviews }: ReviewsSectionProps) {
   const { user, isAuthenticated } = useAuth();
-  const userRating = ratings.find(
-    rating => rating.userId === user?.id && rating.movieId === media.id
-  );
 
-  let userReview;
-  if (isAuthenticated && usersReviews)
-    userReview = usersReviews
-      .filter(
-        review => review.userId === user?.id && review.movieId === media.id
-      )
-      .at(0);
+  const { userRatings } = useUserRatings(user?.id);
+  const userRating = userRatings?.find(rating => rating.movieId === movie.id);
+
+  const { userReviews } = useUserReviews(user?.id);
+  const userReview = userReviews
+    ?.filter(
+      (review: UserReview) =>
+        review.userId === user?.id && review.movieId === movie.id
+    )
+    .at(0);
+
+  // Concat reviews with userReviews for handling the case when the user is not Authentificated but his
+  // review is still published on the website
+  const { userReviewForMovie } = useUserReviewForMovie(movie.id);
+  const notAuthenticatedUserReview =
+    ConvertUserReviewToReviewTMDB(userReviewForMovie);
+
+  const allReviews = notAuthenticatedUserReview
+    ? [notAuthenticatedUserReview, ...reviews].sort((a, b) => {
+        // Convert date strings to Date objects
+        const dateA = new Date(a.createdDate);
+        const dateB = new Date(b.createdDate);
+
+        // Compare the Date objects
+        if (dateA < dateB) {
+          return -1;
+        }
+        if (dateA > dateB) {
+          return 1;
+        }
+        return 0; // Dates are equal
+      })
+    : reviews;
+
+  const mostRecentReview = allReviews.at(-1);
 
   return (
     <section className="my-8 flex flex-col gap-8">
       <div className="flex items-center gap-4">
         <div className="flex items-baseline gap-2 p-2">
-          <Link href={`/movies/${media.id}/reviews`}>
+          <Link href={`/movies/${movie.id}/reviews`}>
             <h3 className="text-xl font-semibold hover:underline">Reviews</h3>
           </Link>
-          <span>—{reviews.length}</span>
+          <span>—{allReviews.length}</span>
         </div>
-        <ReviewsButton setTempReview={setTempReview} media={media} />
+        {isAuthenticated && !userReview && <ReviewsButton movie={movie} />}
+        {!isAuthenticated && <ReviewsButton movie={movie} />}
       </div>
-      {userReview ? (
+      {isAuthenticated && userReview ? (
         <div className="flex">
           <UserReviewCard
             review={userReview}
             width={"max-w-max"}
             userRating={userRating}
+            movieId={movie.id}
+            movieTitle={movie.title}
+            moviePoster={movie.posterPath}
+            movieReleaseDate={movie.releaseDate}
           />
           <div className="mx-8 flex w-24 items-center">
             <Link
-              href={`/movies/${media.id}/reviews`}
+              href={`/movies/${movie.id}/reviews`}
               className="rounded px-2 py-1 hover:underline"
             >
               Read all reviews
             </Link>
           </div>
         </div>
-      ) : lastReviewFromApi ? (
+      ) : isAuthenticated && mostRecentReview ? (
         <div className="flex">
-          <ReviewCard review={lastReviewFromApi} width={"max-w-max"} />
+          <ReviewCard review={mostRecentReview} width={"max-w-max"} />
           <div className="mx-8 flex w-24 items-center">
             <Link
-              href={`/movies/${media.id}/reviews`}
+              href={`/movies/${movie.id}/reviews`}
+              className="rounded px-2 py-1 hover:underline"
+            >
+              Read all reviews
+            </Link>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {!isAuthenticated && mostRecentReview ? (
+        <div className="flex">
+          <ReviewCard review={mostRecentReview} width={"max-w-max"} />
+          <div className="mx-8 flex w-24 items-center">
+            <Link
+              href={`/movies/${movie.id}/reviews`}
               className="rounded px-2 py-1 hover:underline"
             >
               Read all reviews

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Button from "./Button";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
 
 function LoginForm() {

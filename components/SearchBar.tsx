@@ -7,6 +7,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Spinner from "./Spinner";
+import ImagePlaceholderMovie from "./ImagePlaceholderMovie";
 
 function SearchBar() {
   const router = useRouter();
@@ -30,10 +31,11 @@ function SearchBar() {
   }, [pathname]);
 
   return (
-    <div className="relative flex items-center justify-center gap-1">
+    <li className="relative mx-auto flex items-center justify-center gap-1">
       <Combobox onChange={handleChange}>
         <Combobox.Input
-          placeholder="Search movies, tv shows..."
+          // placeholder="Search movies, tv shows..."
+          placeholder="Search movies"
           className="w-[36rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:-translate-y-px focus:shadow-lg focus:outline-none"
           value={query}
           onChange={event => setQuery(event.target.value)}
@@ -51,15 +53,19 @@ function SearchBar() {
                     className={`flex p-2 ${active ? "bg-neutral-500" : ""}`}
                   >
                     <div>
-                      <Image
-                        src={movie.posterPath}
-                        alt=""
-                        width={75}
-                        height={150}
-                        className="max-w-none rounded"
-                        placeholder="empty"
-                        quality={1}
-                      />
+                      {movie.posterPath ? (
+                        <Image
+                          src={movie.posterPath}
+                          alt=""
+                          width={80}
+                          height={160}
+                          className="h-[7.5rem] w-20 max-w-none rounded"
+                          placeholder="empty"
+                          quality={1}
+                        />
+                      ) : (
+                        <ImagePlaceholderMovie dimensions="h-[7.5rem] w-20" />
+                      )}
                     </div>
                     <div className="p-2">
                       <p className="font-semibold">{movie.title}</p>
@@ -71,7 +77,7 @@ function SearchBar() {
             ))}
         </Combobox.Options>
       </Combobox>
-    </div>
+    </li>
   );
 }
 

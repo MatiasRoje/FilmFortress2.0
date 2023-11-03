@@ -1,17 +1,14 @@
-export async function postRating(
-  rating: number,
-  movieId: number,
-  userId: number,
-) {
+import { Rating, RatingApi } from "@/types/ratings";
+
+export async function postRating({ rating, movieId, userId }: Rating) {
   try {
-    const res = await fetch("http://localhost:3000/api/ratings", {
+    return await fetch("/api/ratings", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({ rating, movieId, userId }),
     });
-    return res;
   } catch (error) {
     console.log("Error posting rating: ", error);
   }
@@ -19,7 +16,7 @@ export async function postRating(
 
 export async function getRatings() {
   try {
-    const res = await fetch("http:/localhost:3000/api/ratings", {
+    const res = await fetch("/api/ratings", {
       cache: "no-store",
     });
 
@@ -31,4 +28,49 @@ export async function getRatings() {
   } catch (error) {
     console.log("Error loading ratings:", error);
   }
+}
+
+export async function deleteRatingApi(id: string) {
+  try {
+    return await fetch(`/api/ratings?id=${id}`, {
+      method: "DELETE",
+    });
+  } catch (error) {
+    console.log("Error deleting rating: ", error);
+  }
+}
+
+export type UpdateRatingParams = {
+  rating: RatingApi;
+  newRating: number;
+};
+
+export async function updateRatingApi({
+  rating,
+  newRating,
+}: UpdateRatingParams) {
+  try {
+    return await fetch(`/api/ratings/${rating._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ newRating }),
+    });
+  } catch (error) {
+    console.log("Error updating rating: ", error);
+  }
+}
+
+export async function getUserRatings(
+  userId: number | undefined
+): Promise<RatingApi[]> {
+  if (userId) {
+    const { ratings } = await getRatings();
+    const userRatings = ratings.filter(
+      (rating: RatingApi) => rating.userId === userId
+    );
+    return userRatings;
+  }
+  return [];
 }
