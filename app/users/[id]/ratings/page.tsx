@@ -91,7 +91,7 @@ function UserRatingsPage() {
                       />
                     ) : (
                       <ImagePlaceholderMovie
-                        dimensions="h-56 w-[142px]"
+                        dimensions="h-56 w-[112px] sm:w-[137px] lg:w-[142px]"
                         rounded="rounded-l"
                       />
                     )}
@@ -106,7 +106,7 @@ function UserRatingsPage() {
                       </Link>{" "}
                       <span>({movie.releaseDate.slice(-4)})</span>
                     </p>
-                    <div className="mb-1.5 flex gap-1">
+                    <div className="mb-1.5 hidden gap-1 lg:flex">
                       <p className="text-sm">{movie.runtime}</p>
                       <p className="text-sm text-neutral-400">|</p>
                       <p className="text-sm">
@@ -136,8 +136,10 @@ function UserRatingsPage() {
                         }
                       )}
                     </p>
-                    <p className="mb-1.5 line-clamp-2">{movie.overview}</p>
-                    <div className="flex gap-1">
+                    <p className="mb-1.5 mt-5 line-clamp-3 lg:mt-0 lg:line-clamp-2">
+                      {movie.overview}
+                    </p>
+                    <div className="hidden gap-1 lg:flex">
                       <p className="text-sm">
                         {movie.directors.length > 1
                           ? "Directors:"
