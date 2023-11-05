@@ -12,12 +12,18 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { redirect } from "next/navigation";
 
 function UserWatchlistPage() {
   const [movieTVToggle, setMovieTVToggle] = useState("movies");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
-  const { data: session } = useSession();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/login");
+    },
+  });
 
   const { userWatchlist } = useUserWatchlist(session?.user?.id);
   const { movies, isLoading } = useWatchlistMovies(userWatchlist?.movieIds);

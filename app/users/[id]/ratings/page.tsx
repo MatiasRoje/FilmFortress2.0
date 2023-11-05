@@ -8,6 +8,7 @@ import { useUserRatings } from "@/hooks/useUserRatings";
 import { MovieWithRating } from "@/types/movies";
 import { SparklesIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -18,7 +19,12 @@ function UserRatingsPage() {
   const [selectedMovie, setSelectedMovie] = useState<MovieWithRating | null>(
     null
   );
-  const { data: session } = useSession();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/login");
+    },
+  });
 
   const { userRatings, isLoading: isLoadingRatings } = useUserRatings(
     session?.user?.id

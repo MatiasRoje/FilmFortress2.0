@@ -15,13 +15,19 @@ import ReviewModal from "@/components/ReviewModal";
 import DeleteReviewModal from "@/components/DeleteReviewModal";
 import ImagePlaceholderMovie from "@/components/ImagePlaceholderMovie";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 function UserReviewsPage() {
   const [movieTVToggle, setMovieTVToggle] = useState("movies");
   const [isOpen, setIsOpen] = useState(false);
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
   const [selectedReview, setSelectedReview] = useState<UserReview | null>(null);
-  const { data: session } = useSession();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/login");
+    },
+  });
 
   const { userReviews, isLoading: isLoadingReviews } = useUserReviews(
     session?.user?.id
