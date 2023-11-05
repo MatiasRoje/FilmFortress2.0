@@ -159,7 +159,7 @@ function FilterSearch({
           <Disclosure.Panel>
             <div className="flex flex-col gap-4 space-y-2 bg-neutral-700 p-4">
               <h3>Genres</h3>
-              <ul className="flex w-full flex-wrap gap-1 gap-y-4 border-b pb-8 sm:w-72 xl:w-64">
+              <ul className="flex w-full flex-wrap gap-1 gap-y-4 border-b pb-8 sm:w-72 xl:w-full">
                 {GENRES.map(genre => (
                   <li key={genre.id}>
                     <Link

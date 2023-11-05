@@ -20,35 +20,37 @@ function MoviesPageUserSection({
   totalPages,
   searchParams,
 }: MoviesPageUserSectionProps) {
-  const [page, setPage] = useState(1);
-  const router = useRouter();
+  // NOTE Navigation could be added later
+  // const [page, setPage] = useState(1);
+  // const router = useRouter();
 
-  const sortByQuery = findValueByKey(searchParams, "page");
-  if (sortByQuery && searchParams.page) {
-    setPage(+searchParams?.page);
-    delete searchParams["page"];
-  }
+  // const sortByQuery = findValueByKey(searchParams, "page");
+  // if (sortByQuery && searchParams.page) {
+  //   setPage(+searchParams?.page);
+  //   delete searchParams["page"];
+  // }
 
-  const queryString = querystring.stringify(searchParams);
+  // const queryString = querystring.stringify(searchParams);
 
-  useEffect(() => {
-    router.push(`/movies?${queryString}&page=${page}`);
-  }, [page, router, queryString]);
+  // useEffect(() => {
+  //   router.push(`/movies?${queryString}&page=${page}`);
+  // }, [page, router, queryString]);
 
-  const handleClickPrevious = () => {
-    setPage(prev => prev - 1);
-  };
+  // const handleClickPrevious = () => {
+  //   setPage(prev => prev - 1);
+  // };
 
-  const handleClickNext = () => {
-    setPage(prev => prev + 1);
-  };
+  // const handleClickNext = () => {
+  //   setPage(prev => prev + 1);
+  // };
 
   return (
     <ul className="my-5 ml-0 grid max-w-[60rem] grid-cols-1 gap-4 gap-y-4 sm:my-0 sm:ml-auto sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:grid-cols-5 xl:gap-4">
       {movies.map(movie => (
         <MediaCardSearch movie={movie} key={movie.id} />
       ))}
-      <li className="sm:col-span-2 lg:col-span-3 xl:col-span-5">
+      {/* NOTE This functionality is not compatible with the Search function */}
+      {/* <li className="sm:col-span-2 lg:col-span-3 xl:col-span-5">
         {page > 1 && (
           <ArrowLeftIcon
             className="float-left h-6 w-6 cursor-pointer"
@@ -62,7 +64,7 @@ function MoviesPageUserSection({
             onClick={handleClickNext}
           />
         )}
-      </li>
+      </li> */}
     </ul>
   );
 }
