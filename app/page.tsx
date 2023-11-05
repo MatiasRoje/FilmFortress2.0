@@ -4,6 +4,8 @@ import WatchlistSection from "@/components/WatchlistSection";
 import { getMovies, getRandomMovieFromCollection } from "@/lib/movies";
 import { getSeries } from "@/lib/tv";
 
+export const revalidate = 0;
+
 async function Home() {
   const { movies: moviesByPopularity } = await getMovies("popular");
   const { movies: moviesByRate } = await getMovies("top_rated");
