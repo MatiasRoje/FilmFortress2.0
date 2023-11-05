@@ -3,6 +3,7 @@ import CrewList from "@/components/CrewList";
 import ImagePlaceholderMovie from "@/components/ImagePlaceholderMovie";
 import { getCasting, getMovie } from "@/lib/movies";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,6 +14,15 @@ type CastPageParams = {
 type CastPageProps = {
   params: CastPageParams;
 };
+
+export async function generateMetadata({
+  params,
+}: CastPageProps): Promise<Metadata> {
+  const movie = await getMovie(params.id);
+  return {
+    title: `${movie.title} (${movie.releaseDate.slice(-4)}) - Cast`,
+  };
+}
 
 async function CastPage({ params: { id } }: CastPageProps) {
   const movie = await getMovie(id);

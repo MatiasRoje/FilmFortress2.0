@@ -7,7 +7,6 @@ import useRatedMovies from "@/hooks/useRatedMovies";
 import { useUserRatings } from "@/hooks/useUserRatings";
 import { useAuth } from "@/providers/AuthContext";
 import { MovieWithRating } from "@/types/movies";
-import { RatingApi } from "@/types/ratings";
 import { SparklesIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";

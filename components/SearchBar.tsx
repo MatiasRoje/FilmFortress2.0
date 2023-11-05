@@ -16,6 +16,7 @@ function SearchBar() {
   const [query, setQuery] = useState("");
   const { movies, isLoading, error } = useSearch(query);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const mobileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
@@ -24,11 +25,15 @@ function SearchBar() {
     router.push(`/movies/${id}`);
   };
 
-  const handleMobileOpen: MouseEventHandler<SVGSVGElement> = event => {
-    // Handle the click event here
+  const handleMobileOpen: MouseEventHandler<SVGSVGElement> = () => {
     setMobileOpen(prev => !prev);
-    inputRef.current?.focus();
   };
+
+  useEffect(() => {
+    if (mobileOpen) {
+      mobileInputRef.current?.focus();
+    }
+  }, [mobileOpen]);
 
   useEffect(() => {
     setQuery("");
@@ -64,7 +69,7 @@ function SearchBar() {
               className="absolute inset-x-0 z-10 w-full rounded border-none px-4 py-2 text-neutral-800 focus:shadow-lg focus:outline-none"
               value={query}
               onChange={event => setQuery(event.target.value)}
-              ref={inputRef}
+              ref={mobileInputRef}
             />
             <div className="absolute right-3 top-5 z-20 cursor-pointer">
               <XMarkIcon

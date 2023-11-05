@@ -1,8 +1,6 @@
 import FilterSearch from "@/components/FilterSearch";
-import MovieRuntimeSearch from "@/components/MovieRuntimeSearch";
 import MoviesPageUserSection from "@/components/MoviesPageUserSection";
 import SortSearch from "@/components/SortSearch";
-import UserScoreSearch from "@/components/UserScoreSearch";
 import { getMovies } from "@/lib/movies";
 import { findKeyByValue, findValueByKey } from "@/lib/utility";
 import Link from "next/link";
@@ -13,121 +11,11 @@ export const metadata = {
   title: "Movies",
 };
 
-const GENRES = [
-  {
-    id: 28,
-    name: "Action",
-  },
-  {
-    id: 12,
-    name: "Adventure",
-  },
-  {
-    id: 16,
-    name: "Animation",
-  },
-  {
-    id: 35,
-    name: "Comedy",
-  },
-  {
-    id: 80,
-    name: "Crime",
-  },
-  {
-    id: 99,
-    name: "Documentary",
-  },
-  {
-    id: 18,
-    name: "Drama",
-  },
-  {
-    id: 10751,
-    name: "Family",
-  },
-  {
-    id: 14,
-    name: "Fantasy",
-  },
-  {
-    id: 36,
-    name: "History",
-  },
-  {
-    id: 27,
-    name: "Horror",
-  },
-  {
-    id: 10402,
-    name: "Music",
-  },
-  {
-    id: 9648,
-    name: "Mystery",
-  },
-  {
-    id: 10749,
-    name: "Romance",
-  },
-  {
-    id: 878,
-    name: "Science Fiction",
-  },
-  {
-    id: 10770,
-    name: "TV Movie",
-  },
-  {
-    id: 53,
-    name: "Thriller",
-  },
-  {
-    id: 10752,
-    name: "War",
-  },
-  {
-    id: 37,
-    name: "Western",
-  },
-];
-
 async function MoviesPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  function addGenreToQuery(
-    searchParams: { [key: string]: string | string[] | undefined },
-    newGenre: string
-  ) {
-    const genresIsInQuery = searchParams.hasOwnProperty("with_genres");
-    if (!genresIsInQuery) {
-      return `&with_genres=${newGenre}`;
-    }
-    if (genresIsInQuery) {
-      const genreQuery = findValueByKey(searchParams, "with_genres");
-      if (typeof genreQuery === "string") {
-        const isInQuery = genreQuery.split(",").includes(newGenre);
-        if (isInQuery) {
-          if (genreQuery.split(",").length === 1) {
-            return "";
-          } else {
-            return `&with_genres=${genreQuery
-              .split(",")
-              .filter(genre => genre !== newGenre)
-              .join(",")}`;
-          }
-        } else {
-          return `&with_genres=${genreQuery
-            .split(",")
-            .concat([newGenre])
-            .join(",")}`;
-        }
-      }
-    }
-  }
-
   let query = findKeyByValue(searchParams, "");
   if (query && searchParams.hasOwnProperty(query)) {
     delete searchParams[query];
@@ -135,22 +23,6 @@ async function MoviesPage({
 
   const queryString = querystring.stringify(searchParams);
   const { movies, totalPages } = await getMovies(query!, queryString);
-
-  const genreQuery = findValueByKey(searchParams, "with_genres");
-
-  let queryWithoutGenres;
-  if (genreQuery) {
-    const { with_genres, ...newSearchParams } = searchParams;
-    queryWithoutGenres = newSearchParams;
-  }
-
-  const newQueryWithoutGenres = querystring.stringify(queryWithoutGenres);
-
-  const genreArray = searchParams.with_genres
-    ? typeof searchParams.with_genres === "string"
-      ? searchParams.with_genres.split(",")
-      : []
-    : [];
 
   return (
     <main className="py-6">
@@ -203,7 +75,11 @@ async function MoviesPage({
           </div>
           <FilterSearch searchParams={searchParams} />
         </div>
-        <MoviesPageUserSection movies={movies} />
+        <MoviesPageUserSection
+          movies={movies}
+          totalPages={totalPages}
+          searchParams={searchParams}
+        />
       </section>
     </main>
   );
