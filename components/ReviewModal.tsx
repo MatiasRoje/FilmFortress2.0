@@ -102,9 +102,9 @@ function ReviewModal({
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
       {/* Full-screen container to center the panel */}
-      <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+      <div className="fixed inset-0 flex w-full items-center justify-center p-4 lg:w-screen">
         {/* The actual dialog panel  */}
-        <Dialog.Panel className="mx-auto flex flex-col items-center gap-5 rounded bg-neutral-700 px-12 py-8">
+        <Dialog.Panel className="mx-auto flex flex-col items-center gap-5 rounded bg-neutral-700 px-8 py-8 lg:px-12">
           <Dialog.Title className="text-xs font-medium text-yellow-400">
             REVIEW THIS
           </Dialog.Title>
@@ -113,7 +113,7 @@ function ReviewModal({
             <textarea
               defaultValue={userReviewApi?.content}
               onChange={e => setUserReview(e.target.value)}
-              className="h-80 w-[40rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400"
+              className="h-80 w-full rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400 sm:w-[30rem] lg:w-[40rem]"
             ></textarea>
             <div className="flex justify-center">
               {userReview.length > 0 ? (

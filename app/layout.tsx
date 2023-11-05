@@ -8,7 +8,6 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import "./globals.css";
 import { AuthProvider } from "@/providers/AuthContext";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 export const metadata: Metadata = {

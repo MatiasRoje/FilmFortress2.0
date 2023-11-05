@@ -7,7 +7,6 @@ import useRatedMovies from "@/hooks/useRatedMovies";
 import { useUserRatings } from "@/hooks/useUserRatings";
 import { useAuth } from "@/providers/AuthContext";
 import { MovieWithRating } from "@/types/movies";
-import { RatingApi } from "@/types/ratings";
 import { SparklesIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
@@ -87,17 +86,17 @@ function UserRatingsPage() {
                         alt={`${movie.title} poster`}
                         width="150"
                         height="224"
-                        className="h-full w-full rounded-l"
+                        className="h-full w-60 rounded-l sm:w-full"
                       />
                     ) : (
                       <ImagePlaceholderMovie
-                        dimensions="h-56 w-[142px]"
+                        dimensions="h-56 w-[139px] sm:w-[137px] lg:w-[142px]"
                         rounded="rounded-l"
                       />
                     )}
                   </Link>
                   <div className="h-56 w-full rounded-r bg-neutral-700 px-6 py-4">
-                    <p className="text-lg font-semibold">
+                    <p className="line-clamp-1 text-lg font-semibold">
                       <Link
                         href={`/movies/${movie.id}`}
                         className="hover:underline"
@@ -106,7 +105,7 @@ function UserRatingsPage() {
                       </Link>{" "}
                       <span>({movie.releaseDate.slice(-4)})</span>
                     </p>
-                    <div className="mb-1.5 flex gap-1">
+                    <div className="mb-1.5 hidden gap-1 lg:flex">
                       <p className="text-sm">{movie.runtime}</p>
                       <p className="text-sm text-neutral-400">|</p>
                       <p className="text-sm">
@@ -136,8 +135,10 @@ function UserRatingsPage() {
                         }
                       )}
                     </p>
-                    <p className="mb-1.5 line-clamp-2">{movie.overview}</p>
-                    <div className="flex gap-1">
+                    <p className="mb-1.5 mt-5 line-clamp-3 lg:mt-0 lg:line-clamp-2">
+                      {movie.overview}
+                    </p>
+                    <div className="hidden gap-1 lg:flex">
                       <p className="text-sm">
                         {movie.directors.length > 1
                           ? "Directors:"

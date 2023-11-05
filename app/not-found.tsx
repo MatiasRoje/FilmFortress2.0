@@ -37,7 +37,7 @@ function NotFoundPage() {
   const randomQuote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
 
   return (
-    <div className="mx-auto my-16 flex flex-col gap-5">
+    <div className="mx-auto my-10 flex flex-col gap-5">
       <h2 className="text-4xl font-bold">{randomQuote.quote}</h2>
       <div className="flex justify-end gap-1">
         <p className="italic">{randomQuote.character},</p>

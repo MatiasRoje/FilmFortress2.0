@@ -77,7 +77,7 @@ function UserWatchlistPage() {
           userWatchlist?.movieIds.length && (
             <ul className="space-y-5">
               {movies.map(movie => (
-                <li key={movie.id} className="relative flex">
+                <li key={movie.id} className="relative flex h-56">
                   <p>
                     <PlusCircleIcon
                       className="absolute top-0 z-10 h-9 w-9 text-yellow-400 hover:cursor-pointer"
@@ -91,17 +91,17 @@ function UserWatchlistPage() {
                         alt={`${movie.title} poster`}
                         width="150"
                         height="224"
-                        className="h-full w-full rounded-l"
+                        className="h-56 w-56 rounded-l lg:h-full lg:w-full"
                       />
                     ) : (
                       <ImagePlaceholderMovie
-                        dimensions="w-[142px] h-[224px]"
+                        dimensions="w-[133px] h-[224px] sm:w-[168px] lg:w-[142px]"
                         rounded="rounded-l"
                       />
                     )}
                   </Link>
-                  <div className="h-56 w-full rounded-r bg-neutral-700 px-6 py-4">
-                    <p className="text-lg font-semibold">
+                  <div className="w-full rounded-r bg-neutral-700 px-6 py-4 lg:h-56">
+                    <p className="line-clamp-1 text-lg font-semibold">
                       <Link
                         href={`/movies/${movie.id}`}
                         className="hover:underline"
@@ -110,7 +110,7 @@ function UserWatchlistPage() {
                       </Link>{" "}
                       <span>({movie.releaseDate.slice(-4)})</span>
                     </p>
-                    <div className="mb-2.5 flex gap-1">
+                    <div className="mb-2.5 hidden gap-1 lg:flex">
                       <p className="text-sm">{movie.runtime}</p>
                       <p className="text-sm text-neutral-400">|</p>
                       <p className="text-sm">
@@ -128,7 +128,7 @@ function UserWatchlistPage() {
                         <SparklesIcon className="-mr-1 h-9 w-9 py-1.5 text-yellow-400" />
                       </span>
                     </p>
-                    <div className="mb-1.5 flex gap-1">
+                    <div className="mb-1.5 hidden gap-1 lg:flex">
                       <p className="text-sm">
                         {movie.directors.length > 1
                           ? "Directors:"
@@ -146,7 +146,9 @@ function UserWatchlistPage() {
                           .join(", ")}
                       </p>
                     </div>
-                    <p className="line-clamp-2">{movie.overview}</p>
+                    <p className="line-clamp-4 lg:line-clamp-2">
+                      {movie.overview}
+                    </p>
                   </div>
                 </li>
               ))}

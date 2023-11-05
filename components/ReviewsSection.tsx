@@ -69,7 +69,7 @@ function ReviewsSection({ movie, reviews }: ReviewsSectionProps) {
         {!isAuthenticated && <ReviewsButton movie={movie} />}
       </div>
       {isAuthenticated && userReview ? (
-        <div className="flex">
+        <div className="flex flex-col gap-4 sm:flex-row sm:gap-0">
           <UserReviewCard
             review={userReview}
             width={"max-w-max"}
@@ -79,7 +79,7 @@ function ReviewsSection({ movie, reviews }: ReviewsSectionProps) {
             moviePoster={movie.posterPath}
             movieReleaseDate={movie.releaseDate}
           />
-          <div className="mx-8 flex w-24 items-center">
+          <div className="flex items-center sm:mx-8 sm:w-24">
             <Link
               href={`/movies/${movie.id}/reviews`}
               className="rounded px-2 py-1 hover:underline"
@@ -89,9 +89,9 @@ function ReviewsSection({ movie, reviews }: ReviewsSectionProps) {
           </div>
         </div>
       ) : isAuthenticated && mostRecentReview ? (
-        <div className="flex">
+        <div className="flex flex-col gap-4 sm:flex-row sm:gap-0">
           <ReviewCard review={mostRecentReview} width={"max-w-max"} />
-          <div className="mx-8 flex w-24 items-center">
+          <div className="flex items-center sm:mx-8 sm:w-24">
             <Link
               href={`/movies/${movie.id}/reviews`}
               className="rounded px-2 py-1 hover:underline"
@@ -104,9 +104,9 @@ function ReviewsSection({ movie, reviews }: ReviewsSectionProps) {
         ""
       )}
       {!isAuthenticated && mostRecentReview ? (
-        <div className="flex">
+        <div className="flex flex-col gap-4 sm:flex-row sm:gap-0">
           <ReviewCard review={mostRecentReview} width={"max-w-max"} />
-          <div className="mx-8 flex w-24 items-center">
+          <div className="flex items-center sm:mx-8 sm:w-24">
             <Link
               href={`/movies/${movie.id}/reviews`}
               className="rounded px-2 py-1 hover:underline"

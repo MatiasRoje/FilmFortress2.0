@@ -10,7 +10,7 @@ import FooterUserSection from "./FooterUserSection";
 
 function Footer() {
   return (
-    <footer className="flex flex-col items-center justify-center gap-3 border-t p-4 align-middle">
+    <footer className="flex h-max flex-col items-center justify-center gap-3 border-t p-4 align-middle">
       <FooterUserSection />
       <ul className="flex gap-3">
         <li>

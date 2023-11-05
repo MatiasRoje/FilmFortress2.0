@@ -90,27 +90,30 @@ function UserReviewsPage() {
               {userReviewsWithRating &&
                 userReviewsWithRating.map(userReview => (
                   <li key={userReview._id} className="flex">
-                    <Link href={`/movies/${userReview.movieId}`}>
-                      {userReview.moviePoster ? (
-                        <Image
-                          src={userReview.moviePoster}
-                          alt={`${userReview.movieTitle} poster`}
-                          width="150"
-                          height="225"
-                          className="rounded-l"
-                        />
-                      ) : (
-                        <ImagePlaceholderMovie
-                          dimensions="w-[127px] h-[191px]"
-                          rounded="rounded-l"
-                        />
-                      )}
-                    </Link>
-                    <div className="w-full rounded-r bg-neutral-700 px-6 py-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-6">
+                    <div className="w-full rounded bg-neutral-700 px-6 py-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-2 lg:gap-6">
+                          <Link
+                            href={`/movies/${userReview.movieId}`}
+                            className="grow"
+                          >
+                            {userReview.moviePoster ? (
+                              <Image
+                                src={userReview.moviePoster}
+                                alt={`${userReview.movieTitle} poster`}
+                                width="150"
+                                height="225"
+                                className="h-40 w-auto rounded"
+                              />
+                            ) : (
+                              <ImagePlaceholderMovie
+                                dimensions="w-[106px] h-[160px]"
+                                rounded="rounded"
+                              />
+                            )}
+                          </Link>
                           <div>
-                            <p className="text-lg font-semibold">
+                            <p className="line-clamp-2 w-40 font-semibold sm:text-xl lg:line-clamp-none">
                               Your Review for{" "}
                               <Link
                                 href={`/movies/${userReview.movieId}`}
@@ -120,7 +123,7 @@ function UserReviewsPage() {
                               </Link>{" "}
                               ({userReview.movieReleaseDate.slice(-4)})
                             </p>
-                            <p className="text-sm italic">
+                            <p className="text-xs italic sm:text-sm">
                               Written on{" "}
                               {userReview &&
                                 new Date(userReview.createdAt).toLocaleString(
@@ -132,18 +135,17 @@ function UserReviewsPage() {
                                   }
                                 )}
                             </p>
-                          </div>
-                          <div className="flex items-center justify-center gap-1">
-                            <button
-                              className="rounded p-1 hover:cursor-pointer hover:bg-neutral-600"
-                              onClick={() => {
-                                setSelectedReview(userReview);
-                                setIsOpen(true);
-                              }}
-                            >
-                              <PencilSquareIcon className="h-6 w-6" />
-                            </button>
-                            <div className="relative">
+                            <div className="mt-5 flex items-center gap-1 sm:hidden sm:flex-row">
+                              <button
+                                className="rounded p-1 hover:cursor-pointer hover:bg-neutral-600"
+                                onClick={() => {
+                                  setSelectedReview(userReview);
+                                  setIsOpen(true);
+                                }}
+                              >
+                                <PencilSquareIcon className="h-5 w-5 sm:h-6 sm:w-6" />
+                              </button>
+
                               <button
                                 className="rounded p-1 hover:cursor-pointer hover:bg-neutral-600"
                                 onClick={() => {
@@ -151,14 +153,35 @@ function UserReviewsPage() {
                                   setDeleteIsOpen(true);
                                 }}
                               >
-                                <TrashIcon className="h-6 w-6" />
+                                <TrashIcon className="h-5 w-5 sm:h-6 sm:w-6" />
                               </button>
                             </div>
                           </div>
+                          <div className="hidden flex-col items-center justify-center gap-1 sm:flex sm:flex-row">
+                            <button
+                              className="rounded p-1 hover:cursor-pointer hover:bg-neutral-600"
+                              onClick={() => {
+                                setSelectedReview(userReview);
+                                setIsOpen(true);
+                              }}
+                            >
+                              <PencilSquareIcon className="h-5 w-5 sm:h-6 sm:w-6" />
+                            </button>
+
+                            <button
+                              className="rounded p-1 hover:cursor-pointer hover:bg-neutral-600"
+                              onClick={() => {
+                                setSelectedReview(userReview);
+                                setDeleteIsOpen(true);
+                              }}
+                            >
+                              <TrashIcon className="h-5 w-5 sm:h-6 sm:w-6" />
+                            </button>
+                          </div>
                         </div>
-                        <p className="flex items-center justify-center gap-1 text-lg">
+                        <p className="flex items-center justify-center gap-1 sm:text-lg">
                           <span>
-                            <StarIcon className="h-6 w-6 text-yellow-500" />
+                            <StarIcon className="h-4 w-4 text-yellow-500 sm:h-6 sm:w-6" />
                           </span>
                           {userReview.rating}
                         </p>

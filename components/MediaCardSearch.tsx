@@ -15,7 +15,7 @@ type MediaCardProps = {
   movie: Movie | TvShow;
 };
 
-function MediaCard({ movie }: MediaCardProps) {
+function MediaCardSearch({ movie }: MediaCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
 
@@ -27,7 +27,7 @@ function MediaCard({ movie }: MediaCardProps) {
   }
 
   return (
-    <li className="relative snap-start">
+    <li className="relative flex snap-start sm:block">
       <Link href={`/movies/${movie.id}`} className="w-max">
         {movie.posterPath ? (
           <Image
@@ -35,7 +35,7 @@ function MediaCard({ movie }: MediaCardProps) {
             alt=""
             width="180"
             height="270"
-            className="h-[17rem] w-auto max-w-none rounded-t"
+            className="h-36 w-auto max-w-none rounded-l sm:h-[17rem] sm:rounded-l-none sm:rounded-t"
           />
         ) : (
           <ImagePlaceholderMovie dimensions="w-[180px] h-[270px]" />
@@ -43,8 +43,16 @@ function MediaCard({ movie }: MediaCardProps) {
       </Link>
       <MediaCardWatchlistSection movie={movie} userRating={userRating} />
 
-      <div className="flex h-36 w-full flex-col gap-2 rounded-b bg-neutral-700 p-2">
-        <div className="flex items-center gap-3">
+      <div className="flex h-36 w-full flex-col justify-center gap-2 rounded-r bg-neutral-700 px-2 sm:w-[181.33px] sm:justify-normal sm:rounded-b sm:rounded-tr-none sm:p-2">
+        <p className="line-clamp-1 text-lg font-semibold sm:line-clamp-2 sm:hidden">
+          <Link href={`/movies/${movie.id}`} className="hover:underline">
+            {movie.title}
+          </Link>
+        </p>
+        <p className="-mt-2 text-sm sm:mt-auto sm:hidden">
+          {movie.releaseDate}
+        </p>
+        <div className="flex items-center sm:gap-3">
           <p className="flex items-center justify-center gap-1">
             <span>
               <StarIcon className="h-4 w-4 text-yellow-500" />
@@ -71,15 +79,14 @@ function MediaCard({ movie }: MediaCardProps) {
             </p>
           )}
         </div>
-        <p>
-          <Link
-            href={`/movies/${movie.id}`}
-            className="line-clamp-2 font-semibold hover:underline"
-          >
+        <p className="line-clamp-1 hidden text-lg font-semibold sm:line-clamp-2 sm:block">
+          <Link href={`/movies/${movie.id}`} className="hover:underline">
             {movie.title}
           </Link>
         </p>
-        <p className="mt-auto text-sm">{movie.releaseDate}</p>
+        <p className="-mt-2 hidden text-sm sm:mt-auto sm:block">
+          {movie.releaseDate}
+        </p>
       </div>
       <RatingModal
         userRatingApi={userRating}
@@ -91,4 +98,4 @@ function MediaCard({ movie }: MediaCardProps) {
   );
 }
 
-export default MediaCard;
+export default MediaCardSearch;

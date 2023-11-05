@@ -26,7 +26,7 @@ function LoginForm() {
   }
 
   return (
-    <form className="flex w-1/2 flex-col gap-6 rounded bg-neutral-700 p-6">
+    <form className="mx-4 flex w-full flex-col gap-6 rounded bg-neutral-700 p-6 md:w-1/2">
       <h2 className="text-xl font-semibold">Login</h2>
       <div className="flex flex-col gap-2">
         <label htmlFor="email">Email address</label>
@@ -35,7 +35,7 @@ function LoginForm() {
           id="email"
           onChange={e => setEmail(e.target.value)}
           value={email}
-          className="w-[36rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400"
+          className="w-full rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400"
         />
       </div>
 
@@ -46,7 +46,7 @@ function LoginForm() {
           id="password"
           onChange={e => setPassword(e.target.value)}
           value={password}
-          className="w-[36rem] rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400"
+          className="w-full rounded border-none px-4 py-2 text-lg text-neutral-800 transition-all duration-300 focus:outline-none focus:ring focus:ring-main-400"
         />
       </div>
 
