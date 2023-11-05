@@ -7,7 +7,7 @@ import { getSeries } from "@/lib/tv";
 async function Home() {
   const { movies: moviesByPopularity } = await getMovies("popular");
   const { movies: moviesByRate } = await getMovies("top_rated");
-  const seriesByRate = await getSeries("top_rated");
+  // const seriesByRate = await getSeries("top_rated");
 
   const randomMovie = await getRandomMovieFromCollection(moviesByPopularity);
 

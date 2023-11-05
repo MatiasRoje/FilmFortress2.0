@@ -2,7 +2,6 @@
 
 import { useUserRatings } from "@/hooks/useUserRatings";
 import { useUserReviews } from "@/hooks/useUserReviews";
-import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
@@ -16,21 +15,26 @@ import ExpandableText from "@/components/ExpandableText";
 import ReviewModal from "@/components/ReviewModal";
 import DeleteReviewModal from "@/components/DeleteReviewModal";
 import ImagePlaceholderMovie from "@/components/ImagePlaceholderMovie";
+import { useSession } from "next-auth/react";
 
 function UserReviewsPage() {
   const router = useRouter();
-  const { user, isAuthenticated } = useAuth();
   const [movieTVToggle, setMovieTVToggle] = useState("movies");
   const [isOpen, setIsOpen] = useState(false);
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
   const [selectedReview, setSelectedReview] = useState<UserReview | null>(null);
+  const { data: session } = useSession();
 
   useEffect(() => {
-    if (!isAuthenticated) router.push("/login");
-  }, [isAuthenticated, router]);
+    if (!session) router.push("/login");
+  }, [session, router]);
 
-  const { userReviews, isLoading: isLoadingReviews } = useUserReviews(user?.id);
-  const { userRatings, isLoading: isLoadingRatings } = useUserRatings(user?.id);
+  const { userReviews, isLoading: isLoadingReviews } = useUserReviews(
+    session?.user?.id
+  );
+  const { userRatings, isLoading: isLoadingRatings } = useUserRatings(
+    session?.user?.id
+  );
   const movieIdsArray = useMemo(
     () => userReviews?.map(userReview => userReview.movieId),
     [userReviews]

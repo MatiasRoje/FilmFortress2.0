@@ -1,4 +1,3 @@
-import { useAuth } from "@/providers/AuthContext";
 import { Movie } from "@/types/movies";
 import { Rating } from "@/types/ratings";
 import { PlusCircleIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
@@ -6,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useUserWatchlist } from "@/hooks/useUserWatchlist";
 import { useAddMovieToWatchlist } from "@/hooks/useAddMovieToWatchlist";
 import { useDeleteMovieFromWatchlist } from "@/hooks/useDeleteMovieFromWatchlist";
+import { useSession } from "next-auth/react";
 
 type MediaCardWatchlistSectionProps = {
   movie: Movie;
@@ -17,17 +17,17 @@ function MediaCardWatchlistSection({
   userRating,
 }: MediaCardWatchlistSectionProps) {
   const router = useRouter();
-  const { user, isAuthenticated } = useAuth();
+  const { data: session } = useSession();
 
-  const { userWatchlist } = useUserWatchlist(user?.id);
+  const { userWatchlist } = useUserWatchlist(session?.user?.id);
   const inWatchlist = userWatchlist?.movieIds?.includes(movie.id);
   const { addMovie } = useAddMovieToWatchlist();
   const { deleteMovie } = useDeleteMovieFromWatchlist();
 
   function handleAddMovie() {
-    if (!isAuthenticated) router.push("/login");
+    if (!session) router.push("/login");
 
-    addMovie({ movieId: movie.id, userId: user?.id });
+    addMovie({ movieId: movie.id, userId: session?.user?.id });
   }
 
   function handleDeleteMovie() {

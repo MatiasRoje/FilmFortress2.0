@@ -11,21 +11,22 @@ import {
 import { Menu } from "@headlessui/react";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useUserWatchlist } from "@/hooks/useUserWatchlist";
+import { signOut, useSession } from "next-auth/react";
 
 function NavBarUserSection() {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { data: session } = useSession();
 
   function handleSignOut(): void {
-    logout();
+    signOut();
   }
 
-  const { userWatchlist } = useUserWatchlist(user?.id);
+  const { userWatchlist } = useUserWatchlist(session?.user?.id);
 
-  return isAuthenticated ? (
+  return session?.user ? (
     <>
       <li>
         <Link
-          href={`/users/${user?.id}/watchlist`}
+          href={`/users/${session.user.id}/watchlist`}
           className="hidden gap-1 rounded px-3 py-1 hover:bg-neutral-700 md:flex"
         >
           <span>
@@ -47,7 +48,7 @@ function NavBarUserSection() {
                 <span>
                   <UserCircleIcon className="h-6 w-6" />
                 </span>
-                {user?.username}
+                {session.user.username}
                 {open ? (
                   <span>
                     <ChevronUpIcon className="h-4 w-4" />
@@ -65,7 +66,7 @@ function NavBarUserSection() {
                       className={`min-w-max rounded px-4 py-2 ${
                         active && "bg-neutral-600"
                       }`}
-                      href={`/users/${user?.id}/reviews`}
+                      href={`/users/${session.user.id}/reviews`}
                     >
                       Your reviews
                     </Link>
@@ -77,7 +78,7 @@ function NavBarUserSection() {
                       className={`min-w-max rounded px-4 py-2 ${
                         active && "bg-neutral-600"
                       }`}
-                      href={`/users/${user?.id}/watchlist`}
+                      href={`/users/${session.user.id}/watchlist`}
                     >
                       Your watchlist
                     </Link>
@@ -89,7 +90,7 @@ function NavBarUserSection() {
                       className={`min-w-max rounded px-4 py-2 ${
                         active && "bg-neutral-600"
                       }`}
-                      href={`/users/${user?.id}/ratings`}
+                      href={`/users/${session.user.id}/ratings`}
                     >
                       Your ratings
                     </Link>

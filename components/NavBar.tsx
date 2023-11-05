@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import NavBarUserSection from "./NavBarUserSection";
-import { Bars3Icon, FilmIcon } from "@heroicons/react/24/outline";
+import { FilmIcon } from "@heroicons/react/24/outline";
 
-function NavBar() {
+async function NavBar() {
   return (
     <nav className="relative border-b p-4">
       <ul className="flex items-center gap-3">

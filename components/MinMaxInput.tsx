@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import SecondaryButton from "./SecondaryButton";
 import Link from "next/link";
 
 interface MinMaxInputProps {

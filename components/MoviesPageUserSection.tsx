@@ -2,12 +2,12 @@
 
 import { Movie } from "@/types/movies";
 import MediaCardSearch from "./MediaCardSearch";
-import { findValueByKey } from "@/lib/utility";
 
-import querystring from "querystring";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+// import { findValueByKey } from "@/lib/utility";
+// import querystring from "querystring";
+// import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+// import { useEffect, useState } from "react";
+// import { useRouter } from "next/navigation";
 
 type MoviesPageUserSectionProps = {
   movies: Movie[];

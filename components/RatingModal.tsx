@@ -3,15 +3,12 @@ import { useRef, useState } from "react";
 import StarRating from "./StarRating";
 import Button from "./Button";
 import { Movie, MovieDetails } from "@/types/movies";
-import { TvShow } from "@/types/tv";
-import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
-import { UseMutateFunction } from "@tanstack/react-query";
-import { Rating, RatingApi } from "@/types/ratings";
-import { UpdateRatingParams } from "@/lib/ratings";
+import { RatingApi } from "@/types/ratings";
 import { useCreateRating } from "@/hooks/useCreateRating";
 import { useDeleteRating } from "@/hooks/useDeleteRating";
 import { useUpdateRating } from "@/hooks/useUpdateRating";
+import { useSession } from "next-auth/react";
 
 type RateModalProps = {
   userRatingApi?: RatingApi | undefined;
@@ -29,14 +26,14 @@ function RatingModal({
   const router = useRouter();
   let titleRef = useRef<HTMLHeadingElement | null>(null);
   const [userRating, setUserRating] = useState(0);
-  const { user, isAuthenticated } = useAuth();
+  const { data: session } = useSession();
 
   const { createRating } = useCreateRating();
   const { deleteRating } = useDeleteRating();
   const { updateRating } = useUpdateRating();
 
   function handleClick() {
-    if (!isAuthenticated) router.push("/login");
+    if (!session) router.push("/login");
 
     if (userRatingApi) {
       updateRating(
@@ -52,12 +49,12 @@ function RatingModal({
       );
     }
 
-    if (!userRatingApi && user && movie && userRating) {
+    if (!userRatingApi && session?.user && movie && userRating) {
       createRating(
         {
           rating: userRating,
           movieId: movie.id,
-          userId: user?.id,
+          userId: session.user.id,
         },
         {
           onSuccess: () => {
