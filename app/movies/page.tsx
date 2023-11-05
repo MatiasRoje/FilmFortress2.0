@@ -1,3 +1,4 @@
+import FilterSearch from "@/components/FilterSearch";
 import MovieRuntimeSearch from "@/components/MovieRuntimeSearch";
 import MoviesPageUserSection from "@/components/MoviesPageUserSection";
 import SortSearch from "@/components/SortSearch";
@@ -143,9 +144,7 @@ async function MoviesPage({
     queryWithoutGenres = newSearchParams;
   }
 
-  console.log(queryWithoutGenres);
   const newQueryWithoutGenres = querystring.stringify(queryWithoutGenres);
-  console.log(newQueryWithoutGenres);
 
   const genreArray = searchParams.with_genres
     ? typeof searchParams.with_genres === "string"
@@ -202,31 +201,7 @@ async function MoviesPage({
           <div className="mb-4">
             <SortSearch searchParams={searchParams} />
           </div>
-          <div className="mb-5 flex flex-col gap-4 space-y-2 rounded bg-neutral-700 p-4">
-            <h3>Genres</h3>
-            <ul className="flex w-56 flex-wrap gap-1 gap-y-4">
-              {GENRES.map(genre => (
-                <li key={genre.id}>
-                  <Link
-                    href={`/movies?${
-                      newQueryWithoutGenres
-                        ? newQueryWithoutGenres
-                        : "include_adult=false&language=en-US&page=1"
-                    }${addGenreToQuery(searchParams, genre.id.toString())}`}
-                    className={`rounded-full border px-2 py-1 transition-colors duration-100 hover:bg-neutral-600 ${
-                      genreArray.includes(genre.id.toString())
-                        ? "bg-neutral-600"
-                        : ""
-                    }`}
-                  >
-                    {genre.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <UserScoreSearch searchParams={searchParams} />
-          <MovieRuntimeSearch searchParams={searchParams} />
+          <FilterSearch searchParams={searchParams} />
         </div>
         <MoviesPageUserSection movies={movies} />
       </section>

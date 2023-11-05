@@ -39,7 +39,7 @@ const MinMaxInput: React.FC<MinMaxInputProps> = ({
   };
 
   return (
-    <form className="mb-5 space-y-2 rounded bg-neutral-700 p-4">
+    <form className="mb-5 space-y-2 rounded bg-neutral-700 px-4 py-5">
       <h3>{title}</h3>
       <div className="flex items-center justify-between gap-3">
         <div className="flex flex-col gap-2">

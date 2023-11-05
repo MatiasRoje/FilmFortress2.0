@@ -53,8 +53,8 @@ function MovieHeaderSection({ movie }: MovieHeaderSectionProps) {
               rounded="sm:hidden rounded-l"
             />
           )}
-          <div className="flex flex-col items-center justify-center">
-            <h1 className="text-3xl">{movie.title}</h1>
+          <div className="flex flex-col items-start justify-center">
+            <h1 className="text-2xl sm:text-3xl">{movie.title}</h1>
             <div className="flex gap-1 text-sm">
               <span>{movie.releaseDate.slice(-4)}</span>
               <span>•</span>
