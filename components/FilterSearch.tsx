@@ -141,10 +141,10 @@ function FilterSearch({
     : [];
 
   return (
-    <Disclosure as="div" className="rounded bg-neutral-700 px-4 py-3">
+    <Disclosure as="div" className="rounded bg-neutral-700">
       {({ open }) => (
         <>
-          <Disclosure.Button className="inline-flex w-full items-center justify-between py-2">
+          <Disclosure.Button className="inline-flex w-full items-center justify-between px-4 py-3">
             <h3>Filters</h3>
             {open ? (
               <p>
@@ -157,9 +157,9 @@ function FilterSearch({
             )}
           </Disclosure.Button>
           <Disclosure.Panel>
-            <div className="flex flex-col gap-4 space-y-2 border-b bg-neutral-700 p-4 pb-6">
+            <div className="flex flex-col gap-4 space-y-2 bg-neutral-700 p-4">
               <h3>Genres</h3>
-              <ul className="flex w-56 flex-wrap gap-1 gap-y-4">
+              <ul className="flex w-full flex-wrap gap-1 gap-y-4 border-b pb-8 sm:w-72 xl:w-64">
                 {GENRES.map(genre => (
                   <li key={genre.id}>
                     <Link

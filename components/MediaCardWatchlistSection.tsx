@@ -42,13 +42,13 @@ function MediaCardWatchlistSection({
     <>
       {userRating && (
         <p>
-          <CheckCircleIcon className="absolute top-0 z-10 h-9 w-9 text-green-500" />
+          <CheckCircleIcon className="absolute left-0 top-0 z-10 h-9 w-9 text-green-500" />
         </p>
       )}
       {!userRating && !userWatchlist && (
         <p>
           <PlusCircleIcon
-            className="absolute top-0 z-10 h-9 w-9 hover:cursor-pointer hover:text-yellow-400"
+            className="absolute left-0 top-0 z-10 h-9 w-9 hover:cursor-pointer hover:text-yellow-400"
             onClick={handleAddMovie}
           />
         </p>
@@ -56,7 +56,7 @@ function MediaCardWatchlistSection({
       {!userRating && userWatchlist && inWatchlist && (
         <p>
           <PlusCircleIcon
-            className="absolute top-0 z-10 h-9 w-9 text-yellow-400 hover:cursor-pointer"
+            className="absolute left-0 top-0 z-10 h-9 w-9 text-yellow-400 hover:cursor-pointer"
             onClick={handleDeleteMovie}
           />
         </p>
@@ -64,7 +64,7 @@ function MediaCardWatchlistSection({
       {!userRating && userWatchlist && !inWatchlist && (
         <p>
           <PlusCircleIcon
-            className="absolute top-0 z-10 h-9 w-9 hover:cursor-pointer hover:text-yellow-400"
+            className="absolute left-0 top-0 z-10 h-9 w-9 hover:cursor-pointer hover:text-yellow-400"
             onClick={handleAddMovie}
           />
         </p>

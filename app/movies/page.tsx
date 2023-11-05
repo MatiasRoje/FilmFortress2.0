@@ -154,8 +154,8 @@ async function MoviesPage({
 
   return (
     <main className="py-6">
-      <section className="flex">
-        <div className="h-min w-64 rounded">
+      <section className="flex flex-col sm:flex-row">
+        <div className="h-min w-full rounded sm:w-80 xl:w-64">
           <ul className="mb-5 space-y-2 rounded bg-neutral-700 p-4">
             <li>
               <Link

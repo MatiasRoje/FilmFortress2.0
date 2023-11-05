@@ -87,17 +87,17 @@ function UserRatingsPage() {
                         alt={`${movie.title} poster`}
                         width="150"
                         height="224"
-                        className="h-full w-full rounded-l"
+                        className="h-full w-60 rounded-l sm:w-full"
                       />
                     ) : (
                       <ImagePlaceholderMovie
-                        dimensions="h-56 w-[112px] sm:w-[137px] lg:w-[142px]"
+                        dimensions="h-56 w-[139px] sm:w-[137px] lg:w-[142px]"
                         rounded="rounded-l"
                       />
                     )}
                   </Link>
                   <div className="h-56 w-full rounded-r bg-neutral-700 px-6 py-4">
-                    <p className="text-lg font-semibold">
+                    <p className="line-clamp-1 text-lg font-semibold">
                       <Link
                         href={`/movies/${movie.id}`}
                         className="hover:underline"

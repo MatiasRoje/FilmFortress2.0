@@ -41,10 +41,10 @@ function SortSearch({
   const queryString = querystring.stringify(searchParams);
 
   return (
-    <Disclosure as="div" className="rounded bg-neutral-700 px-4 py-3">
+    <Disclosure as="div" className="rounded bg-neutral-700">
       {({ open }) => (
         <>
-          <Disclosure.Button className="inline-flex w-full items-center justify-between py-2">
+          <Disclosure.Button className="inline-flex w-full items-center justify-between px-4 py-3">
             <h3>Sort</h3>
             {open ? (
               <p>
@@ -56,7 +56,7 @@ function SortSearch({
               </p>
             )}
           </Disclosure.Button>
-          <Disclosure.Panel>
+          <Disclosure.Panel className="px-4 py-3">
             <Listbox
               value={selectedOption}
               onChange={setSelectedOption}

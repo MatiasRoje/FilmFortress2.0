@@ -10,6 +10,7 @@ interface MinMaxInputProps {
   step?: number;
   minQuery: string;
   maxQuery: string;
+  border?: string;
 }
 
 const MinMaxInput: React.FC<MinMaxInputProps> = ({
@@ -20,6 +21,7 @@ const MinMaxInput: React.FC<MinMaxInputProps> = ({
   queryString,
   minQuery,
   maxQuery,
+  border = "",
 }) => {
   const [min, setMin] = useState<number>(minValue);
   const [max, setMax] = useState<number>(maxValue);
@@ -39,9 +41,9 @@ const MinMaxInput: React.FC<MinMaxInputProps> = ({
   };
 
   return (
-    <form className="mb-5 space-y-2 rounded bg-neutral-700 px-4 py-5">
+    <form className="space-y-2 rounded bg-neutral-700 px-4 py-5">
       <h3>{title}</h3>
-      <div className="flex items-center justify-between gap-3">
+      <div className={`flex items-center justify-between gap-3 ${border}`}>
         <div className="flex flex-col gap-2">
           <div className="space-x-2">
             <label className="text-sm">From</label>

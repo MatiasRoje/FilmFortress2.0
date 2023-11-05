@@ -28,6 +28,7 @@ function UserScoreSearch({
       queryString={queryString}
       minQuery="vote_average.gte"
       maxQuery="vote_average.lte"
+      border="border-b pb-10"
     />
   );
 }
