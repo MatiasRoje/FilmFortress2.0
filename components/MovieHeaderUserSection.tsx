@@ -44,10 +44,12 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
   }
 
   function handleDeleteMovie() {
-    const newMovieIds = userWatchlist.movieIds.filter(
-      (movieId: number) => movieId !== movie.id
-    );
-    deleteMovie({ watchlist: userWatchlist, newMovieIds });
+    if (userWatchlist) {
+      const newMovieIds = userWatchlist.movieIds.filter(
+        (movieId: number) => movieId !== movie.id
+      );
+      deleteMovie({ watchlist: userWatchlist, newMovieIds });
+    }
   }
 
   return (
