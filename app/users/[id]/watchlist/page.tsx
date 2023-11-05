@@ -6,9 +6,9 @@ import Spinner from "@/components/Spinner";
 import { useDeleteMovieFromWatchlist } from "@/hooks/useDeleteMovieFromWatchlist";
 import { useUserWatchlist } from "@/hooks/useUserWatchlist";
 import useWatchlistMovies from "@/hooks/useWatchlistMovies";
-import { useAuth } from "@/providers/AuthContext";
 import { MovieDetails } from "@/types/movies";
 import { PlusCircleIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,11 +17,11 @@ import { useEffect, useState } from "react";
 function UserWatchlistPage() {
   const router = useRouter();
   const [movieTVToggle, setMovieTVToggle] = useState("movies");
-  const { user, isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
+  const { data: session } = useSession();
 
-  const { userWatchlist } = useUserWatchlist(user?.id);
+  const { userWatchlist } = useUserWatchlist(session?.user?.id);
   const { movies, isLoading } = useWatchlistMovies(userWatchlist?.movieIds);
   const { deleteMovie } = useDeleteMovieFromWatchlist();
 
@@ -34,8 +34,8 @@ function UserWatchlistPage() {
   }
 
   useEffect(() => {
-    if (!isAuthenticated) router.push("/login");
-  }, [isAuthenticated, router]);
+    if (!session) router.push("/login");
+  }, [session, router]);
 
   return (
     <main>

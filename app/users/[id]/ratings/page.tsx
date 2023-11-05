@@ -5,9 +5,9 @@ import RatingModal from "@/components/RatingModal";
 import Spinner from "@/components/Spinner";
 import useRatedMovies from "@/hooks/useRatedMovies";
 import { useUserRatings } from "@/hooks/useUserRatings";
-import { useAuth } from "@/providers/AuthContext";
 import { MovieWithRating } from "@/types/movies";
 import { SparklesIcon } from "@heroicons/react/24/outline";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -16,13 +16,15 @@ import { useEffect, useMemo, useState } from "react";
 function UserRatingsPage() {
   const router = useRouter();
   const [movieTVToggle, setMovieTVToggle] = useState("movies");
-  const { user, isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<MovieWithRating | null>(
     null
   );
+  const { data: session } = useSession();
 
-  const { userRatings, isLoading: isLoadingRatings } = useUserRatings(user?.id);
+  const { userRatings, isLoading: isLoadingRatings } = useUserRatings(
+    session?.user?.id
+  );
   const movieIdsArray = useMemo(
     () => userRatings?.map(userReview => userReview.movieId),
     [userRatings]
@@ -36,8 +38,8 @@ function UserRatingsPage() {
   });
 
   useEffect(() => {
-    if (!isAuthenticated) router.push("/login");
-  }, [isAuthenticated, router]);
+    if (!session) router.push("/login");
+  }, [session, router]);
 
   return (
     <main>
@@ -126,14 +128,15 @@ function UserRatingsPage() {
                     </p>
                     <p className="mb-1.5 text-sm italic">
                       Rated on{" "}
-                      {new Date(movie.rating!.updatedAt).toLocaleString(
-                        "en-US",
-                        {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        }
-                      )}
+                      {movie.rating &&
+                        new Date(movie.rating.updatedAt).toLocaleString(
+                          "en-US",
+                          {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          }
+                        )}
                     </p>
                     <p className="mb-1.5 mt-5 line-clamp-3 lg:mt-0 lg:line-clamp-2">
                       {movie.overview}

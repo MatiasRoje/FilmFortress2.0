@@ -5,8 +5,8 @@ import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
 import { MovieDetails } from "@/types/movies";
-import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type ReviewsButtonProps = {
   movie: MovieDetails;
@@ -15,10 +15,10 @@ type ReviewsButtonProps = {
 function ReviewsButton({ movie }: ReviewsButtonProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { data: session } = useSession();
 
   const handleAddReview = () => {
-    if (!isAuthenticated) router.push("/login");
+    if (!session) router.push("/login");
 
     setIsOpen(true);
   };

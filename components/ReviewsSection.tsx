@@ -5,12 +5,12 @@ import Link from "next/link";
 import ReviewCard from "./ReviewCard";
 import ReviewsButton from "./ReviewsButton";
 import { MovieDetails } from "@/types/movies";
-import { useAuth } from "@/providers/AuthContext";
 import UserReviewCard from "./UserReviewCard";
 import { useUserRatings } from "@/hooks/useUserRatings";
 import { useUserReviews } from "@/hooks/useUserReviews";
 import { ConvertUserReviewToReviewTMDB } from "@/lib/reviews";
 import { useUserReviewForMovie } from "@/hooks/useUserReviewForMovie";
+import { useSession } from "next-auth/react";
 
 type ReviewsSectionProps = {
   movie: MovieDetails;
@@ -18,16 +18,16 @@ type ReviewsSectionProps = {
 };
 
 function ReviewsSection({ movie, reviews }: ReviewsSectionProps) {
-  const { user, isAuthenticated } = useAuth();
+  const { data: session } = useSession();
 
-  const { userRatings } = useUserRatings(user?.id);
+  const { userRatings } = useUserRatings(session?.user?.id);
   const userRating = userRatings?.find(rating => rating.movieId === movie.id);
 
-  const { userReviews } = useUserReviews(user?.id);
+  const { userReviews } = useUserReviews(session?.user?.id);
   const userReview = userReviews
     ?.filter(
       (review: UserReview) =>
-        review.userId === user?.id && review.movieId === movie.id
+        review.userId === session?.user?.id && review.movieId === movie.id
     )
     .at(0);
 
@@ -65,10 +65,10 @@ function ReviewsSection({ movie, reviews }: ReviewsSectionProps) {
           </Link>
           <span>—{allReviews.length}</span>
         </div>
-        {isAuthenticated && !userReview && <ReviewsButton movie={movie} />}
-        {!isAuthenticated && <ReviewsButton movie={movie} />}
+        {session && !userReview && <ReviewsButton movie={movie} />}
+        {!session && <ReviewsButton movie={movie} />}
       </div>
-      {isAuthenticated && userReview ? (
+      {session && userReview ? (
         <div className="flex flex-col gap-4 sm:flex-row sm:gap-0">
           <UserReviewCard
             review={userReview}
@@ -88,7 +88,7 @@ function ReviewsSection({ movie, reviews }: ReviewsSectionProps) {
             </Link>
           </div>
         </div>
-      ) : isAuthenticated && mostRecentReview ? (
+      ) : session && mostRecentReview ? (
         <div className="flex flex-col gap-4 sm:flex-row sm:gap-0">
           <ReviewCard review={mostRecentReview} width={"max-w-max"} />
           <div className="flex items-center sm:mx-8 sm:w-24">
@@ -103,7 +103,7 @@ function ReviewsSection({ movie, reviews }: ReviewsSectionProps) {
       ) : (
         ""
       )}
-      {!isAuthenticated && mostRecentReview ? (
+      {!session && mostRecentReview ? (
         <div className="flex flex-col gap-4 sm:flex-row sm:gap-0">
           <ReviewCard review={mostRecentReview} width={"max-w-max"} />
           <div className="flex items-center sm:mx-8 sm:w-24">

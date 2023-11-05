@@ -1,11 +1,11 @@
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import Button from "./Button";
-import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
 import { useCreateReview } from "@/hooks/useCreateReview";
 import { UserReview } from "@/types/reviews";
 import { useUpdateReview } from "@/hooks/useUpdateReview";
+import { useSession } from "next-auth/react";
 
 type ReviewModalProps = {
   userReviewApi?: UserReview | undefined;
@@ -30,14 +30,14 @@ function ReviewModal({
   const [userReview, setUserReview] = useState(
     userReviewApi ? userReviewApi.content : ""
   );
-  const { user, isAuthenticated } = useAuth();
+  const { data: session } = useSession();
 
   const { createReview } = useCreateReview();
   const { updateReview } = useUpdateReview();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!isAuthenticated) router.push("/login");
+    if (!session) router.push("/login");
 
     if (userReviewApi) {
       updateReview(
@@ -53,12 +53,12 @@ function ReviewModal({
       );
     }
 
-    if (!userReviewApi && user && userReview) {
+    if (!userReviewApi && session?.user && userReview) {
       if (moviePoster) {
         createReview(
           {
             content: userReview,
-            userId: user.id,
+            userId: session.user.id,
             movieId,
             movieTitle,
             movieReleaseDate,
@@ -74,7 +74,7 @@ function ReviewModal({
         createReview(
           {
             content: userReview,
-            userId: user.id,
+            userId: session.user.id,
             movieId,
             movieTitle,
             movieReleaseDate,

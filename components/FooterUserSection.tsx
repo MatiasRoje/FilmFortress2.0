@@ -1,17 +1,12 @@
 "use client";
 
-import Link from "next/link";
+import { useSession } from "next-auth/react";
 import Button from "./Button";
-import { useAuth } from "@/providers/AuthContext";
 
 function FooterUserSection() {
-  const { isAuthenticated } = useAuth();
+  const { data: session } = useSession();
 
-  return isAuthenticated ? (
-    ""
-  ) : (
-    <Button href="/login">Join the community</Button>
-  );
+  return session ? "" : <Button href="/login">Join the community</Button>;
 }
 
 export default FooterUserSection;

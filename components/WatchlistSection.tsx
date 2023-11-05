@@ -4,18 +4,17 @@ import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Button from "./Button";
 import { useState } from "react";
-import { useAuth } from "@/providers/AuthContext";
 import useWatchlistMovies from "@/hooks/useWatchlistMovies";
 import Carousel from "./Carousel";
 import Spinner from "./Spinner";
 import { useUserWatchlist } from "@/hooks/useUserWatchlist";
+import { useSession } from "next-auth/react";
 
 function WatchlistSection() {
   const [isHovered, setIsHovered] = useState(false);
-  const { isAuthenticated } = useAuth();
-  const { user } = useAuth();
+  const { data: session } = useSession();
 
-  const { userWatchlist } = useUserWatchlist(user?.id);
+  const { userWatchlist } = useUserWatchlist(session?.user?.id);
 
   const { movies, isLoading } = useWatchlistMovies(userWatchlist?.movieIds);
 
@@ -30,7 +29,7 @@ function WatchlistSection() {
   return (
     <section className="my-4 flex flex-col gap-4">
       <Link
-        href={`/users/${user?.id}/watchlist`}
+        href={`/users/${session?.user?.id}/watchlist`}
         onMouseEnter={handleHoverIn}
         onMouseLeave={handleHoverOut}
       >
@@ -48,7 +47,7 @@ function WatchlistSection() {
         </h2>
       </Link>
 
-      {!isAuthenticated && (
+      {!session && (
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <span>
             <PlusCircleIcon className="h-12 w-12 p-2" />
@@ -65,7 +64,7 @@ function WatchlistSection() {
           </Button>
         </div>
       )}
-      {isAuthenticated && !userWatchlist && (
+      {session && !userWatchlist && (
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <span>
             <PlusCircleIcon className="h-12 w-12 p-2" />
@@ -85,34 +84,32 @@ function WatchlistSection() {
           </Link>
         </div>
       )}
-      {isAuthenticated &&
-        userWatchlist &&
-        userWatchlist.movieIds.length === 0 && (
-          <div className="flex flex-col items-center justify-center gap-4 text-center">
-            <span>
-              <PlusCircleIcon className="h-12 w-12 p-2" />
-            </span>
-            <div>
-              <p className="font-semibold">Your Watchlist is empty</p>
-              <p>
-                Create a list of TV shows and movies to help you remember what
-                you&apos;d like to watch.
-              </p>
-            </div>
-            <Link
-              href="/movies"
-              className="focus:ring- rounded bg-neutral-600 px-6 py-2 transition duration-300 hover:bg-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
-            >
-              Browse popular movies
-            </Link>
+      {session && userWatchlist && userWatchlist.movieIds.length === 0 && (
+        <div className="flex flex-col items-center justify-center gap-4 text-center">
+          <span>
+            <PlusCircleIcon className="h-12 w-12 p-2" />
+          </span>
+          <div>
+            <p className="font-semibold">Your Watchlist is empty</p>
+            <p>
+              Create a list of TV shows and movies to help you remember what
+              you&apos;d like to watch.
+            </p>
           </div>
-        )}
-      {isLoading && isAuthenticated && userWatchlist && (
+          <Link
+            href="/movies"
+            className="focus:ring- rounded bg-neutral-600 px-6 py-2 transition duration-300 hover:bg-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
+          >
+            Browse popular movies
+          </Link>
+        </div>
+      )}
+      {isLoading && session && userWatchlist && (
         <div className="my-10 flex items-center justify-center">
           <Spinner dimensions="w-12 h-12" />
         </div>
       )}
-      {!isLoading && isAuthenticated && userWatchlist && (
+      {!isLoading && session && userWatchlist && (
         <Carousel mediaCollection={movies} />
       )}
     </section>

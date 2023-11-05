@@ -7,9 +7,9 @@ import { TvShow } from "@/types/tv";
 import RatingModal from "./RatingModal";
 import { useState } from "react";
 import MediaCardWatchlistSection from "./MediaCardWatchlistSection";
-import { useAuth } from "@/providers/AuthContext";
 import { useUserRatings } from "@/hooks/useUserRatings";
 import ImagePlaceholderMovie from "./ImagePlaceholderMovie";
+import { useSession } from "next-auth/react";
 
 type MediaCardProps = {
   movie: Movie | TvShow;
@@ -17,9 +17,9 @@ type MediaCardProps = {
 
 function MediaCard({ movie }: MediaCardProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuth();
+  const { data: session } = useSession();
 
-  const { userRatings } = useUserRatings(user?.id);
+  const { userRatings } = useUserRatings(session?.user?.id);
   const userRating = userRatings?.find(rating => rating.movieId === movie.id);
 
   function handleClick() {

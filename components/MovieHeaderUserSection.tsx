@@ -9,12 +9,12 @@ import {
 import { useState } from "react";
 import RatingModal from "./RatingModal";
 import { MovieDetails } from "@/types/movies";
-import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
 import { useUserRatings } from "@/hooks/useUserRatings";
 import { useUserWatchlist } from "@/hooks/useUserWatchlist";
 import { useAddMovieToWatchlist } from "@/hooks/useAddMovieToWatchlist";
 import { useDeleteMovieFromWatchlist } from "@/hooks/useDeleteMovieFromWatchlist";
+import { useSession } from "next-auth/react";
 
 type MovieHeaderUserSectionProps = {
   movie: MovieDetails;
@@ -23,12 +23,12 @@ type MovieHeaderUserSectionProps = {
 function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated, user } = useAuth();
+  const { data: session } = useSession();
 
-  const { userRatings } = useUserRatings(user?.id);
+  const { userRatings } = useUserRatings(session?.user?.id);
   const userRating = userRatings?.find(rating => rating.movieId === movie.id);
 
-  const { userWatchlist } = useUserWatchlist(user?.id);
+  const { userWatchlist } = useUserWatchlist(session?.user?.id);
   const inWatchlist = userWatchlist?.movieIds?.includes(movie.id);
   const { addMovie } = useAddMovieToWatchlist();
   const { deleteMovie } = useDeleteMovieFromWatchlist();
@@ -38,9 +38,9 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
   }
 
   function handleAddMovie() {
-    if (!isAuthenticated) router.push("/login");
+    if (!session) router.push("/login");
 
-    addMovie({ movieId: movie.id, userId: user?.id });
+    addMovie({ movieId: movie.id, userId: session?.user?.id });
   }
 
   function handleDeleteMovie() {
@@ -67,7 +67,7 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
       </div>
       <div className="justify-baseline flex flex-col items-center">
         <p className="text-sm text-gray-200">Your Rating</p>
-        {isAuthenticated && userRating && (
+        {session && userRating && (
           <p
             className="flex items-center gap-1 rounded pr-2 hover:cursor-pointer hover:bg-neutral-600"
             onClick={handleClick}
@@ -78,7 +78,7 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
             {userRating.rating}
           </p>
         )}
-        {isAuthenticated && !userRating && (
+        {session && !userRating && (
           <p>
             <span>
               <SparklesIcon
@@ -88,7 +88,7 @@ function MovieHeaderUserSection({ movie }: MovieHeaderUserSectionProps) {
             </span>
           </p>
         )}
-        {!isAuthenticated && (
+        {!session && (
           <p>
             <span>
               <SparklesIcon

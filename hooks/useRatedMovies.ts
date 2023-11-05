@@ -1,4 +1,4 @@
-import { Movie, MovieDetails } from "@/types/movies";
+import { MovieDetails } from "@/types/movies";
 import { useEffect, useState } from "react";
 
 function useRatedMovies(movieIds: number[] | undefined) {

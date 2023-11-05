@@ -1,13 +1,13 @@
 import { UserReview } from "@/types/reviews";
 import { StarIcon } from "@heroicons/react/24/solid";
 import ExpandableText from "./ExpandableText";
-import { useAuth } from "@/providers/AuthContext";
 import { Rating } from "@/types/ratings";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
 import DeleteReviewModal from "./DeleteReviewModal";
+import { useSession } from "next-auth/react";
 
 type ReviewCardProps = {
   review: UserReview | undefined;
@@ -28,7 +28,7 @@ function UserReviewCard({
   movieReleaseDate,
   moviePoster,
 }: ReviewCardProps) {
-  const { user } = useAuth();
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
 
@@ -45,7 +45,9 @@ function UserReviewCard({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-6">
           <div>
-            <p className="text-lg font-semibold">Review by {user?.username} </p>
+            <p className="text-lg font-semibold">
+              Review by {session?.user?.username}{" "}
+            </p>
             <p className="text-sm italic">
               Written on{" "}
               {review &&

@@ -2,26 +2,41 @@
 
 import { useEffect, useState } from "react";
 import Button from "./Button";
-import { useAuth } from "@/providers/AuthContext";
 import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 
 function LoginForm() {
   const router = useRouter();
   // PRE-FILL FOR DEV PURPOSES
   const [email, setEmail] = useState("alice@example.com");
   const [password, setPassword] = useState("Alice123");
-  const { login, isAuthenticated, error } = useAuth();
+  const { data: session } = useSession();
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (session) {
       router.back();
     }
-  }, [isAuthenticated, router]);
+  }, [session, router]);
 
-  function handleLogin(e: React.MouseEvent<HTMLButtonElement>) {
+  async function handleLogin(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (email && password) {
-      login(email, password);
+
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (res?.error) {
+        setError("Invalid Credentials");
+        return;
+      }
+
+      router.replace("/");
+    } catch (error) {
+      console.log(error);
     }
   }
 

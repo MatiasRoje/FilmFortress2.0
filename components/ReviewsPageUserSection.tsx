@@ -5,7 +5,6 @@ import { ReviewTMDB, UserReview } from "@/types/reviews";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import { useAuth } from "@/providers/AuthContext";
 import ReviewsButton from "@/components/ReviewsButton";
 import ReviewCard from "./ReviewCard";
 import UserReviewCard from "./UserReviewCard";
@@ -14,6 +13,7 @@ import { useUserReviews } from "@/hooks/useUserReviews";
 import { useUserReviewForMovie } from "@/hooks/useUserReviewForMovie";
 import { ConvertUserReviewToReviewTMDB } from "@/lib/reviews";
 import ImagePlaceholderMovie from "./ImagePlaceholderMovie";
+import { useSession } from "next-auth/react";
 
 type ReviewsPageUserSectionProps = {
   movie: MovieDetails;
@@ -25,16 +25,16 @@ function ReviewsPageUserSection({
   reviews,
 }: ReviewsPageUserSectionProps) {
   const router = useRouter();
-  const { isAuthenticated, user } = useAuth();
+  const { data: session } = useSession();
 
-  const { userRatings } = useUserRatings(user?.id);
+  const { userRatings } = useUserRatings(session?.user?.id);
   const userRating = userRatings?.find(rating => rating.movieId === movie.id);
 
-  const { userReviews } = useUserReviews(user?.id);
+  const { userReviews } = useUserReviews(session?.user?.id);
   const userReview = userReviews
     ?.filter(
       (review: UserReview) =>
-        review.userId === user?.id && review.movieId === movie.id
+        review.userId === session?.user?.id && review.movieId === movie.id
     )
     .at(0);
 
@@ -78,7 +78,7 @@ function ReviewsPageUserSection({
         ) : (
           <ImagePlaceholderMovie dimensions="w-[300px] h-[450px]" />
         )}
-        {!isAuthenticated ? (
+        {!session ? (
           <p>Sign in to write a review.</p>
         ) : userReview ? (
           ""
@@ -121,7 +121,7 @@ function ReviewsPageUserSection({
             </button>
           </div>
         </div>
-        {!isAuthenticated ? (
+        {!session ? (
           <p className="sm:hidden">Sign in to write a review.</p>
         ) : userReview ? (
           ""
@@ -142,7 +142,7 @@ function ReviewsPageUserSection({
               moviePoster={movie.posterPath}
             />
           )}
-          {!isAuthenticated &&
+          {!session &&
             allReviews &&
             allReviews
               .slice()
@@ -150,7 +150,7 @@ function ReviewsPageUserSection({
               .map(review => (
                 <ReviewCard key={review.id} review={review} width="max-w-4xl" />
               ))}
-          {isAuthenticated &&
+          {session &&
             reviews &&
             reviews
               .slice()
