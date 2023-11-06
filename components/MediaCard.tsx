@@ -38,12 +38,12 @@ function MediaCard({ movie }: MediaCardProps) {
             className="h-[17rem] w-auto max-w-none rounded-t"
           />
         ) : (
-          <ImagePlaceholderMovie dimensions="w-[180px] h-[270px]" />
+          <ImagePlaceholderMovie dimensions="w-[181px] h-[272px]" />
         )}
       </Link>
       <MediaCardWatchlistSection movie={movie} userRating={userRating} />
 
-      <div className="flex h-36 w-full flex-col gap-2 rounded-b bg-neutral-700 p-2">
+      <div className="flex h-36 max-w-[181px] flex-col gap-2 rounded-b bg-neutral-700 p-2">
         <div className="flex items-center gap-3">
           <p className="flex items-center justify-center gap-1">
             <span>
@@ -74,7 +74,7 @@ function MediaCard({ movie }: MediaCardProps) {
         <p>
           <Link
             href={`/movies/${movie.id}`}
-            className="line-clamp-2 font-semibold hover:underline"
+            className="line-clamp-2 flex max-w-[180px] font-semibold hover:underline"
           >
             {movie.title}
           </Link>
