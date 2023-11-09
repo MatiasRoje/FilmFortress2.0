@@ -71,10 +71,10 @@ function MediaCard({ movie }: MediaCardProps) {
             </p>
           )}
         </div>
-        <p>
+        <p className="line-clamp-2 max-h-12">
           <Link
             href={`/movies/${movie.id}`}
-            className="line-clamp-2 flex max-w-[180px] font-semibold hover:underline"
+            className="flex max-w-[180px] font-semibold hover:underline"
           >
             {movie.title}
           </Link>

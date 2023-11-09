@@ -16,6 +16,7 @@ export type UserReview = {
   moviePoster: string;
   rating?: number;
   createdAt: Date;
+  updatedAt: Date;
 };
 
 export type ReviewObject = {
