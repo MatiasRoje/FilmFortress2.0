@@ -81,7 +81,7 @@ function SearchBar() {
         )}
         {isLoading && <Spinner dimensions="w-8 h-8" />}
         {error && <p className="text-red-500">Error</p>}
-        <Combobox.Options className="absolute left-0 top-full z-20 my-2 grid w-full grid-cols-1 rounded bg-neutral-600 shadow-lg sm:w-72 lg:w-[36rem] lg:grid-cols-2 [&>*:nth-child(1)]:rounded-tl [&>*:nth-child(2)]:rounded-tr [&>*:nth-last-child(1)]:rounded-br [&>*:nth-last-child(2)]:rounded-bl">
+        <Combobox.Options className="absolute left-0 top-full z-20 my-2 grid w-full grid-cols-1 rounded bg-neutral-600 shadow-lg hover:cursor-pointer sm:w-72 lg:w-[36rem] lg:grid-cols-2 [&>*:nth-child(1)]:rounded-tl [&>*:nth-child(2)]:rounded-tr [&>*:nth-last-child(1)]:rounded-br [&>*:nth-last-child(2)]:rounded-bl">
           {!isLoading &&
             !error &&
             movies?.map((movie: Movie) => (

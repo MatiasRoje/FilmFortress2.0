@@ -30,7 +30,11 @@ function UserRatingsPage() {
     session?.user?.id
   );
   const movieIdsArray = useMemo(
-    () => userRatings?.map(userReview => userReview.movieId),
+    () =>
+      userRatings
+        ?.map(userReview => userReview.movieId)
+        .slice()
+        .reverse(),
     [userRatings]
   );
 
